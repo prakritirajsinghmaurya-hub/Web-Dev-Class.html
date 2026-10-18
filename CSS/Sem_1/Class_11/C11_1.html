@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #main{
+            height: 90vh;
+            width: 100vw;
+            display: grid;
+            grid-template-columns: repeat(4,300px);
+            /* grid-template-rows: 500px 200px; */
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+        .a{
+            border: 2px solid yellowgreen;
+        }
+        img{
+            height: 100%;
+            width: 100%;
+        }
+        .a:hover{
+            transform: scale(1.5);
+            
+        }
+        /* to interchange positions in grid */
+        /* #one{
+            grid-row-start: 2;
+            grid-row-end: 3;
+        } */
+        /* #three{
+            grid-row: 2/3;
+            grid-column: 2/3;
+        } */
+        
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="one" class="a"> <img src="./Shillong_Pics/WhatsApp Image 2026-08-25 at 14.27.57.jpeg"> </div>
+        <div id="three" class="a"> <img src="./Shillong_Pics/WhatsApp Image 2026-08-26 at 03.36.37.jpeg"> </div>
+        <div id="four" class="a"> <img src="./Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.36.jpeg"> </div>
+        <div id="five" class="a"> <img src="./Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.15.jpeg"> </div>
+        <div id="seven" class="a"> <img src="./Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg"> </div>
+        <div id="eight" class="a"> <img src="./My_Clg/image.png"> </div>
+        <div id="nine" class="a"> <img src="./Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.06.jpeg"> </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        nav{
+            width: 100vw;
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            /* background-color: yellow; */
+        }
+        nav div{
+            height: 100%;
+            width: 20%;
+            /* background-color: yellow; */
+            text-align: left;
+            line-height: 50px;
+        }
+        #search{
+            width: 30%;
+            border: 1px solid;
+            text-align: left;
+        }
+        button{
+            height: 80%;
+            width: auto;
+        }
+        @media screen and (max-width: 400px){
+            nav{
+                flex-direction: column;
+                height: auto;
+                width:auto;
+            }
+            nav div{
+                width: 100%;
+            }
+            #search{
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <div >Navbar</div>
+        <div >Home</div>
+        <div> Link </div>
+        <div id="search"> Search </div>
+        <div> <button> Search </button></div>
+    </nav>
+</body>
+</html>

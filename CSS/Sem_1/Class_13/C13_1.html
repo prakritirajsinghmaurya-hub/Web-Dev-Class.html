@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        #main{
+            height: 5000px;
+            width: 100vw;
+            display: grid;
+            background-color: black;
+            gap: 10px;
+            grid-template-columns:repeat(3,33%);
+            grid-template-rows:repeat(4,300px);
+        }
+        #one{
+            grid-column: span 3;
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-size:xx-large;
+        }
+        
+        #linear-gradient{
+            background: linear-gradient( red, blue);
+        }
+        #linear-right{
+            background: linear-gradient(to right, red, blue);
+        }
+        #linear-left{
+            background: linear-gradient(to left, red, blue);
+        }
+        #linear-top{
+            background: linear-gradient(to top, red, blue);
+        }
+        #diagonal{
+            background: linear-gradient(to bottom right, red, blue);
+        }
+        #degree{
+            background: linear-gradient(45deg, red, blue);
+        }
+        #multiple-colors{
+            background: linear-gradient(to right, red, yellow, green, blue);
+        }
+        #repeat-linear{
+            background: repeating-linear-gradient(to right, red, yellow 10px, green 20px, blue 30px);
+        }
+        #Radial{
+            background: radial-gradient(red, blue);
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="one"> <br><br><br><h1>CSS Gradient</h1> </div>
+        <div id="linear-gradient"> Linear Gradient </div>
+        <div id="linear-right"> Linear Right </div>
+        <div id="linear-left"> Linear Left </div>
+        <div id="linear-top"> Linear Top</div>
+        <div id="diagonal"> Diagonal </div>
+        <div id="degree"> 45 Degree </div>
+        <div id="multiple-colors"> Multiple Colors </div>
+        <div id="repeat-linear"> Repeat Linear </div>
+        <div> color stops</div>
+        <div> Hard Stop</div>
+        <div id="Radial"> Radial</div>
+        <div> Radial Circle </div>
+        <div> Radial Multiple </div>
+        <div> Conic Angle</div>
+        <div> Conic degree</div>
+        <div> Repeating Linear</div>
+        <div> Repeating Radial</div>
+        <div> Repeating conic</div>
+        <div> transparent </div>
+        <div> beautiful Gradient </div>
+
+
+    </div>
+</body>
+</html>

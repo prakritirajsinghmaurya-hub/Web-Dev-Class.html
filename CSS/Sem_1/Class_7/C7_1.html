@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #parent{
+            height: 600px;
+            border: 10px solid rgb(120, 79, 234);
+            width: 100%;
+            display: flex;
+            /* justify-content: space-around; */
+            /* align-items: baseline; */
+            align-items: center;
+            justify-content: center;
+            justify-content: space-evenly;
+
+
+        }
+        #parent div{
+            height: 100px;
+            width: 100px;
+        }
+        #one{
+            background-color: rgb(203, 236, 93);
+        }
+        #two{
+            background-color: aquamarine;
+            /* flex-basis: 200px; */
+            flex-shrink: 2;
+        }
+        #three{
+            background-color: rgb(99, 168, 197);
+            flex-grow: 2;
+        }
+        #four{
+            background-color:blue;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="parent">
+        <div id="one" ></div>
+        <div id="two"></div>
+        <div id="three"></div>
+        <div id="four"></div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: black;
+        }
+        #moments{
+            height: 200px;
+            width: 90vw;
+            background-color: black;
+            color: white;
+            margin: 0% auto;
+        }
+        #long{
+            width: 90vw;
+            height: 400px;
+            margin: 0% auto;
+        }
+        #long:hover h3{
+            opacity: 1;
+            transform: translateY(-30px);
+        }
+        img{
+            height: 100%;
+            width: 100%;
+            border-radius: 20px;
+        }
+        #main{
+            height: 100vh;
+            width: 90vw;
+            margin: 0% auto;
+            background-color: black;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .a{
+            border-radius: 20%;
+        }
+        h3{
+            opacity: 0;
+            transition: 3s;
+            color: white;
+            font-size: xx-large;
+            position: relative;
+            bottom: 40px;
+            height:fit-content;
+            width: fit-content;
+        }
+        .a:hover h3{
+            opacity: 1;
+            transform: translateY(-60px);
+        }
+        img:hover{
+            transition: 3s;
+            transform:scale(1.02);
+        }
+        #one{
+            grid-column: span 2;
+        }
+    </style>
+</head>
+<body>
+    <div id="moments"> 
+        <p> abcd </p> <br>
+        <h1>Moments. </h1> <br>
+        <p> defgh </p> <br>
+    </div>
+    <div id="long">
+            <a href="https://unsplash.com/photos/mount-fuji-and-cosmos-flowers-rj1IGpHcIc0" target="_blank">
+            <img src="https://images.unsplash.com/photo-1791313779146-f1b991068700?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8">
+            </a>
+            <h3> main pic </h3>
+    </div>
+    <div id="main">
+        
+        <div class="a" id="one">
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic one </h3>
+        </div>
+
+        <div class="a" id="two">
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic two </h3>
+        </div>
+
+        <div class="a" id="three" > 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic three </h3>  
+        </div>
+
+        <div class="a" id="four"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic four </h3>  
+        </div>
+
+        <div class="a" id="five"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic five </h3>  
+        </div>
+
+        <div class="a" id="six"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic six </h3>  
+        </div>
+
+        <div class="a" id="seven"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic seven </h3>  
+        </div>
+
+        <div class="a" id="eight"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic eight </h3>  
+        </div>
+
+        <div class="a" id="nine"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic nine </h3>  
+        </div>
+
+        <div class="a" id="ten"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic ten </h3>  
+        </div>
+
+        <div class="a" id="eleven"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic eleven </h3>  
+        </div>
+
+        <div class="a" id="twelve"> 
+            <img src="../Class_11/Shillong_Pics/WhatsApp Image 2026-08-27 at 09.35.18.jpeg">
+            <h3> pic twelve </h3>  
+        </div>
+    </div>
+</body>
+</html>

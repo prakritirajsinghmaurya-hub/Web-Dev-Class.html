@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            perspective: 900px;
+        }
+        #main{
+            margin: 10px auto;
+            height: 600px;
+            width: 500px;
+            transition-duration: 3s;
+            transform-style: preserve-3d;
+        }
+        #main:hover{
+            transform: rotateY(180deg);
+        }
+        #b{
+            background-color: indigo;
+            height: 300px;
+            width: 400px;
+            transform: rotateY(180deg);
+        }
+        #a{
+            position: absolute;
+            background-color: yellow;
+            height: 300px;
+            width: 100%;
+            backface-visibility: hidden;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <img id="a" src="./Assign/Elephant.jpeg">
+        <div id="b"> <h2> Buddy buddy </h2> </div>
+    </div>
+</body>
+</html>

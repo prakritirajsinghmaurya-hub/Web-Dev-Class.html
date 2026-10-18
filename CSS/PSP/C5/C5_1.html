@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        #grand{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #main{
+            height: 500px;
+            width: 300px;
+            background-color: brown;
+        }
+        .child{
+            height: 100px;
+            width: 100%;
+            background-color: cadetblue;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+        }
+        .child:hover{
+            background-color: antiquewhite;
+            position: relative;
+            left: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div id="grand">
+    <div id="main">
+        <div class="child"> abcd </div>
+        <div class="child"> efgh </div>
+        <div class="child"> ijkl </div>
+        <div class="child"> mnop </div>
+        <div class="child"> qrst </div>
+    </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #main{
+        height: 100vh;
+        width: 100vw;
+    }
+    @media screen and (min-width: 700px){
+        #main{
+            background-color: aqua;
+            border: 10px solid;
+            transition: 3s;
+            border-radius: 20px;
+        }
+        #child{
+            background-color: aquamarine;
+            height: 50%;
+            width: 50%;
+            
+        }
+    }
+</style>
+<body>
+    <div id="main">
+        <div id="child"></div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .a{
+            height:100px;
+            width:100px;
+            border-radius: 50%;
+            animation-duration: 900ms;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+            animation-name: a;
+        }
+        #left{
+            background: linear-gradient(rgb(218, 199, 30), red);
+        }
+        #center{
+            background-color: blue;
+            animation-delay: 300ms;
+        }
+        #right{
+            background-color: fuchsia;
+            animation-delay: 600ms;
+        }
+        #main{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: row;
+            background-color: black;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes a{
+            0%{
+                transform: scale(1);
+            }
+            100%{
+                transform: scale(0.5);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div id="left" class="a"></div>
+        <div id="center" class="a"></div>
+        <div id="right" class="a"></div>
+    </div>
+</body>
+</html>

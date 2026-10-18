@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <style>
+            body{
+                perspective: 900px;
+            }
+        #main{
+            height: 1000px;
+            width: 1200px;
+        }
+        #pic{
+            font-size:xx-large;
+            text-align: center;
+            height: 450px;
+            width: 800px;
+            background-color: #0f172a;
+            transform: rotateY(270deg);
+            color: #e2e8f0;
+        }
+        img{
+        height: 500px;
+        width: 850px;
+        position: absolute;
+        }
+        #main:hover #img {
+            transform: rotateY(90deg);
+            transition-duration: 2s;
+        }
+        #main:hover #pic{
+            transform: rotateY(360deg);
+            transition-delay: 2s;
+            transition-duration: 2s;
+        }
+
+    </style>
+
+</head>
+<body>
+        
+    <div id="main">
+        <img id="img" src="./Elephant.jpeg" >
+
+        <div id="pic" >
+        <h2> Shillong </h2>
+        <p> One of the best experiences of my life. </p>
+        <p>Everything wrong happened over there. Broken Bus, Missed Train, Stucked at random places, Road Accident. Still got great views, awesome foggy misty cloudy weather. Got lost on a beautiful road filled with scenery.</p>
+        </div>
+
+    </div>
+</body>
+</html>
