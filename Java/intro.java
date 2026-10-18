@@ -1,6 +1,8 @@
-public class intro { 
-    public static void main(String[] args) {
-        System.out.println ("Hello, World!");
-        System.out.print("abchdyrbf");
+import java.util.Scanner;
+public class Main(){
+    public static void main(){
+        Scanner scn = new Scanner(System.in);
+        int n = scn.nextInt();
+        
     }
 }
