@@ -15,3 +15,11 @@ let a= prompt()
 
 // let a=false
 a>5?console.log("hello"):console.log("bye");
+
+let arr=["om", "jain", 5]
+console.log(arr);
+console.log(arr[arr.length-1]);
+
+for(let i = 0; i<arr.length; i++){
+    console.log(arr[i]);
+}

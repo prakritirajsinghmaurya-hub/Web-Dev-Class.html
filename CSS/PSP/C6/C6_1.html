@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #nav{
+            width:100%;
+            height:100px;
+            /* border: 2px solid; */
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            padding: 30px;
+        }
+        #lp{
+            height: 100%;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            font-size: xx-large;
+        }
+        #cp{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            width: 40%;
+            font-size: x-large;
+        }
+        #rp{
+            height: 100%;
+            width: 30%;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            justify-content: end;
+        }
+        #b1{
+            height: 50px; width: 100px;
+            border-radius: 30px;
+        }
+        #b2{
+            height: 20px; width: 150px;
+            border-radius: 10px;
+            border: none;
+        }
+        span{
+            color: orange;
+            font-size: xx-large;
+        }
+        #creative{
+            height: 40%;
+            width: 100%;
+            /* background-color: aqua; */
+            flex-direction: column;
+            align-items: center;
+            font-size: xx-large;
+        }
+        #sec1{
+            height: 700px;
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            padding: 30px;   
+        }
+        #b22{
+            height: 10%; width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        #b3{
+            background-color: lightblue;
+            border: none;
+            height: 30px;
+            width: 40%;
+            border-radius: 20px;
+        }
+        #b4{
+            /* background-color: blue; */
+            border: none;
+            height: 30px;
+            width: 40%;
+            border-radius: 20px;
+        }
+        #sec2{
+            height: 700px;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #ameoba{
+            background-color: darkturquoise;
+            height: 400px;
+            width: 400px;
+            border-radius: 15% 45% 32% 23%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #mainsec{
+            width: 100%;
+            height: 800px;
+            display: flex;
+            flex-direction: row;
+        }
+        #card{
+            height: 350px; width: 250px;
+            background-color: bisque;
+            border-radius: 35% 35% 0% 0%;
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="nav">
+        <div id="lp"> M <span>.</span> </div>
+        <div id="cp">
+            <div id="c1">Home</div>
+            <div id="c2">About</div>
+            <div id="c3">Work</div>
+            <div id="c4">Status</div>
+            <div id="c5">Contact</div>
+        </div>
+        <div id="rp"> <button id="b1"> Let's Talk</button> </div>
+    </nav>
+
+    <section id="mainsec">
+        <section id="sec1">
+        <button id="b2">Available for work</button><br>
+        <div id="creative">
+            <div><h1>Creative</h1></div>
+            <div style="color: orange;"><h1><i>Frontend</i></h1></div>
+            <div><h1>Devoloper.</h1></div>
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, eveniet.</p>
+        <div id="b22">
+            <button id="b3"> Contact me</button>
+            <button id="b4"> Me Grimlock </button>
+        </div>
+    </section>
+
+    <section id="sec2">
+        <div id="ameoba">
+            <div id="card"></div>
+        </div>
+    </section>
+    </section>
+
+</body>
+</html>
