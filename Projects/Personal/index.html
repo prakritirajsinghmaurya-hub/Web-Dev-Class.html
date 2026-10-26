@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahayak - Lohegaon Hyperlocal Services</title>
+    <!-- Tailwind CSS v4 CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        .modal { transition: opacity 0.25s ease; }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-black text-indigo-600 tracking-tight">SAHAYAK</span>
+                <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2 py-0.5 rounded-full">Lohegaon Campus MVP</span>
+            </div>
+            <div class="text-sm font-medium text-slate-500 flex items-center space-x-1">
+                <span>📍</span> <span class="border-b border-dotted border-slate-400">Near Vedam Tech, Pune</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
+        
+        <!-- Screen 1: The Category Selection Grid -->
+        <section id="category-screen" class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-3 my-6">
+                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">Reliable local help, right when you need it.</h1>
+                <p class="text-lg text-slate-600">Vetted maids and emergency mechanics tailored for college students and residents in Lohegaon.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-4">
+                <!-- Maid Card -->
+                <div onclick="loadProviders('maid')" class="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-500 transition-all duration-200 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🧹</div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Hire Daily Maids & Cooks</h2>
+                        <p class="text-slate-600 leading-relaxed">Find reliable helpers for cooking, cleaning, or laundry. Flexible monthly subscriptions or student-shared options.</p>
+                    </div>
+                    <div class="mt-6 flex items-center text-indigo-600 font-semibold group-hover:translate-x-1 transition-transform">
+                        <span>Browse Available Help</span> <span class="ml-2">→</span>
+                    </div>
+                </div>
+
+                <!-- Mechanic Card -->
+                <div onclick="loadProviders('mechanic')" class="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-orange-500 transition-all duration-200 flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🛠️</div>
+                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Emergency Mechanics</h2>
+                        <p class="text-slate-600 leading-relaxed">Two-wheeler breakdowns, flat tyres, or AC repair issues? Get verified roadside mechanics dispatched instantly.</p>
+                    </div>
+                    <div class="mt-6 flex items-center text-orange-600 font-semibold group-hover:translate-x-1 transition-transform">
+                        <span>Request Urgent Fix</span> <span class="ml-2">→</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen 2: Dynamic Provider Directory Listing -->
+        <section id="directory-screen" class="hidden space-y-6">
+            <div class="flex items-center space-x-4 mb-2">
+                <button onclick="showScreen('category-screen')" class="text-sm font-semibold text-slate-600 bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg transition">← Back</button>
+                <h2 id="directory-title" class="text-3xl font-bold text-slate-900">Available Professionals</h2>
+            </div>
+            
+            <div id="provider-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+    </main>
+
+    <!-- Screen 3: Booking Status Modal -->
+    <div id="booking-modal" class="modal opacity-0 pointer-events-none fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4 transform scale-95 transition-transform duration-200">
+            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl text-emerald-600 mx-auto">✓</div>
+            <div class="text-center space-y-2">
+                <h3 class="text-xl font-bold text-slate-900">Booking Confirmed!</h3>
+                <p id="modal-message" class="text-sm text-slate-600"></p>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-500 border border-slate-100 space-y-1">
+                <p>⚡ <strong>Founder Pitch Notice:</strong> This interactive confirmation demonstrates instant client assignment to E-Cell judges.</p>
+            </div>
+            <button onclick="closeModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl transition">Great, thanks!</button>
+        </div>
+    </div>
+
+    <!-- Frontend Script connecting to Spring Boot Backend -->
+    <script>
+        const API_BASE_URL = "http://localhost:8080/api/workers";
+
+        function showScreen(screenId) {
+            document.getElementById('category-screen').classList.add('hidden');
+            document.getElementById('directory-screen').classList.add('hidden');
+            document.getElementById(screenId).classList.remove('hidden');
+        }
+
+        function loadProviders(category) {
+            const titleElement = document.getElementById('directory-title');
+            const gridElement = document.getElementById('provider-grid');
+            
+            titleElement.innerText = category === 'maid' ? 'Verified Maids in Lohegaon' : 'On-Demand Mechanics Nearby';
+            gridElement.innerHTML = '<p class="text-slate-500 col-span-full text-center py-8">Connecting to Java Server...</p>';
+
+            showScreen('directory-screen');
+
+            fetch(`${API_BASE_URL}?category=${category}`)
+                .then(response => {
+                    if (!response.ok) throw new Error("Network issues reaching backend");
+                    return response.json();
+                })
+                .then(workers => {
+                    gridElement.innerHTML = ''; 
+                    
+                    if(workers.length === 0) {
+                        gridElement.innerHTML = '<p class="text-slate-500 col-span-full text-center">No service partners live in this block.</p>';
+                        return;
+                    }
+
+                    workers.forEach(worker => {
+                        const cardHtml = `
+                            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition">
+                                <div class="space-y-3">
+                                    <div class="flex items-center space-x-3">
+                                        <span class="text-3xl bg-slate-100 p-2 rounded-lg">${worker.avatar}</span>
+                                        <div>
+                                            <h4 class="font-bold text-slate-900">${worker.name}</h4>
+                                            <p class="text-xs text-slate-500">${worker.experience} Exp</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm text-slate-600 font-medium">${worker.specialty}</p>
+                                    <div class="flex justify-between items-center pt-2 border-t border-slate-100 text-sm">
+                                        <span class="text-amber-500 font-bold">★ ${worker.rating}</span>
+                                        <span class="font-semibold text-slate-900">${worker.price}</span>
+                                    </div>
+                                </div>
+                                <button onclick="processBooking(${worker.id}, '${worker.name}', '${category}')" class="mt-5 w-full text-sm font-semibold py-2 rounded-lg text-center transition \${category === 'maid' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-orange-500 hover:bg-orange-600 text-white'}">
+                                    \${category === 'maid' ? 'Book Consultation' : 'Dispatch Mechanic'}
+                                </button>
+                            </div>
+                        `;
+                        gridElement.innerHTML += cardHtml;
+                    });
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    gridElement.innerHTML = `
+                        <div class="col-span-full bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl text-center text-sm">
+                            <strong>Backend Connection Failed:</strong> Make sure your Spring Boot Application is running on port 8080!
+                        </div>
+                    `;
+                });
+        }
+
+        function processBooking(workerId, name, category) {
+            fetch(`${API_BASE_URL}/book`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ workerId: workerId, address: "Lohegaon Student Hub, Pune" })
+            })
+            .then(res => res.text())
+            .then(data => {
+                const msg = category === 'maid' 
+                    ? `Your application for \${name} is registered. Our backend server acknowledged this booking successfully.` 
+                    : `\${name} has been dispatched by the server! Estimated transit window: 15-20 mins.`;
+                
+                document.getElementById('modal-message').innerText = msg;
+                
+                const modal = document.getElementById('booking-modal');
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('div').classList.remove('scale-95');
+            });
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('booking-modal');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.querySelector('div').classList.add('scale-95');
+            showScreen('category-screen');
+        }
+    </script>
+</body>
+</html>
