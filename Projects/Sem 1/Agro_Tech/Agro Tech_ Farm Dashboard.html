@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Agro Tech: Farm Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--forest:#1F3D2B;--deep:#14291C;--clay:#A94E2A;--cream:#F6F0E3;--sand:#E9DDC4;--paper:#FFFBF2;--ink:#1D1B16;--moss:#4F6F35;--ochre:#C99A2E;--line:#CFC2A5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--cream:#17211A;--sand:#223026;--paper:#1C2A20;--ink:#F3ECDB;--line:#3A4A3D;--forest:#2E5A3F;--clay:#E0845C;color-scheme:dark}}
+html{scroll-padding-top:5rem}
+body{background:var(--cream);color:var(--ink);font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:18px;line-height:1.55}
+h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:14px}
+.btn{display:inline-flex;align-items:center;gap:.5rem;min-height:52px;padding:.6rem 1.3rem;border-radius:12px;font-weight:700;background:var(--forest);color:#fff;border:2px solid var(--forest);cursor:pointer}
+.btn:hover{background:var(--deep)}
+.chip{display:flex;align-items:center;gap:.6rem;min-height:56px;padding:.5rem 1rem;border:2px solid var(--line);border-radius:12px;background:var(--paper);font-weight:700;cursor:pointer;text-align:left;color:var(--ink)}
+.chip[aria-pressed=true]{border-color:var(--forest);background:var(--forest);color:#fff}
+.field{width:100%;min-height:52px;padding:.6rem .9rem;border:2px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font:inherit}
+:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
+nav a{padding:.5rem .7rem;border-radius:8px;font-weight:700}
+nav a:hover{background:rgba(255,255,255,.14)}
+.gauge{height:18px;border-radius:9px;background:var(--sand);overflow:hidden;border:2px solid var(--line)}
+.gauge>div{height:100%;background:var(--clay);transition:width .5s}
+details>summary{cursor:pointer;list-style:none;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:700}
+details>summary::-webkit-details-marker{display:none}
+details[open] .chev{transform:rotate(180deg)}
+td,th{padding:.7rem .5rem;text-align:left}
+tr+tr{border-top:1px solid var(--line)}
+.up{color:var(--moss);font-weight:700}.down{color:var(--clay);font-weight:700}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .up{color:#9CC774}}
+@keyframes grow{from{width:0}}
+@media (prefers-reduced-motion:reduce){.gauge>div{transition:none}}
+.i{width:1.5em;height:1.5em;flex:none}
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-20" style="background:var(--forest);color:#fff;padding-top:env(safe-area-inset-top,0px)">
+  <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+    <a href="#top" class="flex items-center gap-2 serif text-2xl font-extrabold"><i data-i="sprout"></i>Agro Tech</a>
+    <nav class="flex flex-wrap gap-1 text-base" aria-label="Main">
+      <a href="#today" data-t="n_today">Today</a>
+      <a href="#advice" data-t="n_advice">Advice</a>
+      <a href="#prices" data-t="n_prices">Prices</a>
+      <a href="#schemes" data-t="n_schemes">Schemes</a>
+      <a href="#help" data-t="n_help">Help</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top" class="max-w-6xl mx-auto px-4 pb-16">
+
+  <!-- Today -->
+  <section id="today" class="pt-8">
+    <p class="text-base" style="color:var(--moss)">Wednesday, 28 October &nbsp;|&nbsp; Pune district, Maharashtra</p>
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mt-2 max-w-4xl">Water your maize tomorrow at 6:00 AM.</h1>
+    <p class="mt-3 max-w-xl">The soil is drying out and no rain is expected before Friday.</p>
+
+    <div class="mt-6 rounded-2xl p-5 flex gap-4 items-start" style="background:var(--clay);color:#fff" role="alert">
+      <i data-i="bug" style="width:2.2em;height:2.2em;flex:none"></i>
+      <div class="flex-1">
+        <h2 class="text-2xl font-extrabold">Pest alert: fall armyworm in maize</h2>
+        <p class="mt-1">Reported in 6 villages near you. Check the young leaves for small holes and green droppings.</p>
+        <details class="mt-2"><summary>What should I do? <i data-i="chev" class="i chev"></i></summary>
+          <p class="mt-2">Look at 20 plants across your field. If 5 or more are damaged, spray neem oil (5 ml per litre of water) in the evening. Call the helpline below if you need advice.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="grid gap-4 md:grid-cols-3 mt-4">
+      <div class="card p-5">
+        <div class="flex items-center gap-2 font-bold" style="color:var(--moss)"><i data-i="sun"></i><span data-t="w_weather">Weather now</span></div>
+        <p class="serif text-5xl font-extrabold mt-2">29°C</p>
+        <p>Partly cloudy. Humidity 58%.</p>
+        <p class="mt-1 font-bold">Rain chance tomorrow: 20%</p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 font-bold" style="color:var(--moss)"><i data-i="drop"></i><span data-t="w_soil">Soil moisture</span></div>
+        <p class="serif text-5xl font-extrabold mt-2">38%</p>
+        <div class="gauge mt-2" role="img" aria-label="Soil moisture 38 percent"><div style="width:38%;animation:grow 1s"></div></div>
+        <p class="mt-2 font-bold" style="color:var(--clay)">Getting dry. Water soon.</p>
+      </div>
+      <div class="card p-5">
+        <div class="flex items-center gap-2 font-bold" style="color:var(--moss)"><i data-i="coin"></i><span data-t="w_best">Best price today</span></div>
+        <p class="serif text-5xl font-extrabold mt-2">₹4,650</p>
+        <p>Soybean, per quintal at Pune market.</p>
+        <p class="mt-1 up">Up ₹80 since yesterday</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Advice -->
+  <section id="advice" class="pt-14">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_advice">Get advice for your field</h2>
+    <p class="mt-1">Tell us three things. We will tell you what to do next.</p>
+    <div class="grid gap-6 lg:grid-cols-2 mt-5">
+      <div class="card p-5 space-y-5">
+        <div>
+          <p class="font-bold mb-2">1. Which crop?</p>
+          <div class="grid grid-cols-2 gap-2" id="crops"></div>
+        </div>
+        <div>
+          <label for="moist" class="font-bold block mb-2">2. How wet is the soil? <span id="moistVal" class="serif text-2xl">38%</span></label>
+          <input id="moist" type="range" min="5" max="95" value="38" class="w-full" style="accent-color:var(--forest);height:36px">
+          <div class="flex justify-between text-base"><span>Dry</span><span>Wet</span></div>
+          <p class="text-base mt-1">Tip: dig 10 cm down and squeeze a handful. If it crumbles, it is dry.</p>
+        </div>
+        <div>
+          <p class="font-bold mb-2">3. What is your soil like?</p>
+          <div class="grid grid-cols-3 gap-2" id="soils"></div>
+        </div>
+        <button class="btn w-full justify-center text-xl" id="go"><i data-i="drop"></i><span data-t="b_advice">Tell me what to do</span></button>
+      </div>
+
+      <div class="rounded-2xl p-6 flex flex-col justify-center" style="background:var(--forest);color:#fff" aria-live="polite" id="result">
+        <p class="opacity-80">Your action</p>
+        <p class="serif text-3xl md:text-4xl font-extrabold mt-1" id="rHead">Water your maize tomorrow at 6:00 AM.</p>
+        <p class="mt-3" id="rBody">Soil is at 38% and maize likes 50% or more. Loam holds water well, so give it a medium watering.</p>
+        <p class="mt-4 font-bold" id="rAmt">About 25 mm of water (a light flood for 40 minutes).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resource hub -->
+  <section id="prices" class="pt-14">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_hub">Resource hub</h2>
+    <div class="grid gap-6 lg:grid-cols-2 mt-5">
+      <div class="card p-5">
+        <h3 class="text-2xl font-extrabold flex items-center gap-2"><i data-i="coin"></i><span data-t="h_prices">Market prices</span></h3>
+        <p class="text-base mb-2">Pune market, ₹ per quintal. Sample data for demo.</p>
+        <table class="w-full">
+          <thead class="text-base"><tr><th>Crop</th><th>Price</th><th>Today</th></tr></thead>
+          <tbody id="priceBody"></tbody>
+        </table>
+        <p class="text-base mt-3" style="color:var(--moss)">Updated 7:30 AM. Prices change through the day.</p>
+      </div>
+
+      <div class="card p-5" id="schemes">
+        <h3 class="text-2xl font-extrabold flex items-center gap-2"><i data-i="doc"></i><span data-t="h_schemes">Schemes you can apply for</span></h3>
+        <p class="text-base mb-2">Tap a scheme to see who can apply.</p>
+        <div id="schemeList" class="divide-y" style="border-color:var(--line)"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Help -->
+  <section id="help" class="pt-14">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_help">Ask an expert</h2>
+    <p class="mt-1" data-t="p_help">Pick your language and your problem. An expert will call you back.</p>
+    <div class="card p-5 mt-5 grid gap-6 lg:grid-cols-2">
+      <form id="helpForm" class="space-y-4" novalidate>
+        <div class="flex flex-wrap gap-2" id="langs" role="group" aria-label="Language">
+          <button type="button" class="chip" data-l="en" aria-pressed="true">English</button>
+          <button type="button" class="chip" data-l="hi" aria-pressed="false">हिन्दी</button>
+          <button type="button" class="chip" data-l="mr" aria-pressed="false">मराठी</button>
+        </div>
+        <div>
+          <p class="font-bold mb-2" data-t="f_topic">What is the problem?</p>
+          <div class="grid grid-cols-2 gap-2" id="topics"></div>
+        </div>
+        <div>
+          <label for="phone" class="font-bold block mb-1" data-t="f_phone">Your phone number</label>
+          <input id="phone" class="field" inputmode="tel" autocomplete="tel" placeholder="98XXXXXXXX">
+        </div>
+        <div>
+          <label for="msg" class="font-bold block mb-1" data-t="f_msg">Tell us more (optional)</label>
+          <textarea id="msg" rows="3" class="field"></textarea>
+        </div>
+        <button class="btn text-xl" type="submit"><i data-i="send"></i><span data-t="b_send">Send to expert</span></button>
+        <p id="formMsg" class="font-bold" role="status"></p>
+      </form>
+      <div class="rounded-2xl p-6 self-start" style="background:var(--sand)">
+        <p class="flex items-center gap-2 font-bold"><i data-i="phone"></i>Prefer to talk?</p>
+        <p class="serif text-4xl font-extrabold mt-2">1800-180-1551</p>
+        <p class="mt-1">Kisan Call Centre. Free call, 6 AM to 10 PM, every day.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="text-center text-base pb-8" style="color:var(--moss)">Agro Tech. Weather, prices and alerts shown here are demo data until live feeds are connected.</footer>
+
+<script>
+const IC={
+sprout:'<path d="M7 20h10M10 20c5.5-2.5.8-6.4 3-10M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8zM14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+drop:'<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
+coin:'<circle cx="12" cy="12" r="9"/><path d="M9 8h6M9 12h6M9 8c4 0 4 4 0 4l4 4"/>',
+bug:'<path d="m8 2 1.9 1.9M14.1 3.9 16 2M9 7.1V6a3 3 0 0 1 6 0v1.1M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6zM12 20v-9M6.5 13H2M3 21c0-2.1 1.7-3.9 3.8-4M20.9 13H22M17.2 17c2.1.1 3.8 1.9 3.8 4"/>',
+doc:'<path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zM14 2v6h6M9 13h6M9 17h6"/>',
+send:'<path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/>',
+phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+chev:'<path d="m6 9 6 6 6-6"/>',
+wheat:'<path d="M2 22 16 8M3.5 12.5l2 2M6.5 9.5l2 2M9.5 6.5l2 2M20 3l-2 2M16 7l2-2M13 10l2-2"/>',
+leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10zM2 21c0-3 1.9-5.6 5-7"/>',
+cloud:'<path d="M17.5 19H9a7 7 0 1 1 6.7-9h1.8a4 4 0 0 1 0 8z"/>',
+coins:'<circle cx="8" cy="8" r="6"/><path d="M18.1 10.4A6 6 0 1 1 10.4 18.1M7 6h1v4"/>'};
+function icons(){document.querySelectorAll('i[data-i]').forEach(e=>{if(e.firstChild)return;e.outerHTML='<svg class="i '+(e.className||'')+'" style="'+(e.getAttribute('style')||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[e.dataset.i]+'</svg>'})}
+const svg=n=>'<svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
+
+/* Advisory */
+const CROPS={Rice:{t:70,ic:'sprout'},Wheat:{t:45,ic:'wheat'},Maize:{t:50,ic:'leaf'},Sugarcane:{t:60,ic:'sprout'}};
+const SOILS={Sandy:{f:1.3,n:'Sandy soil dries fast, so water little and often.'},Loam:{f:1,n:'Loam holds water well, so give a medium watering.'},Clay:{f:.7,n:'Clay holds water for long, so water deeply but less often.'}};
+let crop='Maize',soil='Loam';
+function pills(id,obj,get,set,cols){const w=document.getElementById(id);w.innerHTML='';Object.keys(obj).forEach(k=>{const b=document.createElement('button');b.type='button';b.className='chip';b.setAttribute('aria-pressed',k===get());b.innerHTML=(obj[k].ic?svg(obj[k].ic):'')+k;b.onclick=()=>{set(k);[...w.children].forEach(c=>c.setAttribute('aria-pressed',c===b))};w.appendChild(b)})}
+pills('crops',CROPS,()=>crop,k=>crop=k);
+pills('soils',SOILS,()=>soil,k=>soil=k);
+const moist=document.getElementById('moist');
+moist.oninput=()=>document.getElementById('moistVal').textContent=moist.value+'%';
+document.getElementById('go').onclick=()=>{
+  const m=+moist.value,c=CROPS[crop],s=SOILS[soil],gap=c.t-m;
+  let head,body,amt;
+  if(gap>10){head=`Water your ${crop.toLowerCase()} tomorrow at 6:00 AM.`;body=`Soil is at ${m}% and ${crop.toLowerCase()} needs about ${c.t}%. Only 20% rain is expected, so do not wait. ${s.n}`;amt=`About ${Math.round(Math.min(40,gap*s.f*.9+10))} mm of water.`}
+  else if(gap>0){head=`Water your ${crop.toLowerCase()} in 2 days.`;body=`Soil is at ${m}%, a little below the ${c.t}% ${crop.toLowerCase()} likes. Check again tomorrow morning. ${s.n}`;amt=`About ${Math.round(Math.max(10,gap*s.f+8))} mm of water.`}
+  else{head=`No water needed today. Your ${crop.toLowerCase()} is fine.`;body=`Soil is at ${m}%, which is enough for ${crop.toLowerCase()}. Extra water can rot roots and waste money.`;amt='Check the soil again in 2 days.'}
+  rHead.textContent=head;rBody.textContent=body;rAmt.textContent=amt};
+
+/* Prices */
+const P=[['Wheat',2450,1.2],['Rice',3100,-0.6],['Maize',2180,0.8],['Soybean',4650,1.8],['Onion',1820,-3.4],['Tomato',1500,2.1]];
+priceBody.innerHTML=P.map(([n,p,d])=>`<tr><td class="font-bold">${n}</td><td class="serif text-xl font-extrabold">₹${p.toLocaleString('en-IN')}</td><td class="${d>=0?'up':'down'}">${d>=0?'▲ ':'▼ '}${Math.abs(d)}%</td></tr>`).join('');
+
+/* Schemes */
+const S=[['PM-KISAN','₹6,000 a year, paid in 3 parts','Small and marginal farmers who own land. Apply with Aadhaar, land record and bank passbook at pmkisan.gov.in or your CSC centre.'],
+['Crop insurance (PMFBY)','Pays you if rain, flood or pests ruin the crop','Any farmer growing notified crops. Pay 1.5% to 2% of the insured amount. Apply before the sowing deadline at your bank or CSC.'],
+['Kisan Credit Card','Low-interest loan for seeds and fertiliser','Farmers, tenant farmers and sharecroppers. Visit your bank with land papers and ID. Interest can be as low as 4% if repaid on time.'],
+['Drip irrigation subsidy','Up to 80% off drip and sprinkler sets','Maharashtra farmers can apply on the MahaDBT portal or at the Taluka agriculture office. Saves water and raises yield.']];
+schemeList.innerHTML=S.map(([t,s,d])=>`<details class="py-1"><summary><span>${t}<span class="block font-normal text-base" style="color:var(--moss)">${s}</span></span>${svg('chev').replace('class="i"','class="i chev"')}</summary><p class="pb-3">${d}</p></details>`).join('');
+
+/* Help desk + language */
+const T={
+en:{n_today:'Today',n_advice:'Advice',n_prices:'Prices',n_schemes:'Schemes',n_help:'Help',w_weather:'Weather now',w_soil:'Soil moisture',w_best:'Best price today',h_advice:'Get advice for your field',b_advice:'Tell me what to do',h_hub:'Resource hub',h_prices:'Market prices',h_schemes:'Schemes you can apply for',h_help:'Ask an expert',p_help:'Pick your language and your problem. An expert will call you back.',f_topic:'What is the problem?',f_phone:'Your phone number',f_msg:'Tell us more (optional)',b_send:'Send to expert',ok:'Thank you. An expert will call you within 24 hours.',err:'Please add your phone number so we can call you.',topics:['Crop disease','Water','Seeds','Money']},
+hi:{n_today:'आज',n_advice:'सलाह',n_prices:'भाव',n_schemes:'योजनाएँ',n_help:'मदद',w_weather:'अभी का मौसम',w_soil:'मिट्टी की नमी',w_best:'आज का सबसे अच्छा भाव',h_advice:'अपने खेत के लिए सलाह लें',b_advice:'बताइए क्या करूँ',h_hub:'किसान सुविधा केंद्र',h_prices:'मंडी भाव',h_schemes:'आप इन योजनाओं के लिए आवेदन कर सकते हैं',h_help:'विशेषज्ञ से पूछें',p_help:'अपनी भाषा और समस्या चुनें। विशेषज्ञ आपको वापस फ़ोन करेगा।',f_topic:'क्या समस्या है?',f_phone:'आपका फ़ोन नंबर',f_msg:'और बताइए (ज़रूरी नहीं)',b_send:'विशेषज्ञ को भेजें',ok:'धन्यवाद। विशेषज्ञ 24 घंटे में आपको फ़ोन करेगा।',err:'कृपया अपना फ़ोन नंबर लिखें ताकि हम आपको फ़ोन कर सकें।',topics:['फसल रोग','पानी','बीज','पैसा']},
+mr:{n_today:'आज',n_advice:'सल्ला',n_prices:'बाजारभाव',n_schemes:'योजना',n_help:'मदत',w_weather:'सध्याचे हवामान',w_soil:'जमिनीतील ओलावा',w_best:'आजचा सर्वोत्तम भाव',h_advice:'तुमच्या शेतासाठी सल्ला घ्या',b_advice:'काय करावे ते सांगा',h_hub:'शेतकरी सुविधा केंद्र',h_prices:'बाजारभाव',h_schemes:'तुम्ही या योजनांसाठी अर्ज करू शकता',h_help:'तज्ज्ञांना विचारा',p_help:'तुमची भाषा आणि अडचण निवडा. तज्ज्ञ तुम्हाला परत फोन करतील.',f_topic:'काय अडचण आहे?',f_phone:'तुमचा फोन नंबर',f_msg:'अधिक सांगा (गरजेचे नाही)',b_send:'तज्ज्ञांना पाठवा',ok:'धन्यवाद. तज्ज्ञ २४ तासांत तुम्हाला फोन करतील.',err:'कृपया तुमचा फोन नंबर लिहा, म्हणजे आम्ही फोन करू शकू.',topics:['पिकावरील रोग','पाणी','बियाणे','पैसा']}};
+const TI=['bug','drop','sprout','coins'];let lang='en',topic=0;
+function renderTopics(){topics.innerHTML=T[lang].topics.map((t,i)=>`<button type="button" class="chip" data-i="${i}" aria-pressed="${i===topic}">${svg(TI[i])}${t}</button>`).join('');
+  topics.querySelectorAll('button').forEach(b=>b.onclick=()=>{topic=+b.dataset.i;renderTopics()})}
+function setLang(l){lang=l;document.documentElement.lang=l;
+  document.querySelectorAll('[data-t]').forEach(e=>{const v=T[l][e.dataset.t];if(v)e.textContent=v});
+  document.querySelectorAll('#langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l));
+  formMsg.textContent='';renderTopics()}
+document.querySelectorAll('#langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+helpForm.onsubmit=e=>{e.preventDefault();const ok=/^\d{10}$/.test(phone.value.replace(/\D/g,'').slice(-10))&&phone.value.replace(/\D/g,'').length>=10;
+  formMsg.style.color=ok?'var(--moss)':'var(--clay)';formMsg.textContent=ok?T[lang].ok:T[lang].err;if(ok){helpForm.reset();}};
+renderTopics();icons();
+</script>
+</body>
+</html>
