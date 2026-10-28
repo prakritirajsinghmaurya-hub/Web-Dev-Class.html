@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Agro Tech – Marathwada Farmers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./PRJ_1.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="bar">
+            <a class="logo" href="#home">Agro Tech</a>
+            <nav id="nav">
+                <a href="#home" data-p="home">
+                    <span class="en">Home</span>
+                    <span class="mr">मुख्यपृष्ठ</span>
+                </a>
+                <a href="#about" data-p="about">
+                    <span class="en">About</span>
+                    <span class="mr">आमच्याबद्दल</span>
+                </a>
+                <a href="#services" data-p="services">
+                    <span class="en">Services</span>
+                    <span class="mr">सेवा</span>
+                </a>
+                <a href="#contact" data-p="contact">
+                    <span class="en">Contact</span>
+                    <span class="mr">संपर्क</span>
+                </a>
+            </nav>
+            <button id="lang" aria-label="Switch language">मराठी</button>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ================= HOME ================= -->
+        <section class="page" id="home">
+            <div class="hero">
+                <svg viewBox="0 0 400 300" fill="none" stroke="var(--water)" stroke-width="3" aria-hidden="true">
+                    <path d="M0 40 Q100 0 200 40 T400 40" />
+                    <path d="M0 90 Q100 50 200 90 T400 90" />
+                    <path d="M0 140 Q100 100 200 140 T400 140" />
+                    <path d="M0 190 Q100 150 200 190 T400 190" />
+                    <path d="M0 240 Q100 200 200 240 T400 240" />
+                </svg>
+                <h1>Agro Tech</h1>
+                <p class="lead en">Simple tools and clear information for the farmers of Marathwada.</p>
+                <p class="lead mr">मराठवाड्यातील शेतकऱ्यांसाठी सोपी साधने आणि स्पष्ट माहिती.</p>
+                <a class="btn" href="#services">
+                    <span class="en">See our services</span>
+                    <span class="mr">आमच्या सेवा पहा</span>
+                </a>
+                <a class="btn alt" href="#about">
+                    <span class="en">About the project</span>
+                    <span class="mr">प्रकल्पाविषयी</span>
+                </a>
+            </div>
+
+            <div class="grid">
+                <div class="box">
+                    <h3>
+                        <span class="en">Government schemes</span>
+                        <span class="mr">सरकारी योजना</span>
+                    </h3>
+                    <p class="en">Know which schemes you can apply for.</p>
+                    <p class="mr">कोणत्या योजनांसाठी अर्ज करता येईल ते जाणून घ्या.</p>
+                </div>
+                <div class="box s">
+                    <h3>
+                        <span class="en">Weather &amp; market prices</span>
+                        <span class="mr">हवामान आणि बाजारभाव</span>
+                    </h3>
+                    <p class="en">Quick links to official forecasts and mandi rates.</p>
+                    <p class="mr">अधिकृत हवामान अंदाज आणि मंडी भावांसाठी जलद दुवे.</p>
+                </div>
+                <div class="box">
+                    <h3>
+                        <span class="en">Farm calculators</span>
+                        <span class="mr">शेती कॅल्क्युलेटर</span>
+                    </h3>
+                    <p class="en">Convert land area and estimate your profit.</p>
+                    <p class="mr">जमिनीचे क्षेत्र बदला आणि नफ्याचा अंदाज घ्या.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT ================= -->
+        <section class="page" id="about">
+            <h2>
+                <span class="en">About Agro Tech</span>
+                <span class="mr">Agro Tech बद्दल</span>
+            </h2>
+            <p class="en">Marathwada, in central Maharashtra, often faces uneven rainfall and water shortage. Many farmers find it hard to get timely information about schemes, weather and prices. Agro Tech brings this information together in one simple site, in English and Marathi.</p>
+            <p class="mr">मध्य महाराष्ट्रातील मराठवाड्यात अनेकदा पावसाची अनियमितता आणि पाणीटंचाई जाणवते. योजना, हवामान आणि भाव यांची वेळेवर माहिती मिळवणे अनेक शेतकऱ्यांसाठी कठीण असते. Agro Tech ही माहिती इंग्रजी आणि मराठीत एकाच सोप्या संकेतस्थळावर आणते.</p>
+
+            <h2>
+                <span class="en">Our aim</span>
+                <span class="mr">आमचे ध्येय</span>
+            </h2>
+            <p class="en">Make useful farming information easy to find and easy to understand.</p>
+            <p class="mr">उपयुक्त शेती माहिती सहज सापडावी आणि सहज समजावी.</p>
+
+            <p class="note en">College project. Team and college details: [add here].</p>
+            <p class="note mr">महाविद्यालयीन प्रकल्प. टीम आणि महाविद्यालयाची माहिती: [येथे जोडा].</p>
+        </section>
+
+        <!-- ================= SERVICES ================= -->
+        <section class="page" id="services">
+
+            <!-- Government schemes -->
+            <h2>
+                <span class="en">Government schemes</span>
+                <span class="mr">सरकारी योजना</span>
+            </h2>
+            <div class="grid">
+                <div class="box">
+                    <h3>PM-KISAN</h3>
+                    <p class="en">Yearly income support of ₹6,000 for eligible farmer families, paid in three instalments.</p>
+                    <p class="mr">पात्र शेतकरी कुटुंबांना वार्षिक ₹6,000 उत्पन्न सहाय्य, तीन हप्त्यांत.</p>
+                    <a href="https://pmkisan.gov.in" target="_blank" rel="noopener">pmkisan.gov.in</a>
+                </div>
+                <div class="box">
+                    <h3>Namo Shetkari Mahasanman Nidhi</h3>
+                    <p class="en">Maharashtra’s additional yearly support for PM-KISAN beneficiary farmers.</p>
+                    <p class="mr">पीएम-किसान लाभार्थी शेतकऱ्यांसाठी महाराष्ट्र शासनाचे अतिरिक्त वार्षिक सहाय्य.</p>
+                    <a href="https://agri.maharashtra.gov.in" target="_blank" rel="noopener">agri.maharashtra.gov.in</a>
+                </div>
+                <div class="box">
+                    <h3>PM Fasal Bima Yojana</h3>
+                    <p class="en">Crop insurance against loss from drought, flood, pests and other natural causes.</p>
+                    <p class="mr">दुष्काळ, पूर, किडी आणि इतर नैसर्गिक कारणांमुळे होणाऱ्या पीक नुकसानीसाठी विमा.</p>
+                    <a href="https://pmfby.gov.in" target="_blank" rel="noopener">pmfby.gov.in</a>
+                </div>
+                <div class="box">
+                    <h3>Magel Tyala Shettale</h3>
+                    <p class="en">Subsidy for building a farm pond to store water.</p>
+                    <p class="mr">पाणी साठवण्यासाठी शेततळे बांधण्याकरिता अनुदान.</p>
+                    <a href="https://agri.maharashtra.gov.in" target="_blank" rel="noopener">agri.maharashtra.gov.in</a>
+                </div>
+            </div>
+            <p class="note en">Amounts and rules can change. Always confirm on the official website or at your Krishi office.</p>
+            <p class="note mr">रक्कम व नियम बदलू शकतात. नेहमी अधिकृत संकेतस्थळावर किंवा कृषी कार्यालयात खात्री करा.</p>
+
+            <!-- Weather and market prices -->
+            <h2>
+                <span class="en">Weather &amp; market prices</span>
+                <span class="mr">हवामान आणि बाजारभाव</span>
+            </h2>
+            <div class="grid">
+                <div class="box s">
+                    <h3>
+                        <span class="en">Weather forecast</span>
+                        <span class="mr">हवामान अंदाज</span>
+                    </h3>
+                    <p class="en">Official forecasts from the India Meteorological Department.</p>
+                    <p class="mr">भारतीय हवामान विभागाचे अधिकृत अंदाज.</p>
+                    <a href="https://mausam.imd.gov.in" target="_blank" rel="noopener">mausam.imd.gov.in</a>
+                </div>
+                <div class="box s">
+                    <h3>
+                        <span class="en">Mandi prices</span>
+                        <span class="mr">मंडी भाव</span>
+                    </h3>
+                    <p class="en">Daily market rates for crops across India.</p>
+                    <p class="mr">देशभरातील पिकांचे दैनंदिन बाजारभाव.</p>
+                    <a href="https://agmarknet.gov.in" target="_blank" rel="noopener">agmarknet.gov.in</a>
+                </div>
+            </div>
+
+            <!-- Calculators -->
+            <h2>
+                <span class="en">Farm calculators</span>
+                <span class="mr">शेती कॅल्क्युलेटर</span>
+            </h2>
+            <div class="grid">
+
+                <div class="box">
+                    <h3>
+                        <span class="en">Land area converter</span>
+                        <span class="mr">क्षेत्र रूपांतरण</span>
+                    </h3>
+                    <label for="av">
+                        <span class="en">Area</span>
+                        <span class="mr">क्षेत्र</span>
+                    </label>
+                    <input id="av" type="number" min="0" step="any" value="1">
+                    <label for="au">
+                        <span class="en">Unit</span>
+                        <span class="mr">एकक</span>
+                    </label>
+                    <select id="au">
+                        <option value="4046.86">Acre / एकर</option>
+                        <option value="10000">Hectare / हेक्टर</option>
+                        <option value="101.17">Guntha / गुंठा</option>
+                    </select>
+                    <div class="res" id="ares"></div>
+                </div>
+
+                <div class="box s">
+                    <h3>
+                        <span class="en">Profit estimator</span>
+                        <span class="mr">नफा अंदाज</span>
+                    </h3>
+                    <label for="pa">
+                        <span class="en">Area (acres)</span>
+                        <span class="mr">क्षेत्र (एकर)</span>
+                    </label>
+                    <input id="pa" type="number" min="0" step="any" value="2">
+                    <label for="py">
+                        <span class="en">Yield (quintal per acre)</span>
+                        <span class="mr">उत्पादन (क्विंटल प्रति एकर)</span>
+                    </label>
+                    <input id="py" type="number" min="0" step="any" value="8">
+                    <label for="pp">
+                        <span class="en">Price (₹ per quintal)</span>
+                        <span class="mr">भाव (₹ प्रति क्विंटल)</span>
+                    </label>
+                    <input id="pp" type="number" min="0" step="any" value="5000">
+                    <label for="pc">
+                        <span class="en">Cost (₹ per acre)</span>
+                        <span class="mr">खर्च (₹ प्रति एकर)</span>
+                    </label>
+                    <input id="pc" type="number" min="0" step="any" value="20000">
+                    <div class="res" id="pres"></div>
+                </div>
+
+            </div>
+            <p class="note en">The sample numbers are only examples. Enter your own.</p>
+            <p class="note mr">दिलेली आकडेवारी केवळ उदाहरण आहे. तुमची स्वतःची माहिती भरा.</p>
+        </section>
+
+        <!-- ================= CONTACT ================= -->
+        <section class="page" id="contact">
+            <h2>
+                <span class="en">Contact us</span>
+                <span class="mr">संपर्क करा</span>
+            </h2>
+            <div class="box contact-box">
+                <label for="cn">
+                    <span class="en">Your name</span>
+                    <span class="mr">तुमचे नाव</span>
+                </label>
+                <input id="cn">
+                <label for="cv">
+                    <span class="en">Village / district</span>
+                    <span class="mr">गाव / जिल्हा</span>
+                </label>
+                <input id="cv">
+                <label for="cm">
+                    <span class="en">Message</span>
+                    <span class="mr">संदेश</span>
+                </label>
+                <textarea id="cm" rows="4"></textarea>
+                <button class="btn send" id="send" type="button">
+                    <span class="en">Send message</span>
+                    <span class="mr">संदेश पाठवा</span>
+                </button>
+                <div class="res" id="sres" hidden></div>
+            </div>
+            <p class="note en">Contact email and phone: [add here].</p>
+            <p class="note mr">संपर्क ईमेल आणि फोन: [येथे जोडा].</p>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer>
+        <span class="en">Agro Tech · College project for the farmers of Marathwada</span>
+        <span class="mr">Agro Tech · मराठवाड्यातील शेतकऱ्यांसाठी महाविद्यालयीन प्रकल्प</span>
+    </footer>
+
+    <!-- ================= JAVASCRIPT ================= -->
+    <script>
+        const $ = id => document.getElementById(id);
+
+        /* ---- Page switching (Home / About / Services / Contact) ---- */
+        function show() {
+            let p = (location.hash || '#home').slice(1);
+            if (!$(p)) p = 'home';
+            document.querySelectorAll('.page').forEach(e => e.classList.toggle('on', e.id === p));
+            document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('on', a.dataset.p === p));
+            scrollTo(0, 0);
+        }
+        addEventListener('hashchange', show);
+        show();
+
+        /* ---- Language switch (English / Marathi) ---- */
+        let mr = false;
+        try {
+            mr = localStorage.getItem('lang') === 'mr';
+        } catch (e) { }
+
+        function setLang() {
+            document.body.classList.toggle('mr', mr);
+            document.documentElement.lang = mr ? 'mr' : 'en';
+            $('lang').textContent = mr ? 'English' : 'मराठी';
+            calc();
+        }
+
+        $('lang').onclick = () => {
+            mr = !mr;
+            try {
+                localStorage.setItem('lang', mr ? 'mr' : 'en');
+            } catch (e) { }
+            setLang();
+        };
+
+        /* ---- Number formatting ---- */
+        const f = (n, d = 2) => n.toLocaleString(mr ? 'mr-IN' : 'en-IN', { maximumFractionDigits: d });
+
+        /* ---- Calculators ---- */
+        function calc() {
+            // Land area converter (everything converted to square metres first)
+            const m2 = (+$('av').value || 0) * (+$('au').value);
+            $('ares').innerHTML = mr
+                ? `${f(m2 / 4046.86)} एकर<br>${f(m2 / 10000)} हेक्टर<br>${f(m2 / 101.17)} गुंठा`
+                : `${f(m2 / 4046.86)} acres<br>${f(m2 / 10000)} hectares<br>${f(m2 / 101.17)} guntha`;
+
+            // Profit estimator
+            const a = +$('pa').value || 0;
+            const income = a * (+$('py').value || 0) * (+$('pp').value || 0);
+            const cost = a * (+$('pc').value || 0);
+            const profit = income - cost;
+            const label = mr ? (profit >= 0 ? 'नफा' : 'तोटा') : (profit >= 0 ? 'Profit' : 'Loss');
+
+            $('pres').innerHTML =
+                (mr
+                    ? `उत्पन्न: ₹${f(income, 0)}<br>खर्च: ₹${f(cost, 0)}<br>`
+                    : `Income: ₹${f(income, 0)}<br>Cost: ₹${f(cost, 0)}<br>`) +
+                `<span class="${profit >= 0 ? 'pos' : 'neg'}">${label}: ₹${f(Math.abs(profit), 0)}</span>`;
+        }
+        ['av', 'au', 'pa', 'py', 'pp', 'pc'].forEach(i => $(i).addEventListener('input', calc));
+
+        /* ---- Contact form (demo only, nothing is sent) ---- */
+        $('send').onclick = () => {
+            const r = $('sres');
+            r.hidden = false;
+            r.textContent = mr
+                ? 'धन्यवाद! (हे फक्त डेमो आहे, संदेश प्रत्यक्ष पाठवला गेला नाही.)'
+                : 'Thank you! (This is a demo form. No message was actually sent.)';
+        };
+
+        setLang();
+    </script>
+
+</body>
+
+</html>

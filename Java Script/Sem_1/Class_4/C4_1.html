@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2 id="one" class="two"> hello </h2>
+    <h2 id="one" class="two"> heyy </h2>
+    <button>Rage Bait</button>
+    <script>
+        // let h1 = document.getElementById("one")
+        // h1.style.color='red'
+        // h1.innerText="Byeee"
+
+        // let h1 = document.getElementsByClassName("two")
+        // // h[1].style.color='red'
+
+        // for(let i of h1){
+        //     i.style.color='red'
+        // }
+
+        // query selector
+        // let h2= document.querySelectorAll("h2")
+        // h2.style.color='red'
+        // for(let i of h2){
+        //     i.style.color='red'
+        // }
+
+        let btn = document.querySelector('button')
+        let body = document.querySelector('body')
+        let a=true
+        btn.onclick=function(){
+            body.style.color='red'
+            
+            if(a){
+                body.style.backgroundColor='black'
+                a=false
+            }
+            
+            else{
+                body.style.backgroundColor='green'
+            }
+            
+            
+        }
+    </script>
+</body>
+</html>
