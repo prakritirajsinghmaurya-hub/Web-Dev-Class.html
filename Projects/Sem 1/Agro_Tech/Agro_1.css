@@ -1,0 +1,196 @@
+:root {
+    --forest: #1F3D2B;
+    --deep: #14291C;
+    --clay: #A94E2A;
+    --cream: #F6F0E3;
+    --sand: #E9DDC4;
+    --paper: #FFFBF2;
+    --ink: #1D1B16;
+    --moss: #4F6F35;
+    --ochre: #C99A2E;
+    --line: #CFC2A5;
+    color-scheme: light;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --cream: #17211A;
+        --sand: #223026;
+        --paper: #1C2A20;
+        --ink: #F3ECDB;
+        --line: #3A4A3D;
+        --forest: #2E5A3F;
+        --clay: #E0845C;
+        color-scheme: dark;
+    }
+}
+
+html {
+    scroll-padding-top: 5rem;
+}
+
+body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.55;
+}
+
+h1,
+h2,
+h3,
+.serif {
+    font-family: 'Fraunces', Georgia, serif;
+}
+
+.card {
+    background: var(--paper);
+    border: 2px solid var(--line);
+    border-radius: 14px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 52px;
+    padding: 0.6rem 1.3rem;
+    border-radius: 12px;
+    font-weight: 700;
+    background: var(--forest);
+    color: #fff;
+    border: 2px solid var(--forest);
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: var(--deep);
+}
+
+.chip {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 56px;
+    padding: 0.5rem 1rem;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    font-weight: 700;
+    cursor: pointer;
+    text-align: left;
+    color: var(--ink);
+}
+
+.chip[aria-pressed="true"] {
+    border-color: var(--forest);
+    background: var(--forest);
+    color: #fff;
+}
+
+.field {
+    width: 100%;
+    min-height: 52px;
+    padding: 0.6rem 0.9rem;
+    border: 2px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    color: var(--ink);
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid var(--ochre);
+    outline-offset: 2px;
+}
+
+nav a {
+    padding: 0.5rem 0.7rem;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.gauge {
+    height: 18px;
+    border-radius: 9px;
+    background: var(--sand);
+    overflow: hidden;
+    border: 2px solid var(--line);
+}
+
+.gauge > div {
+    height: 100%;
+    background: var(--clay);
+    transition: width 0.5s;
+}
+
+details > summary {
+    cursor: pointer;
+    list-style: none;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-weight: 700;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details[open] .chev {
+    transform: rotate(180deg);
+}
+
+td,
+th {
+    padding: 0.7rem 0.5rem;
+    text-align: left;
+}
+
+tr + tr {
+    border-top: 1px solid var(--line);
+}
+
+.up {
+    color: var(--moss);
+    font-weight: 700;
+}
+
+.down {
+    color: var(--clay);
+    font-weight: 700;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .up {
+        color: #9CC774;
+    }
+}
+
+@keyframes grow {
+    from {
+        width: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gauge > div {
+        transition: none;
+    }
+}
+
+.i {
+    width: 1.5em;
+    height: 1.5em;
+    flex: none;
+}

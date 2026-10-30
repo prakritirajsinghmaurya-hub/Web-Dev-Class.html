@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shivar: Scan, Ask, Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<style>
+:root{--forest:#1F3D2B;--deep:#14291C;--clay:#A94E2A;--cream:#F6F0E3;--sand:#E9DDC4;--paper:#FFFBF2;--ink:#1D1B16;--moss:#4F6F35;--ochre:#C99A2E;--line:#CFC2A5;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-pal="monsoon"]{--forest:#12343B;--deep:#0B2227;--clay:#B8431F;--cream:#F2F6F3;--sand:#DCE8E4;--paper:#FBFDFC;--ink:#10201F;--moss:#2F6B57;--ochre:#E3A008;--line:#B9CFC8}
+:root[data-pal="turmeric"]{--forest:#3B2A1E;--deep:#2A1D14;--clay:#B5481F;--cream:#FAF3E0;--sand:#F0E0B8;--paper:#FFFDF6;--ink:#241A12;--moss:#5E8C31;--ochre:#E0A800;--line:#DCC896}
+@media (prefers-color-scheme:dark){
+:root{--cream:#17211A;--sand:#223026;--paper:#1C2A20;--ink:#F3ECDB;--line:#3A4A3D;--forest:#2E5A3F;--deep:#1F4030;--clay:#E0845C;--moss:#9CC774;color-scheme:dark}
+:root[data-pal="monsoon"]{--cream:#0E1B1D;--sand:#18302F;--paper:#142628;--ink:#EAF3EF;--line:#2E4C4A;--forest:#1F5A63;--deep:#16444B;--clay:#F08A5D;--moss:#7FD1AE}
+:root[data-pal="turmeric"]{--cream:#1B140E;--sand:#2D2216;--paper:#241A12;--ink:#FAF0DA;--line:#4A3A28;--forest:#6B4A2F;--deep:#503822;--clay:#E6895A;--moss:#A9D26B}}
+html{scroll-padding-top:5rem}
+body{background:var(--cream);color:var(--ink);font-family:'Atkinson Hyperlegible',system-ui,sans-serif;font-size:18px;line-height:1.55}
+h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif}
+.card{background:var(--paper);border:2px solid var(--line);border-radius:14px}
+.btn{display:inline-flex;align-items:center;gap:.5rem;min-height:52px;padding:.6rem 1.3rem;border-radius:12px;font-weight:700;background:var(--forest);color:#fff;border:2px solid var(--forest);cursor:pointer}
+.btn:hover{background:var(--deep)}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--line);min-height:44px;padding:.3rem .9rem}
+.chip{display:flex;align-items:center;gap:.6rem;min-height:52px;padding:.5rem 1rem;border:2px solid var(--line);border-radius:12px;background:var(--paper);font-weight:700;cursor:pointer;text-align:left;color:var(--ink)}
+.chip[aria-pressed="true"]{border-color:var(--forest);background:var(--forest);color:#fff}
+.field{width:100%;min-height:52px;padding:.6rem .9rem;border:2px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink);font:inherit}
+:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
+nav a{padding:.5rem .7rem;border-radius:8px;font-weight:700}
+nav a:hover{background:rgba(255,255,255,.14)}
+.gauge{height:16px;border-radius:9px;background:var(--sand);overflow:hidden;border:2px solid var(--line)}
+.gauge>div{height:100%;background:var(--moss);transition:width .5s}
+.gauge.warn>div{background:var(--clay)}
+details>summary{cursor:pointer;list-style:none;min-height:48px;display:flex;align-items:center;justify-content:space-between;gap:1rem;font-weight:700}
+details>summary::-webkit-details-marker{display:none}
+details[open] .chev{transform:rotate(180deg)}
+.i{width:1.5em;height:1.5em;flex:none}
+.muted{color:var(--moss)}
+.tag{display:inline-block;padding:.1rem .6rem;border-radius:999px;border:2px solid var(--line);font-size:.85rem;font-weight:700}
+.tag.c{background:var(--forest);border-color:var(--forest);color:#fff}
+.tag.s{background:var(--ochre);border-color:var(--ochre);color:#1D1B16}
+.up{color:var(--moss);font-weight:700}.down{color:var(--clay);font-weight:700}
+#farmMap{min-height:340px;border-radius:12px;overflow:hidden;border:2px solid var(--line);background:var(--sand);position:relative}
+.facts dt{font-weight:700;color:var(--moss);font-size:.95rem}
+.facts dd{margin:0 0 .6rem}
+@media (prefers-reduced-motion:reduce){.gauge>div{transition:none}}
+.btn{justify-content:center}.btn[disabled]{opacity:.5;cursor:not-allowed}
+.pill{display:inline-flex;align-items:center;gap:.4rem;padding:.15rem .7rem;border-radius:999px;font-weight:700;font-size:.9rem;border:2px solid currentColor}
+.stage{position:relative;background:#0e1a12;border-radius:12px;overflow:hidden;aspect-ratio:4/3}.stage canvas{width:100%;height:100%;display:block}
+.mic{width:120px;height:120px;border-radius:50%;background:var(--clay);color:#fff;border:6px solid var(--sand);cursor:pointer;display:grid;place-items:center}
+.mic.on{animation:pulse 1.2s infinite}@keyframes pulse{50%{box-shadow:0 0 0 18px rgba(169,78,42,.25)}}
+@media (prefers-reduced-motion:reduce){.mic.on{animation:none}}
+.rx{border:3px solid var(--forest);border-radius:14px;overflow:hidden}.rx>header{background:var(--forest);color:#fff;padding:.7rem 1rem}
+.rx .row{display:grid;grid-template-columns:1fr;gap:.2rem;padding:.7rem 1rem;border-top:2px solid var(--line)}
+.pal{width:34px;height:34px;border-radius:50%;border:2px solid #fff;cursor:pointer}.pal[aria-pressed="true"]{outline:3px solid var(--ochre);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="sticky top-0 z-20" style="background:var(--forest);color:#fff;padding-top:env(safe-area-inset-top,0px)">
+  <div class="max-w-6xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
+    <a href="#top" class="flex items-center gap-2 serif text-2xl font-extrabold"><i data-i="sprout"></i><span data-brand>Shivar</span></a>
+    <nav class="flex flex-wrap gap-1 text-base" aria-label="Main">
+      <a href="#crops" data-t="n_crops">Your Crops</a><a href="#scan" data-t="n_scan">Scan</a><a href="#ask" data-t="n_ask">Ask</a><a href="#plan" data-t="n_plan">Plan</a>
+      <a href="#advice" data-t="n_advice">Advice</a><a href="#prices" data-t="n_prices">Prices</a><a href="#schemes" data-t="n_schemes">Schemes</a><a href="#help" data-t="n_help">Help</a>
+    </nav>
+    <div class="flex items-center gap-2">
+      <span id="netPill" class="pill" role="status"></span>
+      <div id="pals" class="flex gap-1" role="group" aria-label="Colour theme">
+        <button class="pal" data-p="harvest" aria-label="Harvest theme" style="background:linear-gradient(135deg,#1F3D2B 50%,#A94E2A 50%)"></button>
+        <button class="pal" data-p="monsoon" aria-label="Monsoon theme" style="background:linear-gradient(135deg,#12343B 50%,#E3A008 50%)"></button>
+        <button class="pal" data-p="turmeric" aria-label="Turmeric theme" style="background:linear-gradient(135deg,#3B2A1E 50%,#E0A800 50%)"></button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top" class="max-w-6xl mx-auto px-4 pb-16">
+<!-- ============ 1. YOUR CROPS ============ -->
+<section id="crops">
+  <div class="pt-8">
+    <p class="text-base muted" id="dateLine"></p>
+    <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mt-2 max-w-4xl" data-t="h_crops">Your crops and your land</h1>
+    <p class="mt-3 max-w-xl">Add what you have sown and how much land it covers. We will show how your region looks today and what suits your soil.</p>
+  </div>
+
+  <!-- 1a. Map + region conditions -->
+  <div id="cropsRegion" class="grid gap-6 lg:grid-cols-3 mt-6">
+    <div class="card p-4 lg:col-span-2">
+      <h2 class="text-2xl font-extrabold flex items-center gap-2"><i data-i="pin"></i>Your farm area</h2>
+      <p class="text-base muted mb-3" id="mapCaption"></p>
+      <!-- MAP CONTAINER: initMap() near the bottom of this file fills this div. Replace that function with your map API. -->
+      <div id="farmMap" role="img" aria-label="Map of the farm area"></div>
+    </div>
+
+    <div class="card p-5 space-y-4" id="regionPanel">
+      <div>
+        <div class="flex items-center gap-2 font-bold muted"><i data-i="sun"></i>Weather report</div>
+        <p class="serif text-5xl font-extrabold mt-1" id="wTemp"></p>
+        <p id="wDesc"></p>
+      </div>
+      <div>
+        <div class="flex items-center gap-2 font-bold muted"><i data-i="drop"></i>Water level</div>
+        <div class="gauge mt-1" id="wGauge"><div></div></div>
+        <p class="mt-1" id="wLevel"></p>
+      </div>
+      <div>
+        <div class="flex items-center gap-2 font-bold muted"><i data-i="leaf"></i>Soil quality</div>
+        <p class="serif text-3xl font-extrabold mt-1" id="sScore"></p>
+        <dl class="facts mt-2 grid grid-cols-2 gap-x-3" id="sFacts"></dl>
+      </div>
+    </div>
+  </div>
+
+  <!-- 1b. What I have sown -->
+  <div id="myCrops" class="grid gap-6 lg:grid-cols-5 mt-6">
+    <div class="card p-5 lg:col-span-3">
+      <h2 class="text-2xl font-extrabold flex items-center gap-2"><i data-i="wheat"></i>What you have sown</h2>
+      <p class="mt-1" id="landTotal"></p>
+      <div class="flex h-5 rounded-full overflow-hidden mt-2 border-2" style="border-color:var(--line)" id="landBar" aria-hidden="true"></div>
+      <div id="cropList" class="mt-4 space-y-3"></div>
+    </div>
+
+    <div class="card p-5 lg:col-span-2">
+      <h2 class="text-2xl font-extrabold">Add a crop</h2>
+      <form id="cropForm" class="space-y-3 mt-3">
+        <div>
+          <label for="cName" class="font-bold block mb-1">Crop</label>
+          <select id="cName" class="field"></select>
+        </div>
+        <div>
+          <label for="cArea" class="font-bold block mb-1">Land area (acres)</label>
+          <input id="cArea" class="field" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="2.5">
+        </div>
+        <div>
+          <label for="cSeed" class="font-bold block mb-1">Seed you used (optional)</label>
+          <input id="cSeed" class="field" placeholder="Leave empty if not sure">
+        </div>
+        <button class="btn text-xl w-full justify-center" type="submit">Add crop</button>
+        <p id="cMsg" class="font-bold" role="status"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 1c. Recommendations -->
+  <div id="cropRecs" class="card p-5 mt-6">
+    <h2 class="text-2xl font-extrabold flex items-center gap-2"><i data-i="sprout"></i>Best crops for your land this season</h2>
+    <p class="text-base muted" id="recNote"></p>
+    <div class="grid gap-3 md:grid-cols-3 mt-3" id="recList"></div>
+  </div>
+</section>
+
+
+<!-- ================= CONCEPT 1 ================= -->
+<section id="scan" class="pt-12">
+  <div id="scanBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold">Scan a leaf, even offline</h2>
+    <p class="mt-1 max-w-2xl">Everything runs on your phone. Point the camera at a leaf. Coloured boxes show where the plant looks stressed. Results are saved with GPS and sent when the network comes back.</p>
+    <div class="grid gap-6 lg:grid-cols-2 mt-5">
+      <div class="card p-4">
+        <div class="stage"><canvas id="view" width="640" height="480" role="img" aria-label="Leaf camera view with stress boxes"></canvas></div>
+        <div class="flex flex-wrap gap-2 mt-3">
+          <button class="btn" id="camBtn">Start camera</button>
+          <button class="btn ghost" id="sampleBtn">Use sample leaf</button>
+          <button class="btn ghost" id="saveBtn" disabled>Save diagnosis</button>
+        </div>
+        <p class="mt-2 text-base"><span class="pill" style="color:#2f8f3f">Healthy</span> <span class="pill" style="color:#c99a2e">Early stress</span> <span class="pill" style="color:#c0392b">Stressed</span></p>
+        <p id="scanMsg" class="font-bold mt-2" role="status"></p>
+      </div>
+
+      <div class="space-y-4">
+        <div class="card p-5" aria-live="polite">
+          <h3 class="text-2xl font-extrabold">Result</h3>
+          <p id="scanResult" class="mt-1">Start the camera or use the sample leaf.</p>
+        </div>
+        <div class="card p-5">
+          <div class="flex justify-between items-center gap-2">
+            <h3 class="text-2xl font-extrabold">Saved on this phone</h3>
+            <label class="flex items-center gap-2 text-base font-bold"><input type="checkbox" id="simOff" class="w-5 h-5" style="accent-color:var(--forest)"> Pretend no network</label>
+          </div>
+          <p id="syncState" class="text-base muted"></p>
+          <div id="logList" class="mt-2 space-y-2"></div>
+        </div>
+      </div>
+    </div>
+    <details class="card p-4 mt-4">
+      <summary class="font-bold cursor-pointer">What is real here, and what to swap for production</summary>
+      <p class="mt-2 text-base">Real: camera, on-device analysis, AR boxes, GPS tagging, offline queue and auto-sync. Stand-in: the analysis is a simple colour-based check, not a trained model. Replace <code>analyzeCells()</code> with a MobileNetV3 or EfficientNet-Lite model run through TensorFlow Lite (or TF.js in the browser) and point <code>SYNC_URL</code> at your server. Seeing stress before spots appear needs more than a normal phone camera: use a clip-on near-infrared sensor or a model trained on carefully labelled early-stage data.</p>
+    </details>
+  </div>
+</section>
+
+
+<!-- ================= CONCEPT 2 ================= -->
+<section id="ask" class="pt-14">
+  <div id="askBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold">Ask in your own language</h2>
+    <p class="mt-1 max-w-2xl">Press the mic and speak. The agent checks your location, soil card and last 7 days of rain, then gives a simple prescription card and reads it back.</p>
+    <div class="grid gap-6 lg:grid-cols-5 mt-5">
+      <div class="card p-5 lg:col-span-2 flex flex-col items-center text-center gap-3">
+        <div class="flex gap-2" id="aLangs" role="group" aria-label="Language">
+          <button class="chip" data-l="en" aria-pressed="true">English</button>
+          <button class="chip" data-l="hi" aria-pressed="false">हिन्दी</button>
+          <button class="chip" data-l="mr" aria-pressed="false">मराठी</button>
+        </div>
+        <button class="mic" id="micBtn" aria-label="Press to speak">
+          <svg class="i" style="width:56px;height:56px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v3"/></svg>
+        </button>
+        <p id="micMsg" class="font-bold" role="status">Tap and say: "My wheat is wilting"</p>
+        <div class="w-full flex gap-2">
+          <input id="askText" class="field" placeholder="Or type here" aria-label="Type your question">
+          <button class="btn" id="askBtn">Ask</button>
+        </div>
+        <div class="w-full text-left">
+          <p class="font-bold text-base muted">What the agent checked</p>
+          <div id="ctxChips" class="flex flex-wrap gap-2 mt-1"></div>
+        </div>
+      </div>
+      <div class="lg:col-span-3" id="rxWrap" aria-live="polite">
+        <div class="card p-6"><p>Your prescription card will appear here.</p></div>
+      </div>
+    </div>
+    <details class="card p-4 mt-4">
+      <summary class="font-bold cursor-pointer">What is real here, and what to swap for production</summary>
+      <p class="mt-2 text-base">Real: browser speech-to-text and text-to-speech (works best in Chrome on Android), GPS, and the prescription layout. Stand-in: <code>getContext()</code> returns sample soil and rain data, and <code>agent()</code> is rule-based for wilting and yellow leaves. In production, call Bhashini or Whisper for speech, Open-Meteo or IMD for rain, the Soil Health Card for soil, and an LLM through LangChain for the answer. Have an agronomist approve all chemical doses.</p>
+    </details>
+  </div>
+</section>
+
+
+<!-- ================= CONCEPT 3 ================= -->
+<section id="plan" class="pt-14">
+  <div id="planBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold">Plan your profit</h2>
+    <p class="mt-1 max-w-2xl">Choose a crop, land and budget. See the price outlook for the next 6 months, your chance of profit, and track every rupee you spend.</p>
+
+    <div class="grid gap-6 lg:grid-cols-3 mt-5">
+      <div class="card p-5 space-y-3">
+        <div><label for="pCrop" class="font-bold block mb-1">Crop</label><select id="pCrop" class="field"></select></div>
+        <div><label for="pArea" class="font-bold block mb-1">Land (acres)</label><input id="pArea" type="number" min="0.5" step="0.5" value="3" class="field" inputmode="decimal"></div>
+        <div><label for="pBudget" class="font-bold block mb-1">Budget (₹)</label><input id="pBudget" type="number" min="1000" step="1000" class="field" inputmode="numeric"></div>
+        <div><label for="pPin" class="font-bold block mb-1">Pincode</label><input id="pPin" class="field" value="411001" inputmode="numeric"></div>
+        <button class="btn w-full" id="pGo">Check my risk</button>
+      </div>
+
+      <div class="card p-5 lg:col-span-2">
+        <div class="flex justify-between items-baseline flex-wrap gap-2">
+          <h3 class="text-2xl font-extrabold" id="fTitle">Price outlook</h3>
+          <span class="text-base muted" id="fBest"></span>
+        </div>
+        <div id="fChart" class="mt-2"></div>
+      </div>
+    </div>
+
+    <div id="riskRow" class="grid gap-4 md:grid-cols-3 mt-4" aria-live="polite"></div>
+    <p id="riskNote" class="text-base muted mt-2"></p>
+
+    <div class="grid gap-6 lg:grid-cols-5 mt-6">
+      <div class="card p-5 lg:col-span-2">
+        <h3 class="text-2xl font-extrabold">Add an expense</h3>
+        <form id="exForm" class="space-y-3 mt-3">
+          <div><label for="eCat" class="font-bold block mb-1">Type</label>
+            <select id="eCat" class="field"><option>Seeds</option><option>Fertiliser</option><option>Water</option><option>Labour</option><option>Other</option></select></div>
+          <div><label for="eAmt" class="font-bold block mb-1">Amount (₹)</label><input id="eAmt" type="number" min="1" class="field" inputmode="numeric"></div>
+          <div><label for="eNote" class="font-bold block mb-1">Note (optional)</label><input id="eNote" class="field" maxlength="60"></div>
+          <button class="btn w-full" type="submit">Add expense</button>
+        </form>
+      </div>
+      <div class="card p-5 lg:col-span-3">
+        <h3 class="text-2xl font-extrabold">Your ledger</h3>
+        <p id="ledgerTotal" class="mt-1"></p>
+        <div id="ledgerBars" class="mt-3 space-y-2"></div>
+        <div id="tips" class="mt-4 p-4 rounded-xl" style="background:var(--sand)"></div>
+        <div id="exList" class="mt-3 text-base"></div>
+      </div>
+    </div>
+    <details class="card p-4 mt-4">
+      <summary class="font-bold cursor-pointer">What is real here, and what to swap for production</summary>
+      <p class="mt-2 text-base">Real: a simulation that runs 2,000 possible seasons from price swings, yield changes and pest chance, plus a saved ledger. Stand-in: price history is sample data, <code>forecast()</code> is a simple trend, and the risk simulation is basic. In production, load Agmarknet history from a FastAPI backend, replace <code>forecast()</code> with Prophet or an LSTM, and use your pincode's climate and humidity forecast. Always show the model's accuracy and keep forecasts as guidance, not a promise.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ============ 2. ADVICE ============ -->
+<section id="advice" class="pt-14">
+  <div id="adviceBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_advice">How to grow more, and better</h2>
+    <p class="mt-1">Pick a crop to see a simple growing guide for Maharashtra conditions.</p>
+    <div class="grid gap-6 lg:grid-cols-3 mt-5">
+      <div class="grid grid-cols-2 lg:grid-cols-1 gap-2 content-start" id="guideTabs"></div>
+      <div class="card p-5 lg:col-span-2" id="guideBody" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ 3. PRICES ============ -->
+<section id="prices" class="pt-14">
+  <div id="priceBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_prices">Market prices near Pune</h2>
+    <p class="mt-1">Last 12 months, ₹ per quintal. Each crop has its own line. Sample data for demo.</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-5" id="priceCharts"></div>
+  </div>
+</section>
+
+
+<!-- ============ 4. SCHEMES ============ -->
+<section id="schemes" class="pt-14">
+  <div id="schemeBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_schemes">Schemes you can apply for</h2>
+    <p class="mt-1">Central government and Maharashtra state schemes. Tap one to see who can apply.</p>
+    <div class="flex flex-wrap gap-2 mt-4" id="schemeTabs" role="group" aria-label="Scheme type">
+      <button type="button" class="chip" data-f="all" aria-pressed="true">All</button>
+      <button type="button" class="chip" data-f="c" aria-pressed="false">Central</button>
+      <button type="button" class="chip" data-f="s" aria-pressed="false">Maharashtra</button>
+    </div>
+    <div class="card p-5 mt-4" id="schemeList"></div>
+    <p class="text-base muted mt-2">Amounts and rules change often. Confirm with your Taluka agriculture office before applying.</p>
+  </div>
+</section>
+
+
+<!-- ============ 5. HELP ============ -->
+<section id="help" class="pt-14">
+  <div id="helpBox">
+    <h2 class="text-3xl md:text-4xl font-extrabold" data-t="h_help">Ask an expert</h2>
+    <p class="mt-1" data-t="p_help">Pick your language and your problem. An expert will call you back.</p>
+    <div class="card p-5 mt-5 grid gap-6 lg:grid-cols-2">
+      <form id="helpForm" class="space-y-4" novalidate>
+        <div class="flex flex-wrap gap-2" id="langs" role="group" aria-label="Language">
+          <button type="button" class="chip" data-l="en" aria-pressed="true">English</button>
+          <button type="button" class="chip" data-l="hi" aria-pressed="false">हिन्दी</button>
+          <button type="button" class="chip" data-l="mr" aria-pressed="false">मराठी</button>
+        </div>
+        <div>
+          <p class="font-bold mb-2" data-t="f_topic">What is the problem?</p>
+          <div class="grid grid-cols-2 gap-2" id="topics"></div>
+        </div>
+        <div>
+          <label for="phone" class="font-bold block mb-1" data-t="f_phone">Your phone number</label>
+          <input id="phone" class="field" inputmode="tel" autocomplete="tel" placeholder="98XXXXXXXX">
+        </div>
+        <div>
+          <label for="msg" class="font-bold block mb-1" data-t="f_msg">Tell us more (optional)</label>
+          <textarea id="msg" rows="3" class="field"></textarea>
+        </div>
+        <button class="btn text-xl" type="submit"><i data-i="send"></i><span data-t="b_send">Send to expert</span></button>
+        <p id="formMsg" class="font-bold" role="status"></p>
+      </form>
+      <div class="rounded-2xl p-6 self-start" style="background:var(--sand)">
+        <p class="flex items-center gap-2 font-bold"><i data-i="phone"></i>Prefer to talk?</p>
+        <p class="serif text-4xl font-extrabold mt-2">1800-180-1551</p>
+        <p class="mt-1">Kisan Call Centre. Free call, 6 AM to 10 PM, every day.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+</main>
+
+<footer class="text-center text-base pb-8 muted"><span data-brand>Shivar</span> prototype. Weather, prices, soil, alerts and advice are demo data until live feeds are connected. Confirm treatments with your Krishi Vigyan Kendra.</footer>
+
+<script>
+window.AGRO=window.AGRO||{};
+(()=>{
+/* ---------- icons ---------- */
+const IC={
+sprout:'<path d="M7 20h10M10 20c5.5-2.5.8-6.4 3-10M9.5 9.4c1.1.8 1.8 2.2 2.3 3.7-2 .4-3.5.4-4.8-.3-1.2-.6-2.3-1.9-3-4.2 2.8-.5 4.4 0 5.5.8zM14.1 6a7 7 0 0 0-1.1 4c1.9-.1 3.3-.6 4.3-1.4 1-1 1.6-2.3 1.7-4.6-2.7.1-4 1-4.9 2z"/>',
+sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+drop:'<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>',
+bug:'<path d="m8 2 1.9 1.9M14.1 3.9 16 2M9 7.1V6a3 3 0 0 1 6 0v1.1M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6zM12 20v-9M6.5 13H2M3 21c0-2.1 1.7-3.9 3.8-4M20.9 13H22M17.2 17c2.1.1 3.8 1.9 3.8 4"/>',
+send:'<path d="m22 2-7 20-4-9-9-4zM22 2 11 13"/>',
+phone:'<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>',
+chev:'<path d="m6 9 6 6 6-6"/>',
+wheat:'<path d="M2 22 16 8M3.5 12.5l2 2M6.5 9.5l2 2M9.5 6.5l2 2M20 3l-2 2M16 7l2-2M13 10l2-2"/>',
+leaf:'<path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10zM2 21c0-3 1.9-5.6 5-7"/>',
+coins:'<circle cx="8" cy="8" r="6"/><path d="M18.1 10.4A6 6 0 1 1 10.4 18.1M7 6h1v4"/>',
+pin:'<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/>',
+x:'<path d="M18 6 6 18M6 6l12 12"/>'};
+const svg=(n,c='')=>'<svg class="i '+c+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
+function icons(){document.querySelectorAll('i[data-i]').forEach(e=>{e.outerHTML=svg(e.dataset.i)})}
+const $=id=>document.getElementById(id);
+
+/* ---------- REGION DATA (replace with your weather / soil / water API) ---------- */
+async function getRegionData(lat,lng){
+  // TODO: fetch from your API using lat/lng and return the same shape.
+  return {
+    name:'Pune, Maharashtra',lat:18.5204,lng:73.8567,
+    rain7:7,humidity:58,weather:{temp:29,desc:'Partly cloudy. Humidity 58%. Rain chance tomorrow 20%.'},
+    water:{pct:54,text:'Moderate. Groundwater and canal supply are enough for this month.'},
+    soil:{score:'Good (68 / 100)',type:'Medium black',ph:'7.4 (slightly alkaline)',carbon:'0.6% (medium)',n:'Low',p:'Medium',k:'High',moisture:38}
+  };
+}
+
+/* ---------- MAP (replace initMap with Google Maps / Leaflet / Mapbox) ---------- */
+function initMap(el,region,plots){
+  /* Example for Leaflet:
+     const map=L.map(el).setView([region.lat,region.lng],12);
+     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+     L.marker([region.lat,region.lng]).addTo(map); */
+  const colors=['#4F6F35','#C99A2E','#A94E2A','#1F3D2B','#7A5C3A','#8AA05B'];
+  let tiles='',x=20;
+  plots.forEach((p,i)=>{const w=Math.max(50,Math.min(150,p.area*30));tiles+=`<rect x="${x}" y="${190+(i%2)*40}" width="${w}" height="${60+(i%3)*10}" rx="6" fill="${colors[i%6]}" opacity=".85"/><text x="${x+8}" y="${215+(i%2)*40}" fill="#fff" font-size="13" font-weight="700">${p.crop}</text>`;x+=w+14;if(x>520)x=20});
+  el.innerHTML=`<svg viewBox="0 0 700 340" class="w-full h-full" style="min-height:340px" preserveAspectRatio="xMidYMid slice">
+  <rect width="700" height="340" fill="var(--sand)"/>
+  <path d="M0 120 C150 80 250 160 400 110 S600 60 700 100" stroke="#6D9BB5" stroke-width="14" fill="none" opacity=".7"/>
+  <path d="M0 290 L700 250" stroke="var(--line)" stroke-width="10"/><path d="M330 0 L380 340" stroke="var(--line)" stroke-width="8"/>
+  ${tiles}
+  <g transform="translate(350 70)"><path d="M0 0c0-14 20-14 20 0 0 14-10 28-10 28S0 14 0 0z" fill="#A94E2A"/><circle cx="10" cy="0" r="5" fill="#fff"/></g>
+  <text x="14" y="26" font-size="15" font-weight="700" fill="var(--ink)">Map placeholder: ${region.name} (${region.lat.toFixed(3)}, ${region.lng.toFixed(3)})</text>
+  <text x="14" y="46" font-size="13" fill="var(--ink)">Replace initMap() in the script with your map API.</text></svg>`;
+}
+
+/* ---------- CROP DATABASE ---------- */
+// s=sowing seasons, w=water need 1 low..3 high, f=fit with medium black soil 1..3
+const DB={
+Rice:{ic:'sprout',s:['kharif'],w:3,f:2,seeds:['Indrayani (good for Pune hills)','Ambemohar (fragrant)','Phule Samruddhi']},
+Wheat:{ic:'wheat',s:['rabi'],w:2,f:3,seeds:['Trimbak (NIAW-301)','Phule Samadhan (NIAW-34)','HD-2189']},
+Millets:{ic:'leaf',s:['kharif','rabi'],w:1,f:3,seeds:['Bajra: Phule Mahashakti','Jowar (rabi): Phule Revati','Jowar (rabi): M35-1 Maldandi']},
+Maize:{ic:'leaf',s:['kharif','rabi'],w:2,f:2,seeds:['Hybrid maize (certified, 90 to 110 days)','Sweet corn hybrid for fresh market']},
+Soybean:{ic:'sprout',s:['kharif'],w:2,f:3,seeds:['JS-335','MAUS-71','MAUS-158']},
+Sugarcane:{ic:'sprout',s:['kharif','summer'],w:3,f:3,seeds:['Co-86032','Co-0238','CoM-265']},
+Onion:{ic:'leaf',s:['rabi','kharif'],w:2,f:2,seeds:['Bhima Super','Bhima Shakti (rabi)','Bhima Kiran']},
+Gram:{ic:'sprout',s:['rabi'],w:1,f:3,seeds:['Digvijay','Vijay','Phule Vikram']},
+Tomato:{ic:'leaf',s:['rabi','summer'],w:2,f:2,seeds:['Certified hybrid, wilt tolerant']}
+};
+const COLORS=['#4F6F35','#C99A2E','#A94E2A','#1F3D2B','#7A5C3A','#8AA05B','#6D9BB5'];
+
+let REGION=null,myCrops=[];
+try{myCrops=JSON.parse(localStorage.getItem('myCrops')||'null')||null}catch(e){}
+if(!myCrops)myCrops=[{crop:'Maize',area:2.5,seed:'Hybrid maize (certified)'},{crop:'Soybean',area:1.5,seed:''},{crop:'Onion',area:1,seed:''}];
+const save=()=>{try{localStorage.setItem('myCrops',JSON.stringify(myCrops))}catch(e){}dispatchEvent(new Event('agro:crops'))};AGRO.crops=()=>myCrops;
+
+function season(){const m=new Date().getMonth();return m>=9||m===0?'rabi':m<=4?'summer':'kharif'}
+
+function recommend(n){
+  const se=season(),dry=REGION.soil.moisture<45,lowW=REGION.water.pct<50;
+  const want=dry||lowW?1:2;
+  return Object.entries(DB).filter(([k,c])=>c.s.includes(se))
+    .map(([k,c])=>({k,c,score:c.f*2-Math.abs(c.w-want)*2}))
+    .sort((a,b)=>b.score-a.score).slice(0,n);
+}
+function suggestSeed(crop){
+  return DB[crop].seeds[0];
+}
+
+function renderCrops(){
+  const tot=myCrops.reduce((a,c)=>a+c.area,0);
+  $('landTotal').innerHTML=`Total land in use: <b class="serif text-2xl">${tot.toFixed(1)} acres</b>`;
+  $('landBar').innerHTML=myCrops.map((c,i)=>`<div title="${c.crop}" style="width:${tot?c.area/tot*100:0}%;background:${COLORS[i%7]}"></div>`).join('');
+  $('cropList').innerHTML=myCrops.length?myCrops.map((c,i)=>{
+    const seed=c.seed?`<p>Seed: <b>${c.seed}</b></p>`:`<p class="down">Seed not chosen. Recommended: <b>${suggestSeed(c.crop)}</b></p><p class="text-base muted">Suits ${REGION.soil.type.toLowerCase()} soil. Confirm with your Krishi Vigyan Kendra.</p>`;
+    return `<div class="flex gap-3 items-start p-3 rounded-xl" style="border:2px solid var(--line)">
+      <span class="w-3 self-stretch rounded" style="background:${COLORS[i%7]}"></span>
+      <div class="flex-1"><p class="serif text-xl font-extrabold">${c.crop} <span class="font-normal text-base">${c.area} acres</span></p>${seed}</div>
+      <button class="btn ghost" data-rm="${i}" aria-label="Remove ${c.crop}">${svg('x')}</button></div>`}).join('')
+    :'<p>No crops yet. Add your first crop on the right.</p>';
+  $('cropList').querySelectorAll('[data-rm]').forEach(b=>b.onclick=()=>{myCrops.splice(+b.dataset.rm,1);save();renderCrops()});
+  initMap($('farmMap'),REGION,myCrops);
+}
+
+function renderRecs(){
+  const se=season();
+  $('recNote').textContent=`${se[0].toUpperCase()+se.slice(1)} season. Soil moisture is ${REGION.soil.moisture}% and water level is ${REGION.water.pct}%, so low-water crops are ranked higher.`;
+  $('recList').innerHTML=recommend(3).map(({k,c})=>`<div class="p-4 rounded-xl" style="background:var(--sand)">
+    <p class="serif text-2xl font-extrabold flex items-center gap-2">${svg(c.ic)}${k}</p>
+    <p class="text-base mt-1">Water need: <b>${['','Low','Medium','High'][c.w]}</b>. Fit with ${REGION.soil.type.toLowerCase()} soil: <b>${['','Fair','Good','Very good'][c.f]}</b>.</p>
+    <p class="mt-1 text-base">Try: <b>${c.seeds[0]}</b></p></div>`).join('');
+}
+
+async function initCrops(){
+  REGION=await getRegionData();AGRO.region=REGION;
+  $('dateLine').textContent=new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long'})+'  |  '+REGION.name;
+  $('mapCaption').textContent=`${REGION.name}. Coloured blocks show your crops.`;
+  $('wTemp').textContent=REGION.weather.temp+'°C';$('wDesc').textContent=REGION.weather.desc;
+  $('wGauge').firstElementChild.style.width=REGION.water.pct+'%';
+  $('wGauge').classList.toggle('warn',REGION.water.pct<40);
+  $('wLevel').textContent=REGION.water.text;
+  const s=REGION.soil;$('sScore').textContent=s.score;
+  $('sFacts').innerHTML=[['Type',s.type],['pH',s.ph],['Organic carbon',s.carbon],['Moisture',s.moisture+'%'],['Nitrogen',s.n],['Phosphorus',s.p],['Potassium',s.k]].map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join('');
+  $('cName').innerHTML=Object.keys(DB).map(k=>`<option>${k}</option>`).join('');
+  renderCrops();renderRecs();
+}
+$('cropForm').onsubmit=e=>{
+  e.preventDefault();const a=parseFloat($('cArea').value);
+  if(!(a>0)){$('cMsg').style.color='var(--clay)';$('cMsg').textContent='Enter the land area in acres.';return}
+  myCrops.push({crop:$('cName').value,area:a,seed:$('cSeed').value.trim()});save();
+  $('cMsg').style.color='var(--moss)';$('cMsg').textContent='Crop added.';
+  $('cArea').value='';$('cSeed').value='';renderCrops();
+};
+
+/* ---------- ADVICE ---------- */
+const G={
+Rice:{ic:'sprout',when:'Kharif: nursery in June, transplant in July.',seed:'Use certified seed. 8 to 10 kg per acre for transplanting. Soak seed 24 hours, then dry in shade.',space:'20 x 15 cm, 2 seedlings per hill.',water:'Keep 2 to 5 cm standing water. Drain 10 days before harvest. Alternate wetting and drying saves up to 25% water.',feed:'Per acre: 40 kg N at planting, 20 kg at tillering, 20 kg at panicle start. Add zinc sulphate if leaves turn rusty.',care:'Weed at 20 and 40 days. Watch for stem borer and blast after cloudy weather.',quality:'Harvest when 80% of grains are straw coloured. Dry grain to 14% moisture before storage.'},
+Wheat:{ic:'wheat',when:'Rabi: sow 1 to 25 November for best yield.',seed:'40 kg per acre (timely sowing). Treat seed with a fungicide.',space:'Rows 20 to 22 cm apart, 5 cm deep.',water:'5 to 6 irrigations. Never miss crown root (21 days) and flowering stages.',feed:'Per acre: 48 kg N, 24 kg P, 16 kg K. Half N at sowing, rest after first irrigation.',care:'Spray weedicide at 25 to 30 days. Check for rust in cool, humid weather.',quality:'Harvest when grain is hard and stalks are golden. Late harvest causes shattering losses.'},
+Millets:{ic:'leaf',when:'Bajra: kharif after first good rain. Jowar: rabi, mid-September to mid-October.',seed:'Bajra 2 to 2.5 kg per acre. Jowar 4 kg per acre. Ragi 3 kg per acre.',space:'Bajra 45 x 15 cm. Jowar 45 x 15 cm.',water:'Very low need. One irrigation at flowering raises yield. Good for dry plots.',feed:'Per acre: 20 to 30 kg N plus compost 2 tonnes. Millets respond well to farmyard manure.',care:'Thin plants at 15 days. Watch for downy mildew in bajra and shoot fly in jowar.',quality:'Harvest when ear heads turn hard. Dry well. Millets store long and fetch better prices as health food.'},
+Maize:{ic:'leaf',when:'Kharif: June to July. Rabi: October to November.',seed:'8 kg per acre of certified hybrid.',space:'60 x 20 cm.',water:'Critical at knee-high, tasseling and grain filling. Avoid waterlogging.',feed:'Per acre: 48 kg N in 3 parts, 24 kg P, 16 kg K.',care:'Scout for fall armyworm from 2 weeks. Early neem spray works best.',quality:'Harvest at 20 to 25% grain moisture. Dry to 12 to 14% to avoid aflatoxin.'},
+Soybean:{ic:'sprout',when:'Kharif: last week of June to mid-July.',seed:'28 to 30 kg per acre. Treat with Rhizobium and PSB culture.',space:'45 x 5 cm, 3 to 4 cm deep.',water:'Rain-fed mostly. Give life-saving irrigation at pod filling if dry spell.',feed:'Per acre: 12 kg N, 32 kg P, 8 kg K as basal. No extra N later.',care:'Watch for girdle beetle and leaf eaters. Keep fields weed-free for 40 days.',quality:'Harvest when pods turn brown and leaves drop. Dry seed to 12% moisture.'},
+Sugarcane:{ic:'sprout',when:'Adsali: July to August. Pre-seasonal: October to November.',seed:'Use 2 or 3-budded setts from healthy 8 to 10 month crop. Treat with fungicide.',space:'Rows 4 to 5 feet apart.',water:'Drip irrigation saves up to 40% water and raises yield.',feed:'Per acre: 100 kg N, 40 kg P, 40 kg K in splits. Earth up at 90 and 120 days.',care:'Trash mulching holds moisture. Watch for woolly aphid and early shoot borer.',quality:'Harvest at 12 to 14 months. Crush within 24 hours to protect sugar content.'},
+Onion:{ic:'leaf',when:'Rabi: nursery in October, transplant in November to December.',seed:'3 to 4 kg per acre for nursery.',space:'15 x 10 cm.',water:'Light, frequent irrigation. Stop 10 days before harvest.',feed:'Per acre: 40 kg N, 20 kg P, 20 kg K. Add sulphur for pungency.',care:'Watch thrips and purple blotch. Avoid excess nitrogen, it spoils storage.',quality:'Cure bulbs in shade 7 to 10 days. Grade by size to fetch better rates.'},
+Gram:{ic:'sprout',when:'Rabi: mid-October to mid-November.',seed:'30 kg per acre. Treat with Rhizobium.',space:'30 x 10 cm.',water:'Needs very little. One irrigation at flowering and one at pod filling.',feed:'Per acre: 10 kg N and 20 kg P at sowing only.',care:'Nip the tops at 30 days to get more branches. Watch for pod borer.',quality:'Harvest when leaves dry and pods rattle. Store dry in clean bags.'}
+};
+let gCrop='Rice';
+function renderGuide(){
+  $('guideTabs').innerHTML=Object.keys(G).map(k=>`<button type="button" class="chip" aria-pressed="${k===gCrop}" data-k="${k}">${svg(G[k].ic)}${k}</button>`).join('');
+  $('guideTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{gCrop=b.dataset.k;renderGuide()});
+  const g=G[gCrop],rows=[['When to sow',g.when],['Seed',g.seed],['Spacing',g.space],['Water',g.water],['Fertiliser',g.feed],['Crop care',g.care],['Quality and harvest',g.quality]];
+  $('guideBody').innerHTML=`<h3 class="text-3xl font-extrabold">${gCrop}</h3><dl class="facts mt-3">${rows.map(([a,b])=>`<dt>${a}</dt><dd>${b}</dd>`).join('')}</dl>
+  <p class="text-base muted">General guidance. Doses depend on a soil test. Visit your nearest Krishi Vigyan Kendra for exact numbers.</p>`;
+}
+
+/* ---------- PRICES (replace PRICE with live mandi history) ---------- */
+const MONTHS=[];{const d=new Date();for(let i=11;i>=0;i--){const m=new Date(d.getFullYear(),d.getMonth()-i,1);MONTHS.push(m.toLocaleDateString('en-IN',{month:'short'}))}}
+const PRICE=AGRO.price={
+Soybean:[4300,4350,4420,4380,4450,4500,4480,4560,4520,4600,4570,4650],
+Onion:[2300,2450,2100,1900,1700,1500,1450,1600,1750,1900,1750,1820],
+Tomato:[1100,900,1300,1800,2400,2000,1400,1200,1000,1250,1470,1500],
+Wheat:[2300,2320,2350,2380,2400,2420,2450,2440,2430,2440,2450,2450],
+Bajra:[2350,2380,2400,2450,2500,2480,2520,2560,2600,2580,2620,2640],
+Maize:[2000,2020,2050,2100,2150,2180,2160,2140,2150,2170,2160,2180]};
+function chart(name,d,col){
+  const W=320,H=150,p=28,mn=Math.min(...d),mx=Math.max(...d),r=(mx-mn)||1;
+  const X=i=>p+i*(W-2*p)/(d.length-1),Y=v=>H-24-(v-mn)/r*(H-54);
+  const pts=d.map((v,i)=>X(i)+','+Y(v)).join(' ');
+  const ch=(d[11]-d[10])/d[10]*100,yoy=(d[11]-d[0])/d[0]*100;
+  return `<div class="card p-4"><div class="flex justify-between items-baseline"><h3 class="text-xl font-extrabold">${name}</h3><span class="serif text-2xl font-extrabold">₹${d[11].toLocaleString('en-IN')}</span></div>
+  <svg viewBox="0 0 ${W} ${H}" class="w-full mt-1" role="img" aria-label="${name} price over 12 months, from ${d[0]} to ${d[11]}">
+  <line x1="${p}" x2="${W-p}" y1="${H-24}" y2="${H-24}" stroke="var(--line)" stroke-width="2"/>
+  <polyline points="${pts}" fill="none" stroke="${col}" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="${X(11)}" cy="${Y(d[11])}" r="5" fill="${col}"/>
+  <text x="${p}" y="${H-6}" font-size="11" fill="var(--ink)">${MONTHS[0]}</text><text x="${W-p}" y="${H-6}" font-size="11" text-anchor="end" fill="var(--ink)">${MONTHS[11]}</text>
+  <text x="${p}" y="14" font-size="11" fill="var(--ink)">High ₹${mx}</text><text x="${W-p}" y="14" font-size="11" text-anchor="end" fill="var(--ink)">Low ₹${mn}</text></svg>
+  <p class="text-base"><span class="${ch>=0?'up':'down'}">${ch>=0?'▲':'▼'} ${Math.abs(ch).toFixed(1)}%</span> this month. <span class="${yoy>=0?'up':'down'}">${yoy>=0?'▲':'▼'} ${Math.abs(yoy).toFixed(0)}%</span> in 12 months.</p></div>`;
+}
+$('priceCharts').innerHTML=Object.entries(PRICE).map(([n,d],i)=>chart(n,d,['#4F6F35','#A94E2A','#C99A2E','#1F3D2B','#7A5C3A','#6D9BB5'][i])).join('');
+
+/* ---------- SCHEMES ---------- */
+const S=[
+['c','PM-KISAN','₹6,000 a year in 3 payments, sent to your bank','Landholding farmer families. Apply with Aadhaar, land record and bank passbook at pmkisan.gov.in or your CSC centre.'],
+['c','PM Fasal Bima Yojana (PMFBY)','Pays you if rain, flood, drought or pests ruin the crop','Farmers growing notified crops. You pay 2% (kharif), 1.5% (rabi) or 5% (cash crops) of the insured amount. Apply before the cut-off date through your bank, CSC or the crop insurance portal.'],
+['c','Kisan Credit Card (KCC)','Low-interest short-term crop loan','Farmers, tenant farmers and sharecroppers. Visit your bank with land papers and ID. Interest subsidy is available on timely repayment.'],
+['c','PM-KUSUM','Subsidy on solar pumps','Farmers who need irrigation pumps. Apply through the state nodal agency (MEDA in Maharashtra).'],
+['c','PM Krishi Sinchayee Yojana: Per Drop More Crop','Subsidy on drip and sprinkler irrigation','Apply through the state portal. Helps save water and raise yield.'],
+['c','Soil Health Card','Free soil test with crop-wise fertiliser advice','Every farmer. Ask at your Taluka agriculture office or Krishi Vigyan Kendra.'],
+['c','e-NAM','Sell your produce online to many mandis','Register with Aadhaar and bank details at your nearest e-NAM mandi, then bid for better prices.'],
+['s','Namo Shetkari Mahasanman Nidhi','Extra yearly cash support for Maharashtra farmers, on top of PM-KISAN','Farmers already receiving PM-KISAN. No separate form is usually needed, but check your status with the agriculture office.'],
+['s','MahaDBT Farmer Schemes','One portal for subsidies on tools, drip, farm mechanisation and more','Maharashtra farmers can apply at the MahaDBT portal with Aadhaar, 7/12 extract and bank details.'],
+['s','Magel Tyala Shettale (Farm Pond)','Support to build a farm pond to store water','Maharashtra farmers with suitable land. Apply through MahaDBT or the Taluka agriculture office.'],
+['s','Mukhyamantri Saur Krishi Vahini','Daytime solar power for farm pumps','Farmers in areas covered by the state scheme. Contact your local MSEDCL office.'],
+['s','Dr. Babasaheb Ambedkar Krushi Swavalamban Yojana','Support for wells, pumps and drip for eligible farmers','Meant for eligible SC and Navbauddh farmers. Apply on MahaDBT or at the Zilla Parishad agriculture office.']];
+let sf='all';
+function renderSchemes(){
+  $('schemeTabs').querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.f===sf));
+  $('schemeList').innerHTML=S.filter(x=>sf==='all'||x[0]===sf).map(([t,n,s,d])=>`<details class="py-1" style="border-top:1px solid var(--line)"><summary><span><span class="tag ${t}">${t==='c'?'Central':'Maharashtra'}</span> ${n}<span class="block font-normal text-base muted">${s}</span></span>${svg('chev','chev')}</summary><p class="pb-3">${d}</p></details>`).join('');
+}
+$('schemeTabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{sf=b.dataset.f;renderSchemes()});
+
+/* ---------- HELP + LANGUAGE ---------- */
+const T={
+en:{n_crops:'Your Crops',n_advice:'Advice',n_prices:'Prices',n_schemes:'Schemes',n_help:'Help',h_crops:'Your crops and your land',h_advice:'How to grow more, and better',h_prices:'Market prices near Pune',h_schemes:'Schemes you can apply for',h_help:'Ask an expert',p_help:'Pick your language and your problem. An expert will call you back.',f_topic:'What is the problem?',f_phone:'Your phone number',f_msg:'Tell us more (optional)',b_send:'Send to expert',ok:'Thank you. An expert will call you within 24 hours.',err:'Please add your phone number so we can call you.',topics:['Crop disease','Water','Seeds','Money']},
+hi:{n_crops:'आपकी फसलें',n_advice:'सलाह',n_prices:'भाव',n_schemes:'योजनाएँ',n_help:'मदद',h_crops:'आपकी फसलें और आपकी ज़मीन',h_advice:'ज़्यादा और बेहतर उपज कैसे लें',h_prices:'पुणे के पास मंडी भाव',h_schemes:'आप इन योजनाओं के लिए आवेदन कर सकते हैं',h_help:'विशेषज्ञ से पूछें',p_help:'अपनी भाषा और समस्या चुनें। विशेषज्ञ आपको वापस फ़ोन करेगा।',f_topic:'क्या समस्या है?',f_phone:'आपका फ़ोन नंबर',f_msg:'और बताइए (ज़रूरी नहीं)',b_send:'विशेषज्ञ को भेजें',ok:'धन्यवाद। विशेषज्ञ 24 घंटे में आपको फ़ोन करेगा।',err:'कृपया अपना फ़ोन नंबर लिखें ताकि हम आपको फ़ोन कर सकें।',topics:['फसल रोग','पानी','बीज','पैसा']},
+mr:{n_crops:'तुमची पिके',n_advice:'सल्ला',n_prices:'बाजारभाव',n_schemes:'योजना',n_help:'मदत',h_crops:'तुमची पिके आणि तुमची जमीन',h_advice:'जास्त आणि चांगले उत्पादन कसे घ्यावे',h_prices:'पुण्याजवळचे बाजारभाव',h_schemes:'तुम्ही या योजनांसाठी अर्ज करू शकता',h_help:'तज्ज्ञांना विचारा',p_help:'तुमची भाषा आणि अडचण निवडा. तज्ज्ञ तुम्हाला परत फोन करतील.',f_topic:'काय अडचण आहे?',f_phone:'तुमचा फोन नंबर',f_msg:'अधिक सांगा (गरजेचे नाही)',b_send:'तज्ज्ञांना पाठवा',ok:'धन्यवाद. तज्ज्ञ २४ तासांत तुम्हाला फोन करतील.',err:'कृपया तुमचा फोन नंबर लिहा, म्हणजे आम्ही फोन करू शकू.',topics:['पिकावरील रोग','पाणी','बियाणे','पैसा']}};
+T.en.n_scan='Scan';T.hi.n_scan='स्कैन';T.mr.n_scan='स्कॅन';T.en.n_ask='Ask';T.hi.n_ask='पूछें';T.mr.n_ask='विचारा';T.en.n_plan='Plan';T.hi.n_plan='प्लान';T.mr.n_plan='नियोजन';
+const TI=['bug','drop','sprout','coins'];let lang='en',topic=0;
+function renderTopics(){
+  $('topics').innerHTML=T[lang].topics.map((t,i)=>`<button type="button" class="chip" data-i="${i}" aria-pressed="${i===topic}">${svg(TI[i])}${t}</button>`).join('');
+  $('topics').querySelectorAll('button').forEach(b=>b.onclick=()=>{topic=+b.dataset.i;renderTopics()});
+}
+function setLang(l){
+  lang=l;document.documentElement.lang=l;AGRO.lang=l;dispatchEvent(new Event('agro:lang'));
+  document.querySelectorAll('[data-t]').forEach(e=>{const v=T[l][e.dataset.t];if(v)e.textContent=v});
+  document.querySelectorAll('#langs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.l===l));
+  $('formMsg').textContent='';renderTopics();
+}
+document.querySelectorAll('#langs button').forEach(b=>b.onclick=()=>setLang(b.dataset.l));
+$('helpForm').onsubmit=e=>{
+  e.preventDefault();const d=$('phone').value.replace(/\D/g,''),ok=d.length>=10;
+  $('formMsg').style.color=ok?'var(--moss)':'var(--clay)';$('formMsg').textContent=ok?T[lang].ok:T[lang].err;
+  if(ok)$('helpForm').reset();
+};
+
+/* ---------- start ---------- */
+icons();renderGuide();renderSchemes();renderTopics();initCrops().then(()=>dispatchEvent(new Event('agro:crops')));
+})();
+(()=>{
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const ls={get(k,d){try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+/* ===================== NETWORK STATE ===================== */
+const SYNC_URL=''; // TODO: your server endpoint, e.g. 'https://api.example.com/diagnoses'
+const online=()=>navigator.onLine&&!$('simOff').checked;
+function netUI(){
+  const p=$('netPill'),on=online();
+  p.textContent=on?'Online':'Offline: saving on phone';
+  p.style.color=on?'#9CC774':'#F2B36B';
+  if(on)syncLogs();renderLogs();
+}
+addEventListener('online',netUI);addEventListener('offline',netUI);
+
+/* ===================== CONCEPT 1: SCANNER ===================== */
+const view=$('view'),vctx=view.getContext('2d'),work=document.createElement('canvas');work.width=64;work.height=48;
+const wctx=work.getContext('2d',{willReadFrequently:true});
+const vid=document.createElement('video');vid.playsInline=true;vid.muted=true;
+let camOn=false,timer=null,last=null;
+const GC=4,GR=3,COLS={ok:'#2f8f3f',early:'#c99a2e',bad:'#c0392b'};
+
+/* Swap this function for a TFLite / TF.js model. Input: 64x48 pixels. Output: one {level,label} per grid cell (4x3). */
+function analyzeCells(){
+  const px=wctx.getImageData(0,0,64,48).data,cw=64/GC,ch=48/GR,cells=[];
+  for(let r=0;r<GR;r++)for(let c=0;c<GC;c++){
+    let n=0,leaf=0,ratio=0;
+    for(let y=r*ch;y<(r+1)*ch;y++)for(let x=c*cw;x<(c+1)*cw;x++){
+      const i=(y*64+x)*4,R=px[i],G=px[i+1],B=px[i+2];n++;
+      if(G>B*1.05&&G>=R*.8&&G>60){leaf++;ratio+=R/(G+1)}
+    }
+    if(leaf/n<.3){cells.push({level:null});continue}
+    const q=ratio/leaf;
+    cells.push(q<.78?{level:'ok',label:'Healthy leaf'}:q<.93?{level:'early',label:'Early stress. Possible nitrogen shortage'}:{level:'bad',label:'Stressed. Yellowing or damage'});
+  }
+  return cells;
+}
+function drawFrame(src){
+  vctx.drawImage(src,0,0,640,480);wctx.drawImage(view,0,0,64,48);
+  const cells=analyzeCells();last=cells;
+  const w=640/GC,h=480/GR;vctx.lineWidth=5;vctx.font='bold 22px sans-serif';
+  cells.forEach((c,i)=>{if(!c.level)return;const x=(i%GC)*w+4,y=Math.floor(i/GC)*h+4;
+    vctx.strokeStyle=COLS[c.level];vctx.strokeRect(x,y,w-8,h-8);
+    vctx.fillStyle=COLS[c.level];vctx.fillRect(x,y,c.level==='ok'?70:110,28);
+    vctx.fillStyle='#fff';vctx.fillText(c.level==='ok'?'OK':c.level==='early'?'EARLY':'STRESS',x+6,y+22)});
+  showResult(cells);
+}
+function showResult(cells){
+  const n=l=>cells.filter(c=>c.level===l).length,ok=n('ok'),e=n('early'),b=n('bad');
+  let t;
+  if(ok+e+b===0)t='No leaf found. Hold the camera closer to a leaf.';
+  else if(b)t=`${b} area(s) look stressed and ${e} show early stress. Check for yellowing, pests or water shortage today.`;
+  else if(e)t=`${e} area(s) show early stress. A soil test or light nitrogen feed may help. Scan again tomorrow.`;
+  else t='Leaf looks healthy.';
+  if(showResult.k!==t){showResult.k=t;$('scanResult').innerHTML=esc(t)+((e+b)?'<br><button class="btn mt-2" id="toAsk">Get a prescription</button>':'');
+  const ta=$('toAsk');if(ta)ta.onclick=()=>{const q=b?'My leaves are yellow and damaged':'My leaves are turning yellow';$('askText').value=q;location.hash='#ask';AGRO.ask(q)}}
+  $('saveBtn').disabled=ok+e+b===0;
+}
+function sampleLeaf(){
+  const g=vctx;g.fillStyle='#4a3a28';g.fillRect(0,0,640,480);
+  [[150,150,0],[480,140,.3],[160,360,-.3],[490,360,.2]].forEach(([x,y,a],k)=>{
+    g.save();g.translate(x,y);g.rotate(a);g.fillStyle=k===1?'#9aa23a':'#3f9a3a';g.beginPath();g.ellipse(0,0,120,80,0,0,7);g.fill();
+    if(k===1){g.fillStyle='#d8c241';g.beginPath();g.ellipse(30,0,55,40,0,0,7);g.fill()}
+    if(k===2){g.fillStyle='#c9b83a';g.beginPath();g.ellipse(-40,10,30,22,0,0,7);g.fill()}
+    g.restore()});
+  const t=document.createElement('canvas');t.width=640;t.height=480;t.getContext('2d').drawImage(view,0,0);drawFrame(t);
+}
+async function toggleCam(){
+  if(camOn){camOn=false;clearInterval(timer);vid.srcObject?.getTracks().forEach(t=>t.stop());$('camBtn').textContent='Start camera';return}
+  try{
+    vid.srcObject=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});await vid.play();
+    camOn=true;$('camBtn').textContent='Stop camera';$('scanMsg').textContent='';
+    timer=setInterval(()=>vid.videoWidth&&drawFrame(vid),300);
+  }catch(e){$('scanMsg').textContent='Camera not available here. Showing the sample leaf instead.';sampleLeaf()}
+}
+$('camBtn').onclick=toggleCam;$('sampleBtn').onclick=()=>{if(camOn)toggleCam();sampleLeaf()};
+
+function getGPS(){return new Promise(res=>{if(!navigator.geolocation)return res(null);navigator.geolocation.getCurrentPosition(p=>res({lat:+p.coords.latitude.toFixed(5),lng:+p.coords.longitude.toFixed(5)}),()=>res(null),{timeout:4000})})}
+$('saveBtn').onclick=async()=>{
+  if(!last)return;const gps=await getGPS();const n=l=>last.filter(c=>c.level===l).length;
+  const logs=ls.get('logs',[]);
+  logs.unshift({id:Date.now(),t:new Date().toISOString(),gps,ok:n('ok'),early:n('early'),bad:n('bad'),synced:false});
+  ls.set('logs',logs.slice(0,30));$('scanMsg').textContent=gps?'Saved with GPS.':'Saved (no GPS available).';
+  if(online())syncLogs();renderLogs();
+};
+async function syncLogs(){
+  const logs=ls.get('logs',[]),pend=logs.filter(l=>!l.synced);if(!pend.length)return;
+  try{
+    if(SYNC_URL)await fetch(SYNC_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(pend)});
+    else await new Promise(r=>setTimeout(r,600)); // demo: pretend the server answered
+    pend.forEach(l=>l.synced=true);ls.set('logs',logs);renderLogs();
+  }catch(e){}
+}
+function renderLogs(){
+  const logs=ls.get('logs',[]),p=logs.filter(l=>!l.synced).length;
+  $('syncState').textContent=logs.length?(p?`${p} waiting to sync. They will send when the network returns.`:'All saved diagnoses are synced.'):'Nothing saved yet.';
+  $('logList').innerHTML=logs.slice(0,5).map(l=>`<div class="flex justify-between gap-2 p-3 rounded-xl" style="border:2px solid var(--line)"><span><b>${new Date(l.t).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</b><br><span class="text-base">${l.ok} healthy, ${l.early} early, ${l.bad} stressed${l.gps?`. GPS ${l.gps.lat}, ${l.gps.lng}`:''}</span></span><span class="pill self-start" style="color:${l.synced?'var(--moss)':'var(--clay)'}">${l.synced?'Synced':'Pending'}</span></div>`).join('');
+}
+$('simOff').onchange=netUI;
+
+/* ===================== CONCEPT 2: VOICE AGENT ===================== */
+let aLang='en';const VL={en:'en-IN',hi:'hi-IN',mr:'mr-IN'};
+const LB={en:{why:'Why this happens',todo:'What to do',dose:'How much',when:'When',avoid:'Avoid',ask:'Tap and say: "My wheat is wilting"',list:'Listening...',think:'Checking your location, soil and rain...',nomic:'Voice input is not supported here. Please type your question.',call:'Still unsure? Call 1800-180-1551'},
+hi:{why:'ऐसा क्यों हुआ',todo:'क्या करें',dose:'कितना',when:'कब',avoid:'क्या न करें',ask:'दबाएँ और बोलें: "मेरी गेहूँ की फसल मुरझा रही है"',list:'सुन रहा हूँ...',think:'आपकी जगह, मिट्टी और बारिश देख रहा हूँ...',nomic:'यहाँ आवाज़ काम नहीं करती। कृपया लिखकर पूछें।',call:'फिर भी शक है? फ़ोन करें 1800-180-1551'},
+mr:{why:'असे का होते',todo:'काय करावे',dose:'किती',when:'केव्हा',avoid:'काय टाळावे',ask:'दाबा आणि बोला: "माझा गहू सुकतोय"',list:'ऐकत आहे...',think:'तुमचे ठिकाण, माती आणि पाऊस तपासत आहे...',nomic:'येथे आवाज चालत नाही. कृपया लिहून विचारा.',call:'तरीही शंका? फोन करा 1800-180-1551'}};
+const LV={en:{Low:'Low',Medium:'Medium',High:'High'},hi:{Low:'कम',Medium:'मध्यम',High:'ज़्यादा'},mr:{Low:'कमी',Medium:'मध्यम',High:'जास्त'}};
+const CROPN={wheat:{en:'wheat',hi:'गेहूँ',mr:'गहू',re:/wheat|गेहूँ|गेहूं|गहू/},maize:{en:'maize',hi:'मक्का',mr:'मका',re:/maize|corn|मक्का|मका/},soybean:{en:'soybean',hi:'सोयाबीन',mr:'सोयाबीन',re:/soy|सोया/},onion:{en:'onion',hi:'प्याज',mr:'कांदा',re:/onion|प्याज|कांदा/}};
+
+/* Swap with real data: GPS + Soil Health Card API + Open-Meteo / IMD rainfall */
+async function getContext(){
+  const R=AGRO.region,g=await getGPS()||{lat:R?R.lat:18.5204,lng:R?R.lng:73.8567,def:true};
+  const s=R?R.soil:{n:'Low',p:'Medium',k:'High',ph:'7.4'};
+  return{gps:g,soil:{N:s.n,P:s.p,K:s.k,pH:parseFloat(s.ph)||7.4},rain:R&&R.rain7!=null?R.rain7:7,humidity:(R&&R.humidity)||58,tmax:32};
+}
+/* Swap with an LLM call. Return {title, why, steps:[[what,dose,when]], avoid} */
+function agent(q,x,l){
+  q=q.toLowerCase();
+  const cropKey=Object.keys(CROPN).find(k=>CROPN[k].re.test(q))||(AGRO.crops?AGRO.crops().map(c=>c.crop.toLowerCase()).find(n=>CROPN[n]):undefined),crop=cropKey?CROPN[cropKey][l]:{en:'crop',hi:'फसल',mr:'पीक'}[l];
+  const wilt=/wilt|dry|droop|मुरझा|सूख|सुक|कोमेज/.test(q),yel=/yellow|पीला|पीली|पीले|पिवळ/.test(q),dry=x.rain<10,N=LV[l][x.soil.N],r=x.rain;
+  if(wilt)return{en:{title:`Wilting ${crop}`,why:dry?`Only ${r} mm rain in 7 days and the soil is dry. The plants need water.`:`${r} mm rain in 7 days. Wet soil can rot roots and cause wilting.`,steps:dry?[['Light irrigation','25 mm (about 40 minutes of flooding)','6 AM tomorrow'],['Mulch with straw','2 inch layer between rows','Today']]:[['Drain extra water','Open the field drains','Today'],['Root drench with carbendazim','2 g per litre of water','Evening, once']],avoid:dry?'No fertiliser until plants recover.':'No irrigation for 5 days.'},
+  hi:{title:`${crop} मुरझा रही है`,why:dry?`7 दिन में सिर्फ़ ${r} मिमी बारिश हुई और मिट्टी सूखी है। पौधों को पानी चाहिए।`:`7 दिन में ${r} मिमी बारिश हुई। ज़्यादा नमी से जड़ सड़ सकती है।`,steps:dry?[['हल्की सिंचाई','25 मिमी (लगभग 40 मिनट)','कल सुबह 6 बजे'],['पुआल की मल्चिंग','पंक्तियों के बीच 2 इंच','आज']]:[['अतिरिक्त पानी निकालें','खेत की नालियाँ खोलें','आज'],['जड़ में कार्बेन्डाज़िम','2 ग्राम प्रति लीटर पानी','शाम, एक बार']],avoid:dry?'पौधे ठीक होने तक खाद न डालें।':'5 दिन सिंचाई न करें।'},
+  mr:{title:`${crop} सुकत आहे`,why:dry?`७ दिवसांत फक्त ${r} मिमी पाऊस झाला आणि माती कोरडी आहे. पिकाला पाणी हवे.`:`७ दिवसांत ${r} मिमी पाऊस झाला. जास्त ओलाव्याने मुळे कुजू शकतात.`,steps:dry?[['हलके पाणी द्या','२५ मिमी (सुमारे ४० मिनिटे)','उद्या सकाळी ६ वाजता'],['गवताचे आच्छादन','ओळींमध्ये २ इंच','आज']]:[['जास्तीचे पाणी काढा','शेतातील चर उघडा','आज'],['मुळांशी कार्बेन्डाझिम','२ ग्रॅम प्रति लिटर पाणी','संध्याकाळी, एकदा']],avoid:dry?'पीक सावरेपर्यंत खत देऊ नका.':'५ दिवस पाणी देऊ नका.'}}[l];
+  if(yel)return{en:{title:`Yellow ${crop} leaves`,why:`Your soil card shows ${N} nitrogen. Yellow older leaves usually mean nitrogen is short.`,steps:[['Urea spray on leaves','20 g per litre of water (2%)','Evening. Repeat after 10 days'],['Urea top dressing','20 kg per acre','After the next irrigation']],avoid:'Do not spray in hot afternoon or before rain.'},
+  hi:{title:`${crop} के पत्ते पीले`,why:`आपके सॉइल कार्ड में नाइट्रोजन ${N} है। पुराने पत्ते पीले होना नाइट्रोजन की कमी दिखाता है।`,steps:[['पत्तों पर यूरिया स्प्रे','20 ग्राम प्रति लीटर पानी (2%)','शाम को। 10 दिन बाद दोहराएँ'],['यूरिया खाद','20 किलो प्रति एकड़','अगली सिंचाई के बाद']],avoid:'दोपहर की गर्मी में या बारिश से पहले स्प्रे न करें।'},
+  mr:{title:`${crop} पाने पिवळी`,why:`तुमच्या माती कार्डवर नत्र ${N} आहे. जुनी पाने पिवळी पडणे म्हणजे नत्राची कमतरता.`,steps:[['पानांवर युरिया फवारणी','२० ग्रॅम प्रति लिटर पाणी (२%)','संध्याकाळी. १० दिवसांनी पुन्हा'],['युरिया खत','२० किलो प्रति एकर','पुढील पाण्यानंतर']],avoid:'दुपारच्या उन्हात किंवा पावसापूर्वी फवारू नका.'}}[l];
+  return{en:{title:'Let us find the cause first',why:'We need a clearer picture of the problem.',steps:[['Check 20 plants','Look under leaves for insects, holes or droppings','Today'],['Scan a leaf in the scanner above','Hold the camera close','Now']],avoid:'Do not spray anything until you know the cause.'},
+  hi:{title:'पहले कारण पता करें',why:'समस्या को और साफ़ समझना होगा।',steps:[['20 पौधे देखें','पत्तों के नीचे कीड़े, छेद या मल देखें','आज'],['ऊपर स्कैनर में पत्ता स्कैन करें','कैमरा पास रखें','अभी']],avoid:'कारण पता चले बिना कुछ न छिड़कें।'},
+  mr:{title:'आधी कारण शोधू',why:'समस्या अधिक स्पष्ट समजून घ्यावी लागेल.',steps:[['२० झाडे तपासा','पानांखाली कीड, छिद्रे किंवा विष्ठा पाहा','आज'],['वरील स्कॅनरमध्ये पान स्कॅन करा','कॅमेरा जवळ धरा','आत्ता']],avoid:'कारण समजेपर्यंत काही फवारू नका.'}}[l];
+}
+function rxHTML(c,l){const L=LB[l];
+  return `<div class="rx"><header><p class="serif text-2xl font-extrabold">${esc(c.title)}</p></header>
+  <div class="row"><b class="muted">${L.why}</b><span>${esc(c.why)}</span></div>
+  ${c.steps.map((s,i)=>`<div class="row"><b>${i+1}. ${esc(s[0])}</b><span>${L.dose}: <b>${esc(s[1])}</b></span><span>${L.when}: <b>${esc(s[2])}</b></span></div>`).join('')}
+  <div class="row" style="background:var(--sand)"><b style="color:var(--clay)">${L.avoid}</b><span>${esc(c.avoid)}</span></div>
+  <div class="row text-base">${L.call}</div></div>
+  <button class="btn ghost mt-3" id="replay">Play again</button>`;}
+function speak(c,l){
+  if(!('speechSynthesis' in window))return;speechSynthesis.cancel();
+  const txt=[c.title,c.why,...c.steps.map(s=>`${s[0]}. ${s[1]}. ${s[2]}.`),c.avoid].join(' ');
+  const u=new SpeechSynthesisUtterance(txt);u.lang=VL[l];speechSynthesis.speak(u);
+}
+async function ask(text){
+  if(!text.trim())return;const l=aLang;$('micMsg').textContent=LB[l].think;
+  const x=await getContext();
+  $('ctxChips').innerHTML=[`Location ${x.gps.lat.toFixed(2)}, ${x.gps.lng.toFixed(2)}${x.gps.def?' (default Pune)':''}`,`Soil N ${x.soil.N}, P ${x.soil.P}, K ${x.soil.K}, pH ${x.soil.pH}`,`Rain 7 days: ${x.rain} mm`,`Humidity ${x.humidity}%`].map(t=>`<span class="pill text-sm" style="color:var(--moss)">${esc(t)}</span>`).join('');
+  const c=agent(text,x,l);$('rxWrap').innerHTML=rxHTML(c,l);$('micMsg').textContent=LB[l].ask;
+  $('replay').onclick=()=>speak(c,l);speak(c,l);
+}
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,listening=false;
+$('micBtn').onclick=()=>{
+  if(!SR){$('micMsg').textContent=LB[aLang].nomic;return}
+  if(listening){rec.stop();return}
+  rec=new SR();rec.lang=VL[aLang];rec.interimResults=false;
+  rec.onstart=()=>{listening=true;$('micBtn').classList.add('on');$('micMsg').textContent=LB[aLang].list};
+  rec.onend=()=>{listening=false;$('micBtn').classList.remove('on')};
+  rec.onerror=()=>{$('micMsg').textContent=LB[aLang].nomic};
+  rec.onresult=e=>{const t=e.results[0][0].transcript;$('askText').value=t;ask(t)};
+  rec.start();
+};
+$('askBtn').onclick=()=>ask($('askText').value);
+$('askText').onkeydown=e=>{if(e.key==='Enter')ask(e.target.value)};
+document.querySelectorAll('#aLangs button').forEach(b=>b.onclick=()=>{aLang=b.dataset.l;document.querySelectorAll('#aLangs button').forEach(x=>x.setAttribute('aria-pressed',x===b));$('micMsg').textContent=LB[aLang].ask});
+
+/* ===================== CONCEPT 3: PLANNER ===================== */
+const MONTHS=[];{const d=new Date();for(let i=-11;i<=6;i++)MONTHS.push(new Date(d.getFullYear(),d.getMonth()+i,1).toLocaleDateString('en-IN',{month:'short'}))}
+/* Swap PRICE with Agmarknet / CEDA history (₹ per quintal, last 12 months) */
+const PRICE=AGRO.price; // shared with the Prices section
+const CROP={Soybean:{y:8,c:22000,m:4,pest:.2},Onion:{y:50,c:70000,m:5,pest:.25},Tomato:{y:100,c:90000,m:4,pest:.35},Wheat:{y:16,c:25000,m:5,pest:.12},Bajra:{y:8,c:14000,m:4,pest:.1},Maize:{y:22,c:28000,m:4,pest:.25}};
+$('pCrop').innerHTML=Object.keys(PRICE).map(k=>`<option>${k}</option>`).join('');
+function setBudget(){$('pBudget').value=Math.round($('pArea').value*CROP[$('pCrop').value].c)}
+$('pCrop').onchange=()=>{setBudget();run()};$('pArea').onchange=setBudget;setBudget();
+
+/* Swap with Prophet / LSTM served from FastAPI. Returns next 6 monthly prices. */
+function forecast(d){const l=d.slice(-6);let s=(l[5]-l[0])/5,v=d[11];return Array.from({length:6},()=>{s*=.85;v+=s;return Math.round(v)})}
+const vol=d=>{const r=d.slice(1).map((v,i)=>Math.log(v/d[i])),m=r.reduce((a,b)=>a+b)/r.length;return Math.sqrt(r.reduce((a,b)=>a+(b-m)**2,0)/r.length)};
+const gauss=()=>Math.sqrt(-2*Math.log(Math.random()||1e-9))*Math.cos(2*Math.PI*Math.random());
+
+function chart(h,f,hv){
+  const W=600,H=230,p=36,all=[...h,...f],mn=Math.min(...all)*.95,mx=Math.max(...all)*1.05,n=all.length;
+  const X=i=>p+i*(W-2*p)/(n-1),Y=v=>H-30-(v-mn)/(mx-mn)*(H-60);
+  const hp=h.map((v,i)=>X(i)+','+Y(v)).join(' '),fp=[h[11],...f].map((v,i)=>X(11+i)+','+Y(v)).join(' ');
+  const bi=f.indexOf(Math.max(...f))+12;
+  return `<svg viewBox="0 0 ${W} ${H}" class="w-full" role="img" aria-label="Price history and 6 month forecast">
+  <line x1="${X(11)}" x2="${X(11)}" y1="10" y2="${H-30}" stroke="var(--line)" stroke-width="2" stroke-dasharray="4 4"/>
+  <text x="${X(11)+6}" y="22" font-size="13" fill="var(--ink)">Today</text>
+  <polyline points="${hp}" fill="none" stroke="var(--forest)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round" style="stroke:var(--ink)"/>
+  <polyline points="${fp}" fill="none" stroke="var(--clay)" stroke-width="4" stroke-dasharray="8 6" stroke-linecap="round"/>
+  <circle cx="${X(bi)}" cy="${Y(all[bi])}" r="7" fill="var(--ochre)" stroke="var(--ink)" stroke-width="2"/>
+  <circle cx="${X(hv+11)}" cy="${Y(all[hv+11])}" r="7" fill="none" stroke="var(--moss)" stroke-width="3"/>
+  ${[0,5,11,14,17].map(i=>`<text x="${X(i)}" y="${H-8}" font-size="13" text-anchor="middle" fill="var(--ink)">${MONTHS[i]}</text>`).join('')}
+  <text x="${p}" y="${H-34}" font-size="12" fill="var(--ink)">₹${Math.round(mn)}</text><text x="${W-p}" y="${H-34}" text-anchor="end" font-size="12" fill="var(--ink)">₹${Math.round(mx)}</text></svg>
+  <p class="text-base"><span style="color:var(--clay);font-weight:700">Dashed</span> = forecast. Yellow dot = highest price in the next 6 months. Green ring = expected harvest month.</p>`;
+}
+function run(){
+  const crop=$('pCrop').value,P=CROP[crop],h=PRICE[crop],f=forecast(h),v=vol(h),area=+$('pArea').value||1,budget=+$('pBudget').value||1,hv=Math.min(6,P.m);
+  const hum=65,pest=Math.max(.05,Math.min(.6,P.pest+(hum-60)/200)); // swap hum with pincode humidity forecast
+  const N=2000;let win=0;const prof=[];
+  for(let i=0;i<N;i++){
+    const price=f[hv-1]*Math.exp(gauss()*v*Math.sqrt(hv)),yld=P.y*area*(1+gauss()*.15)*(Math.random()<pest?.8:1),pr=price*yld-budget;
+    prof.push(pr);if(pr>0)win++;
+  }
+  prof.sort((a,b)=>a-b);const p=Math.round(win/N*100),med=prof[N>>1],bad=prof[Math.floor(N*.1)];
+  $('fTitle').textContent=crop+' price outlook';
+  const bi=f.indexOf(Math.max(...f));$('fBest').textContent=`Best sale month ahead: ${MONTHS[12+bi]} (₹${f[bi].toLocaleString('en-IN')})`;
+  $('fChart').innerHTML=chart(h,f,hv);
+  const col=p>=75?'var(--moss)':p>=50?'var(--ochre)':'var(--clay)',inr=x=>(x<0?'-':'')+'₹'+Math.abs(Math.round(x)).toLocaleString('en-IN');
+  $('riskRow').innerHTML=`<div class="card p-5"><p class="font-bold muted">Chance of profit</p><p class="serif text-5xl font-extrabold" style="color:${col}">${p}%</p><div class="gauge mt-2"><div style="width:${p}%;background:${col}"></div></div></div>
+  <div class="card p-5"><p class="font-bold muted">Pest outbreak risk</p><p class="serif text-5xl font-extrabold">${Math.round(pest*100)}%</p><p class="text-base">Based on forecast humidity of about ${hum}%.</p></div>
+  <div class="card p-5"><p class="font-bold muted">Likely profit at harvest</p><p class="serif text-4xl font-extrabold">${inr(med)}</p><p class="text-base">In a bad season (1 in 10): <b>${inr(bad)}</b></p></div>`;
+  $('riskNote').textContent=`${area} acres of ${crop.toLowerCase()}, harvest in about ${hv} months, from 2,000 simulated seasons. Guidance only, not a promise.`;
+  renderLedger(med);
+}
+$('pGo').onclick=run;
+
+/* Ledger */
+let exps=ls.get('exps',[]);
+function renderLedger(){
+  const tot=exps.reduce((a,e)=>a+e.amt,0),by={};exps.forEach(e=>by[e.cat]=(by[e.cat]||0)+e.amt);
+  const bud=+$('pBudget').value||0;
+  $('ledgerTotal').innerHTML=`Spent so far: <b class="serif text-2xl">₹${tot.toLocaleString('en-IN')}</b>${bud?` of ₹${bud.toLocaleString('en-IN')} budget (${Math.round(tot/bud*100)}%)`:''}`;
+  $('ledgerBars').innerHTML=Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div><div class="flex justify-between text-base"><b>${c}</b><span>₹${v.toLocaleString('en-IN')} (${Math.round(v/tot*100)}%)</span></div><div class="gauge"><div style="width:${v/tot*100}%"></div></div></div>`).join('')||'<p>No expenses yet.</p>';
+  const T={Labour:[.35,'Labour is your biggest cost. Share work with neighbours or hire machines through your FPO or custom hiring centre.'],Fertiliser:[.3,'Fertiliser is high. Do a soil test and apply only what your Soil Health Card says.'],Water:[.2,'Water cost is high. Irrigate at night and consider drip with the MahaDBT subsidy.'],Seeds:[.25,'Seed cost is high. Buy certified seed from government outlets in bulk with other farmers.']};
+  const tips=Object.entries(T).filter(([c,[t]])=>tot&&(by[c]||0)/tot>t).map(([c,[t,m]])=>m);
+  $('tips').innerHTML=`<p class="font-bold">Ways to cut cost</p>`+(tips.length?tips.map(t=>`<p class="mt-1">${t}</p>`).join(''):'<p class="mt-1">No cost problems spotted yet. Keep adding expenses.</p>');
+  $('exList').innerHTML=exps.slice(0,5).map(e=>`<div class="flex justify-between gap-2 py-1" style="border-top:1px solid var(--line)"><span>${esc(e.cat)}${e.note?': '+esc(e.note):''}</span><b>₹${e.amt.toLocaleString('en-IN')}</b></div>`).join('');
+}
+$('exForm').onsubmit=e=>{
+  e.preventDefault();const a=+$('eAmt').value;if(!(a>0))return;
+  exps.unshift({cat:$('eCat').value,amt:a,note:$('eNote').value.trim()});ls.set('exps',exps);
+  $('eAmt').value='';$('eNote').value='';renderLedger();
+};
+
+addEventListener('agro:crops',()=>{const c=(AGRO.crops?AGRO.crops():[]).find(c=>PRICE[c.crop]);if(c){$('pCrop').value=c.crop;$('pArea').value=c.area;setBudget();run()}});
+addEventListener('agro:lang',()=>{const l=AGRO.lang;if(!LB[l])return;aLang=l;document.querySelectorAll('#aLangs button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.l===l));$('micMsg').textContent=LB[l].ask});
+AGRO.ask=ask;
+/* start */
+netUI();renderLogs();run();
+})();
+(()=>{const BRAND='Shivar'; // change your app name here
+document.title=BRAND+': Scan, Ask, Plan';
+document.querySelectorAll('[data-brand]').forEach(e=>e.textContent=BRAND);
+function setPal(p){document.documentElement.dataset.pal=p;try{localStorage.setItem('pal',p)}catch(e){}document.querySelectorAll('#pals button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.p===p))}
+let sp='harvest';try{sp=localStorage.getItem('pal')||sp}catch(e){}
+document.querySelectorAll('#pals button').forEach(b=>b.onclick=()=>setPal(b.dataset.p));setPal(sp);})();
+</script>
+</body>
+</html>

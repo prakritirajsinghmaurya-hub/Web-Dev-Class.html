@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            height: 600px;
+            width: 800px;
+            transition-duration: 20sec;
+        }
+        img :hover{
+            transition-duration: 20sec;
+            transform: rotate(400deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- <input id="one" />
+    <h1 id="rr"></h1>
+    <button>Click me</button> -->
+
+    <img height="300px" src=""/> 
+    <script>
+        // let inp = document.querySelector("input")
+        // inp.addEventListener("input",function(e){
+        //     console.log(e.target.value);
+        // })
+
+        // let inp = document.querySelector("#one")
+        // let h1 = document.querySelector("#rr")
+        // let btn= document.querySelector("button")
+        // btn.addEventListener("click",function(){
+        //     // console.log(e.target.value);
+        //     h1.innerText = inp.value
+        //     inp.value=""
+            
+        // })
+
+
+
+        let arr=["./Photo on 14-10-26 at 3.22 PM.jpg",
+        "./Photo on 14-10-26 at 3.21 PM.jpg","./Photo on 26-10-26 at 11.26 AM.jpg","./Photo on 26-10-26 at 3.55 PM.jpg"]
+        let img= document.querySelector("img")
+        let n=0
+        setInterval(()=>{
+            img.setAttribute('src',arr[n])
+            n=(n+1)%arr.length
+        },1000)
+    </script>
+</body>
+</html>

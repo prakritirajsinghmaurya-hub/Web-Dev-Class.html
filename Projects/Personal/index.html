@@ -1,187 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="hi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sahayak - Lohegaon Hyperlocal Services</title>
-    <!-- Tailwind CSS v4 CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        .modal { transition: opacity 0.25s ease; }
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+<meta charset="utf-8">
+<title>सामान्य ज्ञान प्रतियोगिता 2027</title>
+<script src="./support.js"></script>
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Mukta:wght@500;700;800&family=Yatra+One&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+</style>
+</helmet>
+<div style="width:900px;height:1350px;box-sizing:border-box;background:#FFF4D6;font-family:'Mukta',sans-serif;color:#3A0A10;display:flex;flex-direction:column;overflow:hidden">
 
-    <!-- Header / Navbar -->
-    <header class="bg-white shadow-sm border-b border-slate-200 sticky top-0 z-40">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-2">
-                <span class="text-2xl font-black text-indigo-600 tracking-tight">SAHAYAK</span>
-                <span class="bg-indigo-100 text-indigo-800 text-xs font-semibold px-2 py-0.5 rounded-full">Lohegaon Campus MVP</span>
-            </div>
-            <div class="text-sm font-medium text-slate-500 flex items-center space-x-1">
-                <span>📍</span> <span class="border-b border-dotted border-slate-400">Near Vedam Tech, Pune</span>
-            </div>
-        </div>
-    </header>
+<div style="height:22px;flex:none;background:radial-gradient(circle at 11px 11px,#F2A900 8px,transparent 9px) 0 0/22px 22px repeat-x,#6B0F1A"></div>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow max-w-6xl w-full mx-auto px-4 py-8">
-        
-        <!-- Screen 1: The Category Selection Grid -->
-        <section id="category-screen" class="space-y-8">
-            <div class="text-center max-w-2xl mx-auto space-y-3 my-6">
-                <h1 class="text-4xl font-extrabold text-slate-900 tracking-tight sm:text-5xl">Reliable local help, right when you need it.</h1>
-                <p class="text-lg text-slate-600">Vetted maids and emergency mechanics tailored for college students and residents in Lohegaon.</p>
-            </div>
+<div style="text-align:center;padding:18px 40px 0;flex:none">
+<div style="font-size:22px;font-weight:700;line-height:1.4;color:#B23A0E">॥ दीपावली के पावन अवसर पर ॥</div>
+<h1 style="margin:0;font-family:'Yatra One','Mukta',serif;font-weight:400;font-size:66px;line-height:1.3;color:#8A1020">श्री लक्ष्मी पूजन समारोह</h1>
+<div style="display:inline-block;margin-top:6px;background:#1B2A5C;color:#FFD866;font-weight:800;font-size:28px;line-height:1.4;padding:5px 34px;border-radius:40px">नवयुवक संघ, बिगही का टोला</div>
+</div>
 
-            <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-4">
-                <!-- Maid Card -->
-                <div onclick="loadProviders('maid')" class="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-indigo-500 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🧹</div>
-                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Hire Daily Maids & Cooks</h2>
-                        <p class="text-slate-600 leading-relaxed">Find reliable helpers for cooking, cleaning, or laundry. Flexible monthly subscriptions or student-shared options.</p>
-                    </div>
-                    <div class="mt-6 flex items-center text-indigo-600 font-semibold group-hover:translate-x-1 transition-transform">
-                        <span>Browse Available Help</span> <span class="ml-2">→</span>
-                    </div>
-                </div>
+<div style="margin-top:16px;flex:none;background:#8A1020;text-align:center;padding:12px 40px 14px;border-top:6px solid #F2A900;border-bottom:6px solid #F2A900">
+<div style="font-family:'Yatra One','Mukta',serif;font-size:54px;line-height:1.35;color:#FFD866">सामान्य ज्ञान प्रतियोगिता</div>
+<div style="font-size:44px;font-weight:800;line-height:1.1;color:#FFFFFF">2027</div>
+<div style="margin-top:6px;font-size:24px;font-weight:700;line-height:1.4;color:#FFFFFF">कक्षा 6 • 7 • 8 • 9 के विद्यार्थियों के लिए</div>
+</div>
 
-                <!-- Mechanic Card -->
-                <div onclick="loadProviders('mechanic')" class="group cursor-pointer bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:shadow-md hover:border-orange-500 transition-all duration-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">🛠️</div>
-                        <h2 class="text-2xl font-bold text-slate-900 mb-2">Emergency Mechanics</h2>
-                        <p class="text-slate-600 leading-relaxed">Two-wheeler breakdowns, flat tyres, or AC repair issues? Get verified roadside mechanics dispatched instantly.</p>
-                    </div>
-                    <div class="mt-6 flex items-center text-orange-600 font-semibold group-hover:translate-x-1 transition-transform">
-                        <span>Request Urgent Fix</span> <span class="ml-2">→</span>
-                    </div>
-                </div>
-            </div>
-        </section>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:16px 40px 0">
 
-        <!-- Screen 2: Dynamic Provider Directory Listing -->
-        <section id="directory-screen" class="hidden space-y-6">
-            <div class="flex items-center space-x-4 mb-2">
-                <button onclick="showScreen('category-screen')" class="text-sm font-semibold text-slate-600 bg-slate-200 hover:bg-slate-300 px-3 py-1.5 rounded-lg transition">← Back</button>
-                <h2 id="directory-title" class="text-3xl font-bold text-slate-900">Available Professionals</h2>
-            </div>
-            
-            <div id="provider-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-        </section>
-    </main>
+<div>
+<div style="display:flex;gap:12px">
+<div style="flex:1;text-align:center;background:#FFE08A;border:2px solid #8A1020;border-radius:14px;padding:6px;font-size:28px;font-weight:800;line-height:1.4">गणित</div>
+<div style="flex:1;text-align:center;background:#FFE08A;border:2px solid #8A1020;border-radius:14px;padding:6px;font-size:28px;font-weight:800;line-height:1.4">विज्ञान</div>
+<div style="flex:1;text-align:center;background:#FFE08A;border:2px solid #8A1020;border-radius:14px;padding:6px;font-size:28px;font-weight:800;line-height:1.4">सामान्य ज्ञान</div>
+</div>
+<div style="margin-top:6px;text-align:center;font-size:21px;font-weight:700;line-height:1.4">प्रश्न NCERT पाठ्यक्रम पर आधारित • पेन-पेपर परीक्षा</div>
+</div>
 
-    <!-- Screen 3: Booking Status Modal -->
-    <div id="booking-modal" class="modal opacity-0 pointer-events-none fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl space-y-4 transform scale-95 transition-transform duration-200">
-            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center text-xl text-emerald-600 mx-auto">✓</div>
-            <div class="text-center space-y-2">
-                <h3 class="text-xl font-bold text-slate-900">Booking Confirmed!</h3>
-                <p id="modal-message" class="text-sm text-slate-600"></p>
-            </div>
-            <div class="bg-slate-50 p-3 rounded-xl text-xs text-slate-500 border border-slate-100 space-y-1">
-                <p>⚡ <strong>Founder Pitch Notice:</strong> This interactive confirmation demonstrates instant client assignment to E-Cell judges.</p>
-            </div>
-            <button onclick="closeModal()" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 rounded-xl transition">Great, thanks!</button>
-        </div>
-    </div>
+<div style="display:flex;align-items:center;gap:24px;background:#FFFFFF;border:3px solid #B83A0A;border-radius:20px;padding:18px">
+<div style="flex:none;width:190px;height:190px;box-sizing:border-box;border:3px dashed #3A0A10;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;font-size:20px;font-weight:800;line-height:1.4;color:#5A1A20">[QR कोड यहाँ लगाएँ]</div>
+<div style="flex:1">
+<div style="display:inline-block;background:#B83A0A;color:#FFFFFF;font-size:24px;font-weight:800;line-height:1.4;padding:2px 20px;border-radius:30px">पंजीकरण शुरू</div>
+<div style="margin-top:8px;font-size:32px;font-weight:800;line-height:1.3;color:#8A1020">QR कोड स्कैन करके ऑनलाइन फॉर्म भरें</div>
+<div style="margin-top:8px;font-size:26px;font-weight:700;line-height:1.4">अंतिम तिथि: [__ अक्टूबर 2027]</div>
+<div style="font-size:21px;font-weight:700;line-height:1.4">फॉर्म भरने में सहायता: [नाम – मोबाइल नंबर]</div>
+</div>
+</div>
 
-    <!-- Frontend Script connecting to Spring Boot Backend -->
-    <script>
-        const API_BASE_URL = "http://localhost:8080/api/workers";
+<div style="display:flex;gap:12px">
+<div style="flex:1;text-align:center;background:#FFFFFF;border:3px solid #8A1020;border-radius:16px;padding:10px 8px">
+<div style="font-size:22px;font-weight:800;line-height:1.4;color:#8A1020">परीक्षा तिथि</div>
+<div style="font-size:28px;font-weight:800;line-height:1.3">[__ अक्टूबर 2027]</div>
+</div>
+<div style="flex:1;text-align:center;background:#FFFFFF;border:3px solid #1B6B34;border-radius:16px;padding:10px 8px">
+<div style="font-size:22px;font-weight:800;line-height:1.4;color:#1B6B34">पुरस्कार वितरण</div>
+<div style="font-size:28px;font-weight:800;line-height:1.3">[__ _____ 2027]</div>
+</div>
+<div style="flex:1.3;text-align:center;background:#FFFFFF;border:3px solid #5B2A86;border-radius:16px;padding:10px 8px">
+<div style="font-size:22px;font-weight:800;line-height:1.4;color:#5B2A86">परीक्षा केंद्र</div>
+<div style="font-size:24px;font-weight:800;line-height:1.3">शांति देवी शिक्षण संस्थान,<br>बिगही, बलिया</div>
+</div>
+</div>
 
-        function showScreen(screenId) {
-            document.getElementById('category-screen').classList.add('hidden');
-            document.getElementById('directory-screen').classList.add('hidden');
-            document.getElementById(screenId).classList.remove('hidden');
-        }
+<div style="text-align:center;border-top:3px double #8A1020;border-bottom:3px double #8A1020;padding:6px 0;font-size:23px;font-weight:700;line-height:1.5">मुख्य अतिथि: [नाम, पद] &nbsp;|&nbsp; विशिष्ट अतिथि: [नाम, पद]</div>
 
-        function loadProviders(category) {
-            const titleElement = document.getElementById('directory-title');
-            const gridElement = document.getElementById('provider-grid');
-            
-            titleElement.innerText = category === 'maid' ? 'Verified Maids in Lohegaon' : 'On-Demand Mechanics Nearby';
-            gridElement.innerHTML = '<p class="text-slate-500 col-span-full text-center py-8">Connecting to Java Server...</p>';
+<div style="text-align:center">
+<div style="display:inline-block;background:#8A1020;color:#FFD866;font-family:'Yatra One','Mukta',serif;font-size:34px;line-height:1.4;padding:2px 54px;border-radius:12px">पुरस्कार</div>
+<div style="display:flex;justify-content:space-around;margin-top:12px">
+<div>
+<div style="width:96px;height:96px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFE9A0,#E0A800 60%,#A87400);border:4px solid #A87400;display:flex;align-items:center;justify-content:center;font-family:'Yatra One',serif;font-size:50px;color:#3A0A10">1</div>
+<div style="margin-top:6px;font-size:26px;font-weight:800;line-height:1.4">प्रथम</div>
+</div>
+<div>
+<div style="width:96px;height:96px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFFFFF,#B8BEC6 60%,#7C838C);border:4px solid #7C838C;display:flex;align-items:center;justify-content:center;font-family:'Yatra One',serif;font-size:50px;color:#3A0A10">2</div>
+<div style="margin-top:6px;font-size:26px;font-weight:800;line-height:1.4">द्वितीय</div>
+</div>
+<div>
+<div style="width:96px;height:96px;margin:0 auto;border-radius:50%;background:radial-gradient(circle at 35% 30%,#F0C090,#C9803A 60%,#8A4F1A);border:4px solid #8A4F1A;display:flex;align-items:center;justify-content:center;font-family:'Yatra One',serif;font-size:50px;color:#3A0A10">3</div>
+<div style="margin-top:6px;font-size:26px;font-weight:800;line-height:1.4">तृतीय</div>
+</div>
+</div>
+<div style="margin-top:6px;font-size:22px;font-weight:700;line-height:1.4;color:#B23A0E">सभी प्रतिभागियों को प्रमाण पत्र</div>
+</div>
 
-            showScreen('directory-screen');
+</div>
 
-            fetch(`${API_BASE_URL}?category=${category}`)
-                .then(response => {
-                    if (!response.ok) throw new Error("Network issues reaching backend");
-                    return response.json();
-                })
-                .then(workers => {
-                    gridElement.innerHTML = ''; 
-                    
-                    if(workers.length === 0) {
-                        gridElement.innerHTML = '<p class="text-slate-500 col-span-full text-center">No service partners live in this block.</p>';
-                        return;
-                    }
+<div style="flex:none;margin-top:12px;background:#6B0F1A;text-align:center;padding:10px 20px 12px">
+<div style="font-family:'Yatra One','Mukta',serif;font-size:34px;line-height:1.4;color:#FFD866">आप सभी सादर आमंत्रित हैं</div>
+<div style="font-size:20px;font-weight:700;line-height:1.4;color:#FFFFFF">नवयुवक संघ, बिगही का टोला</div>
+</div>
 
-                    workers.forEach(worker => {
-                        const cardHtml = `
-                            <div class="bg-white rounded-xl p-5 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-slate-300 transition">
-                                <div class="space-y-3">
-                                    <div class="flex items-center space-x-3">
-                                        <span class="text-3xl bg-slate-100 p-2 rounded-lg">${worker.avatar}</span>
-                                        <div>
-                                            <h4 class="font-bold text-slate-900">${worker.name}</h4>
-                                            <p class="text-xs text-slate-500">${worker.experience} Exp</p>
-                                        </div>
-                                    </div>
-                                    <p class="text-sm text-slate-600 font-medium">${worker.specialty}</p>
-                                    <div class="flex justify-between items-center pt-2 border-t border-slate-100 text-sm">
-                                        <span class="text-amber-500 font-bold">★ ${worker.rating}</span>
-                                        <span class="font-semibold text-slate-900">${worker.price}</span>
-                                    </div>
-                                </div>
-                                <button onclick="processBooking(${worker.id}, '${worker.name}', '${category}')" class="mt-5 w-full text-sm font-semibold py-2 rounded-lg text-center transition \${category === 'maid' ? 'bg-indigo-600 hover:bg-indigo-700 text-white' : 'bg-orange-500 hover:bg-orange-600 text-white'}">
-                                    \${category === 'maid' ? 'Book Consultation' : 'Dispatch Mechanic'}
-                                </button>
-                            </div>
-                        `;
-                        gridElement.innerHTML += cardHtml;
-                    });
-                })
-                .catch(error => {
-                    console.error("Error:", error);
-                    gridElement.innerHTML = `
-                        <div class="col-span-full bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl text-center text-sm">
-                            <strong>Backend Connection Failed:</strong> Make sure your Spring Boot Application is running on port 8080!
-                        </div>
-                    `;
-                });
-        }
-
-        function processBooking(workerId, name, category) {
-            fetch(`${API_BASE_URL}/book`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ workerId: workerId, address: "Lohegaon Student Hub, Pune" })
-            })
-            .then(res => res.text())
-            .then(data => {
-                const msg = category === 'maid' 
-                    ? `Your application for \${name} is registered. Our backend server acknowledged this booking successfully.` 
-                    : `\${name} has been dispatched by the server! Estimated transit window: 15-20 mins.`;
-                
-                document.getElementById('modal-message').innerText = msg;
-                
-                const modal = document.getElementById('booking-modal');
-                modal.classList.remove('opacity-0', 'pointer-events-none');
-                modal.querySelector('div').classList.remove('scale-95');
-            });
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('booking-modal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            modal.querySelector('div').classList.add('scale-95');
-            showScreen('category-screen');
-        }
-    </script>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":900,"height":1350}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
 </body>
 </html>
