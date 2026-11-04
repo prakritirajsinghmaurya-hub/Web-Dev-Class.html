@@ -1,1 +1,0 @@
-<center><h3>Sorry check u r card balance!</h3></center>
