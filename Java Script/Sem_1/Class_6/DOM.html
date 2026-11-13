@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // =====================================
+// DOM BASICS
+// =====================================
+// 1. getElementById()
+// -------------------------------------
+
+let heading = document.getElementById("heading");
+
+console.log(heading);
+
+heading.innerText = "DOM Manipulation";
+heading.style.color = "blue";
+
+
+// 2. getElementsByClassName()
+// -------------------------------------
+
+let topics = document.getElementsByClassName("topic");
+
+console.log(topics);
+
+topics[0].style.color = "red";
+topics[1].style.color = "green";
+topics[2].style.color = "purple";
+
+
+// 3. querySelector()
+// -------------------------------------
+
+// Selects the FIRST matching element
+
+let firstBox = document.querySelector(".box");
+
+console.log(firstBox);
+
+firstBox.innerText = "First Box";
+firstBox.style.backgroundColor = "yellow";
+
+
+// 4. querySelector() with ID
+// -------------------------------------
+
+let description = document.querySelector("#description");
+
+description.innerText = "DOM is used to manipulate HTML using JavaScript";
+
+description.style.color = "orange";
+
+
+// 5. querySelectorAll()
+// -------------------------------------
+
+// Selects ALL matching elements
+
+let boxes = document.querySelectorAll(".box");
+
+console.log(boxes);
+
+
+// Changing all boxes
+
+boxes.forEach(function(box) {
+
+  box.style.border = "2px solid black";
+  box.style.padding = "10px";
+  box.style.margin = "10px";
+
+});
+
+
+// 6. Changing innerText
+// -------------------------------------
+
+let firstTopic = document.querySelector(".topic");
+
+firstTopic.innerText = "HTML + CSS";
+
+
+// 7. Changing multiple elements
+// -------------------------------------
+
+let allTopics = document.querySelectorAll(".topic");
+
+allTopics.forEach(function(topic) {
+
+  topic.style.fontSize = "25px";
+
+});
+
+
+// 8. Button text
+// -------------------------------------
+
+let button = document.getElementById("btn");
+
+button.innerText = "DOM Started";
+
+button.style.backgroundColor = "black";
+button.style.color = "white";
+button.style.padding = "10px 20px";
+    </script>
+</body>
+</html>

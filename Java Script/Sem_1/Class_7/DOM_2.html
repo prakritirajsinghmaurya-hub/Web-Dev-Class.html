@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="heading">DOM Basics</h1>
+
+    <p id="message">Hello JavaScript</p>
+  
+    <button id="changeBtn">Change Color</button>
+  
+    <button id="toggleBtn">Toggle</button>
+  
+    <div class="box">Box 1</div>
+    <div class="box">Box 2</div>
+    <div class="box">Box 3</div>
+    <script>
+        // ==============================
+// DOM BASICS
+// ==============================
+
+
+// 1. getElementById()
+
+let heading = document.getElementById("heading");
+
+console.log(heading);
+
+
+// Changing innerText
+
+heading.innerText = "JavaScript DOM";
+
+
+// Changing color
+
+heading.style.color = "blue";
+
+
+// ==============================
+// 2. getElementsByClassName()
+// ==============================
+
+let boxes = document.getElementsByClassName("box");
+
+console.log(boxes);
+
+boxes[0].style.color = "red";
+boxes[1].style.color = "green";
+boxes[2].style.color = "blue";
+
+
+// ==============================
+// 3. querySelector()
+// ==============================
+
+let message = document.querySelector("#message");
+
+console.log(message);
+
+message.innerText = "DOM is Easy!";
+
+
+// ==============================
+// 4. querySelectorAll()
+// ==============================
+
+let allBoxes = document.querySelectorAll(".box");
+
+console.log(allBoxes);
+
+
+// ==============================
+// 5. Basic Event
+// ==============================
+
+let button = document.getElementById("changeBtn");
+
+button.addEventListener("click", function () {
+
+  document.body.style.backgroundColor = "lightblue";
+
+});
+
+
+// ==============================
+// 6. Toggle Background Color
+// ==============================
+
+let toggleBtn = document.getElementById("toggleBtn");
+
+let isDark = false;
+
+toggleBtn.addEventListener("click", function () {
+
+  if (isDark === false) {
+
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+
+    isDark = true;
+
+  } else {
+
+    document.body.style.backgroundColor = "white";
+    document.body.style.color = "black";
+
+    isDark = false;
+
+  }
+
+});
+    </script>
+</body>
+</html>

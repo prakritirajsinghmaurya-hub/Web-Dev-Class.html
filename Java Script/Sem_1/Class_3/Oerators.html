@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ==========================================
+
+// ==========================================
+
+
+// ==========================================
+// 1. ARITHMETIC OPERATORS
+// ==========================================
+
+let a = 20;
+let b = 10;
+
+console.log("Addition:", a + b);
+console.log("Subtraction:", a - b);
+console.log("Multiplication:", a * b);
+console.log("Division:", a / b);
+console.log("Remainder:", a % b);
+console.log("Power:", a ** b);
+
+
+// ==========================================
+// 2. ASSIGNMENT OPERATORS
+// ==========================================
+
+let x = 10;
+
+x += 5; // x = x + 5
+console.log("After += :", x);
+
+x -= 3; // x = x - 3
+console.log("After -= :", x);
+
+x *= 2; // x = x * 2
+console.log("After *= :", x);
+
+x /= 4; // x = x / 4
+console.log("After /= :", x);
+
+x %= 3; // x = x % 3
+console.log("After %= :", x);
+
+
+// ==========================================
+// 3. COMPARISON OPERATORS
+// ==========================================
+
+let age = 20;
+
+console.log("Greater:", age > 18);
+console.log("Less:", age < 18);
+console.log("Greater or Equal:", age >= 18);
+console.log("Less or Equal:", age <= 18);
+
+console.log("Equal:", age == 20);
+console.log("Not Equal:", age != 20);
+
+console.log("Strict Equal:", age === 20);
+console.log("Strict Not Equal:", age !== 20);
+
+
+// ==========================================
+// 4. == VS ===
+// ==========================================
+
+console.log(10 == "10");   // true
+console.log(10 === "10");  // false
+
+
+// ==========================================
+// 5. LOGICAL AND (&&)
+// ==========================================
+
+let userAge = 22;
+let hasLicense = true;
+
+console.log(userAge >= 18 && hasLicense);
+
+
+// ==========================================
+// 6. LOGICAL OR (||)
+// ==========================================
+
+let hasCash = false;
+let hasCard = true;
+
+console.log(hasCash || hasCard);
+
+
+// ==========================================
+// 7. LOGICAL NOT (!)
+// ==========================================
+
+let isLoggedIn = false;
+
+console.log(!isLoggedIn);
+
+
+// ==========================================
+// 8. INCREMENT OPERATOR
+// ==========================================
+
+let count = 10;
+
+count++;
+
+console.log("Increment:", count);
+
+
+// ==========================================
+// 9. DECREMENT OPERATOR
+// ==========================================
+
+count--;
+
+console.log("Decrement:", count);
+
+
+// ==========================================
+// 10. PRE-INCREMENT VS POST-INCREMENT
+// ==========================================
+
+let number = 10;
+
+console.log(number++); // 10
+console.log(number);   // 11
+
+console.log(++number); // 12
+
+
+// ==========================================
+// 11. PRE-DECREMENT VS POST-DECREMENT
+// ==========================================
+
+let value = 10;
+
+console.log(value--); // 10
+console.log(value);   // 9
+
+console.log(--value); // 8
+
+
+// ==========================================
+// 12. TERNARY OPERATOR
+// ==========================================
+
+let marks = 75;
+
+let result = marks >= 40 ? "Pass" : "Fail";
+
+console.log(result);
+
+
+// ==========================================
+// 13. OPERATOR PRECEDENCE
+// ==========================================
+
+let result1 = 10 + 5 * 2;
+
+console.log(result1); // 20
+
+let result2 = (10 + 5) * 2;
+
+console.log(result2); // 30
+
+
+// ==========================================
+// 14. PRACTICE
+// ==========================================
+
+// Even or Odd
+
+let number2 = 17;
+
+console.log(
+    number2 % 2 === 0
+        ? "Even"
+        : "Odd"
+);
+
+
+// Positive or Negative
+
+let number3 = -10;
+
+console.log(
+    number3 >= 0
+        ? "Positive"
+        : "Negative"
+);
+
+
+// Voting Eligibility
+
+let voterAge = 19;
+
+console.log(
+    voterAge >= 18
+        ? "Eligible to Vote"
+        : "Not Eligible"
+);
+    </script>
+</body>
+</html>

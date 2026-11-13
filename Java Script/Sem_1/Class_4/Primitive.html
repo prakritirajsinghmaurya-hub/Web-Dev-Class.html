@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Basics - Class Practice</title>
+</head>
+<body>
+
+    <h1>JavaScript Basics</h1>
+    <p>Open the browser console to see the output.</p>
+
+    <script>
+        // =====================================
+        // 1. NULL VS UNDEFINED
+        // =====================================
+
+        let a;
+        console.log(a); // undefined
+
+        let b = null;
+        console.log(b); // null
+
+        console.log(typeof a); // undefined
+        console.log(typeof b); // object
+
+        console.log(null == undefined);  // true
+        console.log(null === undefined); // false
+
+
+        // =====================================
+        // 2. ARRAY BASICS
+        // =====================================
+
+        let arr = [1, 2, 3, 4, 5, "hello"];
+
+        console.log(arr);
+        console.log(arr[1]); // 2
+        console.log(arr[0]); // 1
+        console.log(arr[arr.length - 1]); // hello
+
+
+        // =====================================
+        // 3. NESTED ARRAY
+        // =====================================
+
+        let numbers = [1, 2, 3, [5, 6]];
+
+        console.log(numbers[3]);    // [5, 6]
+        console.log(numbers[3][0]); // 5
+        console.log(numbers[3][1]); // 6
+
+        let nestedArr = [1, 2, 3, 4, 5, [6, 7, 8]];
+
+        console.log(nestedArr[5][1]); // 7
+
+
+        // =====================================
+        // 4. OBJECT BASICS
+        // =====================================
+
+        let student = {
+            name: "Om",
+            lastName: "Jain",
+            age: 16
+        };
+
+        console.log(student);
+        console.log(student.name);
+        console.log(student.lastName);
+        console.log(student.age);
+
+
+        // =====================================
+        // 5. NESTED OBJECT
+        // =====================================
+
+        let obj = {
+            name: "Om",
+            details: {
+                age: 1
+            }
+        };
+
+        console.log(obj.details);
+        console.log(obj.details.age); // 1
+
+
+        // =====================================
+        // 6. BASIC FOR LOOP
+        // =====================================
+
+        let arr2 = [1, 2, 3, 4, 4, 5, 6];
+
+        for (let i = 0; i < arr2.length; i++) {
+            console.log(arr2[i]);
+        }
+
+
+        // =====================================
+        // 7. FOR...IN LOOP
+        // =====================================
+        // Array ke indexes milte hain.
+
+        for (let i in arr2) {
+            console.log(i);
+        }
+
+
+        // =====================================
+        // 8. FOR...OF LOOP
+        // =====================================
+        // Array ki values milti hain.
+
+        for (let value of arr2) {
+            console.log(value);
+        }
+
+
+        // =====================================
+        // 9. LAST ELEMENT OF ARRAY
+        // =====================================
+
+        let arr3 = [1, 2, 3, 4, 5];
+
+        console.log(arr3[arr3.length - 1]); // 5
+
+
+        // =====================================
+        // 10. ARRAY PUSH METHOD
+        // =====================================
+        // push() array ke end mein elements add karta hai.
+
+        let fruits = ["Apple", "Mango"];
+
+        fruits.push("Banana");
+
+        console.log(fruits);
+        // ["Apple", "Mango", "Banana"]
+
+        fruits.push("Orange", "Grapes");
+
+        console.log(fruits);
+        // ["Apple", "Mango", "Banana", "Orange", "Grapes"]
+
+        console.log(fruits.length); // 5
+
+        // push() updated array ki length return karta hai.
+
+        let result = fruits.push("Kiwi");
+
+        console.log(result); // 6
+        console.log(fruits);
+
+
+        // =====================================
+        // 11. ARRAY REFERENCE
+        // =====================================
+
+        let arr4 = [];
+        let arr5 = [];
+
+        console.log(arr4 == arr5);  // false
+        console.log(arr4 === arr5); // false
+
+        let arr6 = [];
+        let arr7 = arr6;
+
+        console.log(arr6 == arr7);  // true
+        console.log(arr6 === arr7); // true
+
+
+        // =====================================
+        // 12. NESTED FOR LOOP - STAR PATTERN
+        // =====================================
+
+        for (let i = 1; i < 4; i++) {
+            let star = "";
+
+            for (let j = 1; j <= i; j++) {
+                star = star + "*";
+            }
+
+            console.log(star);
+        }
+
+        // Output:
+        // *
+        // **
+        // ***
+
+
+        // =====================================
+        // 13. STAR PATTERN: 5 ROWS
+        // =====================================
+
+        for (let i = 1; i <= 5; i++) {
+            let str = "";
+
+            for (let j = 1; j <= i; j++) {
+                str = str + "*";
+            }
+
+            console.log(str);
+        }
+
+        // Output:
+        // *
+        // **
+        // ***
+        // ****
+        // *****
+
+
+        // =====================================
+        // 14. PRIMITIVE VS REFERENCE
+        // =====================================
+
+        let x = 5;
+        let y = x;
+
+        y = 10;
+
+        console.log(x); // 5
+        console.log(y); // 10
+
+        let original = [1, 2, 3];
+        let copy = original;
+
+        copy.push(4);
+
+        console.log(original); // [1, 2, 3, 4]
+        console.log(copy);     // [1, 2, 3, 4]
+
+
+        // =====================================
+        // END OF CLASS PRACTICE
+        // =====================================
+
+        console.log("Class practice completed!");
+
+    </script>
+
+</body>
+</html>

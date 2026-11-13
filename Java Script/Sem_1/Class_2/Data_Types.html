@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ==========================================
+// JAVASCRIPT - DAY 2
+// DATA TYPES
+// ==========================================
+
+
+// 1. STRING
+// Text ko String kehte hain
+
+let name = "Rupesh";
+let city = 'Pune';
+
+console.log(name);
+console.log(city);
+
+console.log(typeof name); // string
+
+
+
+// 2. NUMBER
+// Integer aur decimal dono Number hote hain
+
+let age = 27;
+let price = 999.99;
+
+console.log(age);
+console.log(price);
+
+console.log(typeof age);   // number
+console.log(typeof price); // number
+
+
+
+// 3. BOOLEAN
+// Sirf true ya false
+
+let isStudent = true;
+let isLoggedIn = false;
+
+console.log(isStudent);
+console.log(isLoggedIn);
+
+console.log(typeof isStudent); // boolean
+
+
+
+// 4. UNDEFINED
+// Variable declare kiya hai
+// lekin value assign nahi ki
+
+let marks;
+
+console.log(marks);        // undefined
+console.log(typeof marks); // undefined
+
+
+
+// 5. NULL
+// Intentionally empty value
+
+let selectedUser = null;
+
+console.log(selectedUser);
+console.log(typeof selectedUser); // object
+// ⚠️ typeof null ka result object aata hai
+// Ye JavaScript ka old/known behavior hai.
+
+
+
+// 6. BIGINT
+// Bahut bade integer numbers ke liye
+
+let bigNumber = 123456789012345678901234567890n;
+
+console.log(bigNumber);
+console.log(typeof bigNumber); // bigint
+
+
+
+// 7. SYMBOL
+// Unique value create karne ke liye
+
+let id1 = Symbol("id");
+let id2 = Symbol("id");
+
+console.log(id1 === id2); // false
+
+console.log(typeof id1); // symbol
+
+
+
+// ==========================================
+// TYPE CHECKING
+// ==========================================
+
+console.log(typeof "Hello");     // string
+console.log(typeof 100);         // number
+console.log(typeof true);        // boolean
+console.log(typeof undefined);   // undefined
+console.log(typeof null);        // object
+console.log(typeof 100n);        // bigint
+console.log(typeof Symbol());    // symbol
+    </script>
+</body>
+</html>

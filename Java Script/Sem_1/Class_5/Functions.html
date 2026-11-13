@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // ==========================================
+// JavaScript Functions - Basic Practice
+// ==========================================
+
+// 1. Simple Function
+function greet() {
+  console.log("Hello, JavaScript!");
+}
+
+greet();
+
+
+// 2. Function with Parameter
+function greetUser(name) {
+  console.log(`Hello ${name}!`);
+}
+
+greetUser("Rupesh");
+greetUser("Rahul");
+
+
+// 3. Function with Multiple Parameters
+function add(a, b) {
+  console.log("Sum:", a + b);
+}
+
+add(10, 20);
+add(50, 30);
+
+
+// 4. Function with Return Value
+function multiply(a, b) {
+  return a * b;
+}
+
+let result = multiply(5, 4);
+
+console.log("Multiplication:", result);
+
+
+// 5. Check Even or Odd
+function checkEvenOdd(number) {
+  if (number % 2 === 0) {
+    return "Even";
+  } else {
+    return "Odd";
+  }
+}
+
+console.log(checkEvenOdd(10));
+console.log(checkEvenOdd(7));
+
+
+// 6. Find Square
+function square(number) {
+  return number * number;
+}
+
+console.log("Square:", square(6));
+
+
+// 7. Find Maximum of Two Numbers
+function findMaximum(a, b) {
+  if (a > b) {
+    return a;
+  } else {
+    return b;
+  }
+}
+
+console.log("Maximum:", findMaximum(25, 40));
+
+
+// 8. Calculate Percentage
+function calculatePercentage(marks, total) {
+  return (marks / total) * 100;
+}
+
+console.log(
+  "Percentage:",
+  calculatePercentage(450, 500) + "%"
+);
+
+
+// 9. Calculate Discount
+function calculateDiscount(price, discount) {
+  let discountAmount = (price * discount) / 100;
+  return price - discountAmount;
+}
+
+console.log(
+  "Final Price:",
+  calculateDiscount(1000, 20)
+);
+
+
+// 10. Check Voting Eligibility
+function checkEligibility(age) {
+  if (age >= 18) {
+    return "Eligible to vote";
+  } else {
+    return "Not eligible to vote";
+  }
+}
+
+console.log(checkEligibility(20));
+console.log(checkEligibility(16));
+
+
+// ==========================================
+// Practice Questions
+// ==========================================
+
+// Q1. Create a function that returns the cube of a number.
+
+// Q2. Create a function that checks whether a number is positive,
+//     negative or zero.
+
+// Q3. Create a function that returns the smallest of two numbers.
+
+// Q4. Create a function that takes three numbers and
+//     returns their average.
+
+// Q5. Create a function that takes a person's age and
+//     returns:
+//     "Child"    -> age < 13
+//     "Teenager" -> age 13-19
+//     "Adult"    -> age >= 20
+    </script>
+</body>
+</html>
