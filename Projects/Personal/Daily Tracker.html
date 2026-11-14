@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daily Tracker</title>
+<style>
+:root{--bg:#f3f6f1;--card:#fff;--ink:#16221a;--mute:#6b7a70;--line:#dbe4dc;--on:#1f7a4d;--onink:#fff;--today:#f2b705;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1511;--card:#18211b;--ink:#e9f1ea;--mute:#8a9a8f;--line:#2a372e;--on:#3fb97c;--onink:#07140c;--today:#f2b705}}
+:root[data-theme="dark"]{--bg:#0f1511;--card:#18211b;--ink:#e9f1ea;--mute:#8a9a8f;--line:#2a372e;--on:#3fb97c;--onink:#07140c;--today:#f2b705}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;max-width:720px;margin-inline:auto;padding:16px}
+h1{font-size:1.5rem;margin:4px 0 2px}
+.sub{color:var(--mute);font-size:.9rem;margin:0 0 14px}
+.bar{display:flex;gap:8px;align-items:center;justify-content:space-between;margin-bottom:12px}
+button{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 12px;cursor:pointer}
+button:focus-visible{outline:3px solid var(--today);outline-offset:2px}
+.month{font-weight:700}
+.score{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:14px}
+.prog{height:12px;background:var(--line);border-radius:8px;overflow:hidden;margin-top:8px}
+.prog i{display:block;height:100%;width:0;background:var(--on);transition:width .25s}
+.big{font-size:1.1rem;font-weight:700}
+.today h2{font-size:1rem;margin:0 0 8px}
+.row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:14px;margin-bottom:8px;border-radius:12px;background:var(--card);border:1px solid var(--line)}
+.box{width:28px;height:28px;border:2px solid var(--mute);border-radius:8px;flex:none;display:grid;place-items:center;font-weight:900;color:transparent}
+.row.done{border-color:var(--on)}
+.row.done .box{background:var(--on);border-color:var(--on);color:var(--onink)}
+.row.done .name{text-decoration:line-through;color:var(--mute)}
+.name{flex:1;font-weight:600}
+.streak{font-size:.8rem;color:var(--mute)}
+.gridwrap{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:14px}
+table{border-collapse:collapse;min-width:100%}
+th,td{padding:3px;text-align:center;font-size:.7rem}
+th.t{position:sticky;left:0;background:var(--card);text-align:left;font-size:.78rem;white-space:nowrap;padding-right:10px}
+td button{width:24px;height:24px;padding:0;border-radius:6px;border:1px solid var(--line);background:transparent}
+td button.on{background:var(--on);border-color:var(--on)}
+th.cur{color:var(--today);font-weight:900}
+td.cur button{border-color:var(--today)}
+.wt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:14px}
+.wt h2{font-size:1rem;margin:0 0 10px}
+.wform{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.wform input{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;min-width:0;flex:1 1 110px}
+.wform button{background:var(--on);color:var(--onink);border-color:var(--on);font-weight:700}
+.wstats{display:flex;gap:16px;flex-wrap:wrap;font-size:.85rem;color:var(--mute);margin-bottom:6px}
+.wstats b{color:var(--ink);font-size:1.05rem}
+#wchart{width:100%;height:auto;display:block}
+.wlog{margin-top:8px;font-size:.8rem;color:var(--mute);max-height:130px;overflow-y:auto}
+.wlog div{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-top:1px solid var(--line)}
+.wlog button{padding:2px 8px;font-size:.75rem}
+.foot{display:flex;justify-content:space-between;margin-top:14px;color:var(--mute);font-size:.8rem}
+</style>
+</head>
+<body>
+<h1>My daily tracker</h1>
+<p class="sub">Tap a task when it's done. Your ticks save on this device.</p>
+
+<div class="bar">
+  <button id="prev" aria-label="Previous month">&lsaquo;</button>
+  <span class="month" id="mlabel"></span>
+  <button id="next" aria-label="Next month">&rsaquo;</button>
+</div>
+
+<div class="score">
+  <div class="big" id="todayScore"></div>
+  <div class="prog"><i id="bar"></i></div>
+  <div class="streak" id="allStreak" style="margin-top:8px"></div>
+</div>
+
+<div class="today"><h2 id="todayTitle">Today</h2><div id="list"></div></div>
+
+<div class="gridwrap"><table id="grid"></table></div>
+
+<div class="wt">
+  <h2>Weight</h2>
+  <div class="wform">
+    <input type="date" id="wdate" aria-label="Date">
+    <input type="number" id="wval" step="0.1" min="20" max="250" placeholder="Weight in kg" aria-label="Weight in kg">
+    <button id="wsave">Save weight</button>
+  </div>
+  <div class="wstats" id="wstats"></div>
+  <svg id="wchart" viewBox="0 0 600 220" role="img" aria-label="Weight line graph"></svg>
+  <div class="wlog" id="wlog"></div>
+</div>
+
+<div class="foot"><span>Month total: <b id="mtotal"></b></span><button id="reset">Clear this month</button></div>
+
+<script>
+var TASKS=["Push-ups","Curl-ups","Run","Hydration","Skin care","Nutrition","Vitamin C intake","Saafi (cleanliness)","LeetCode","GitHub","Meditation","Protein"];
+var KEY="vedam-tracker-v1";
+var data={};
+try{data=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){data={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(data))}catch(e){}}
+var now=new Date();
+var view=new Date(now.getFullYear(),now.getMonth(),1);
+function mk(y,m){return y+"-"+String(m+1).padStart(2,"0")}
+function dk(y,m,d){return mk(y,m)+"-"+String(d).padStart(2,"0")}
+function isDone(t,key){return !!(data[key]&&data[key][t])}
+function toggle(t,key){data[key]=data[key]||{};data[key][t]=!data[key][t];save();render()}
+function streak(t){
+  var d=new Date(now.getFullYear(),now.getMonth(),now.getDate()),n=0;
+  if(!isDone(t,dk(d.getFullYear(),d.getMonth(),d.getDate())))d.setDate(d.getDate()-1);
+  while(isDone(t,dk(d.getFullYear(),d.getMonth(),d.getDate()))){n++;d.setDate(d.getDate()-1)}
+  return n;
+}
+function render(){
+  var y=view.getFullYear(),m=view.getMonth();
+  var days=new Date(y,m+1,0).getDate();
+  var isCur=(y===now.getFullYear()&&m===now.getMonth());
+  var td=now.getDate();
+  document.getElementById("mlabel").textContent=view.toLocaleString("en-IN",{month:"long",year:"numeric"});
+  var tk=dk(now.getFullYear(),now.getMonth(),now.getDate());
+  document.getElementById("todayTitle").textContent="Today, "+now.toLocaleDateString("en-IN",{weekday:"long",day:"numeric",month:"short"});
+  var c=0,list=document.getElementById("list");list.innerHTML="";
+  TASKS.forEach(function(t,i){
+    var done=isDone(t,tk);if(done)c++;
+    var b=document.createElement("button");b.className="row"+(done?" done":"");
+    var s=streak(t);
+    b.innerHTML='<span class="box">&#10003;</span><span class="name">'+t+'</span><span class="streak">'+(s?s+" day streak":"")+'</span>';
+    b.onclick=function(){toggle(t,tk)};list.appendChild(b);
+  });
+  document.getElementById("todayScore").textContent=c+" of "+TASKS.length+" done today"+(c===TASKS.length?" \u2014 full day!":"");
+  document.getElementById("bar").style.width=(c/TASKS.length*100)+"%";
+  var best=Math.max.apply(null,TASKS.map(streak));
+  document.getElementById("allStreak").textContent="Best current streak: "+best+" day"+(best===1?"":"s");
+  var h='<tr><th class="t"></th>';
+  for(var d=1;d<=days;d++)h+='<th class="'+(isCur&&d===td?"cur":"")+'">'+d+'</th>';
+  h+='</tr>';var total=0;
+  TASKS.forEach(function(t,ti){
+    h+='<tr><th class="t">'+t.split(" (")[0]+'</th>';
+    for(var d=1;d<=days;d++){
+      var on=isDone(t,dk(y,m,d));if(on)total++;
+      h+='<td class="'+(isCur&&d===td?"cur":"")+'"><button class="'+(on?"on":"")+'" data-t="'+ti+'" data-d="'+d+'" aria-label="'+t+' day '+d+'"></button></td>';
+    }
+    h+='</tr>';
+  });
+  var g=document.getElementById("grid");g.innerHTML=h;
+  g.querySelectorAll("button").forEach(function(b){b.onclick=function(){toggle(TASKS[b.dataset.t],dk(y,m,+b.dataset.d))}});
+  document.getElementById("mtotal").textContent=total+" / "+(days*TASKS.length);
+}
+document.getElementById("prev").onclick=function(){view.setMonth(view.getMonth()-1);render()};
+document.getElementById("next").onclick=function(){view.setMonth(view.getMonth()+1);render()};
+document.getElementById("reset").onclick=function(){
+  if(!confirm("Clear all ticks for this month?"))return;
+  var p=mk(view.getFullYear(),view.getMonth());
+  Object.keys(data).forEach(function(k){if(k.indexOf(p)===0)delete data[k]});save();render();
+};
+render();
+
+var WKEY="vedam-weight-v1",W={};
+try{W=JSON.parse(localStorage.getItem(WKEY)||"{}")}catch(e){W={}}
+function wsave(){try{localStorage.setItem(WKEY,JSON.stringify(W))}catch(e){}}
+function todayStr(){return dk(now.getFullYear(),now.getMonth(),now.getDate())}
+document.getElementById("wdate").value=todayStr();
+document.getElementById("wsave").onclick=function(){
+  var d=document.getElementById("wdate").value,v=parseFloat(document.getElementById("wval").value);
+  if(!d||isNaN(v)||v<20||v>250)return;
+  W[d]=Math.round(v*10)/10;wsave();document.getElementById("wval").value="";drawW();
+};
+function fmt(d){var p=d.split("-");return new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString("en-IN",{day:"numeric",month:"short"})}
+function drawW(){
+  var keys=Object.keys(W).sort(),svg=document.getElementById("wchart"),st=document.getElementById("wstats"),lg=document.getElementById("wlog");
+  lg.innerHTML="";
+  if(!keys.length){st.textContent="No entries yet. Add today\u2019s weight above.";svg.innerHTML="";return}
+  var vals=keys.map(function(k){return W[k]});
+  var last=vals[vals.length-1],first=vals[0],diff=Math.round((last-first)*10)/10;
+  st.innerHTML='<span>Latest <b>'+last+' kg</b></span><span>Change since first entry <b>'+(diff>0?"+":"")+diff+' kg</b></span>';
+  var lo=Math.min.apply(null,vals)-1,hi=Math.max.apply(null,vals)+1;
+  var L=44,R=16,T=14,B=30,w=600-L-R,h=220-T-B;
+  function X(i){return L+(keys.length===1?w/2:i*w/(keys.length-1))}
+  function Y(v){return T+(hi-v)/(hi-lo)*h}
+  var s="";
+  for(var i=0;i<=3;i++){var gv=lo+(hi-lo)*i/3,gy=Y(gv);
+    s+='<line x1="'+L+'" x2="'+(600-R)+'" y1="'+gy+'" y2="'+gy+'" stroke="var(--line)"/><text x="'+(L-6)+'" y="'+(gy+4)+'" text-anchor="end" font-size="11" fill="var(--mute)">'+gv.toFixed(1)+'</text>'}
+  var pts=keys.map(function(k,i){return X(i)+","+Y(W[k])}).join(" ");
+  s+='<polyline points="'+pts+'" fill="none" stroke="var(--on)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>';
+  keys.forEach(function(k,i){
+    s+='<circle cx="'+X(i)+'" cy="'+Y(W[k])+'" r="4.5" fill="var(--on)" stroke="var(--card)" stroke-width="2"/>';
+    if(keys.length<=8||i===0||i===keys.length-1||i%Math.ceil(keys.length/6)===0)
+      s+='<text x="'+X(i)+'" y="210" text-anchor="middle" font-size="11" fill="var(--mute)">'+fmt(k)+'</text>';
+  });
+  svg.innerHTML=s;
+  keys.slice().reverse().slice(0,10).forEach(function(k){
+    var r=document.createElement("div");r.innerHTML='<span>'+fmt(k)+' \u2014 '+W[k]+' kg</span>';
+    var b=document.createElement("button");b.textContent="Remove";b.onclick=function(){delete W[k];wsave();drawW()};
+    r.appendChild(b);lg.appendChild(r);
+  });
+}
+drawW();
+</script>
+</body>
+</html>
