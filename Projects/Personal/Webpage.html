@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="eng">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -17,10 +17,16 @@
         } */
         .project-card{
             border: 1px solid black; margin: 10px;padding: 10px;
-            height: 200px; width: 200px;
-            border-radius: 10px;
+            height: 200px; width: 400px;
+            border-radius: 20px;
             background-color: rgb(57, 130, 130);
             color: white;
+            transition: 2s;
+        }
+        .project-card:hover{
+            background-color: rgb(134, 175, 175);
+            color: black;
+            transform: scale(1.05);
         }
         #prj_sec{
             height: 300px;
@@ -29,26 +35,27 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            align-items: space-around;
+            
         }
         #cards{
             display: flex;
-            justify-content: space-around;
-            align-items: center;
+            justify-content: space-evenly;
+            /* align-items: center; */
         }
     </style>
 </head>
 
 <body>
-    <!-- Header -->
+    <header>
         <div>
         <img src="../Profile Pic.jpeg" alt="PRSM Pic" height="800px">
         <h1> This is PRSM </h1>
         <div> Student at Vedam School of Technology (B.Tech) 2026-30 </div>  
         <div> Learning Web Development and Basics of Coding </div>    
         </div>
-
-    <!-- About me -->
+    </header>
+    
+    <main>
         <div>
             <h2> About Me </h2>
             <p>
@@ -66,23 +73,31 @@
 
         <div><h2 id="prj_head">My Projects</h2></div>
         <div id="cards">
+            <a href="https://github.com/prakritirajsinghmaurya-hub/Web-Dev-Class.html/blob/main/Projects/Sem%201/Agro_Tech/Prj_prototype/Prototype_3.html" style="text-decoration: none; color: white;">
             <div class="project-card">
-                <h3> Project 1     </h3>
-                <p> abt prj 1
+                <h3> Agro Tech </h3>
+                <p>
+                    I helped in frontend and backend development of this project. It was built with the vision to help farmers and agriculture related people to get the best price for their products and also to get the best quality of products for their needs. for more details click me.
 
 
                 </p>
-
-                
             </div>
+            </a>
+
+            <a href="" style="text-decoration: none; color: white;">
             <div class="project-card">
                 <h3> Project Card 2</h3>
                 <p> abt prj 2 </p>
             </div>
+            </a>
+
+            <a href="" style="text-decoration: none; color: white;">
             <div class="project-card">
                 <h3> Project Card 3</h3>
                 <p> abt prj 3 </p>
             </div>
+            </a>
+
         </div>
 
     </section>
@@ -108,12 +123,15 @@
             </ul>
         </div>
 
-        <!-- Footer -->
+    </main>
+    
+    <footer>
         <div>
             <h4>
                 2026 PRSM Built with patience using HTML & CSS
             </h4>
         </div>
+    </footer>
 </body>
 
 </html>
