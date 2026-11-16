@@ -15,6 +15,64 @@
         /* } */
         /* #prj_head{
         } */
+        #creative{
+            height: 400px;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center, space-evenly;
+            align-items: center;
+        }
+        #sec2{
+            height: 400px;
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #ameoba{
+            background-color: darkturquoise;
+            height: 400px;
+            width: 400px;
+            border-radius: 15% 45% 32% 23%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation-duration: 5s;
+            animation-name: abcd;
+            animation-iteration-count: infinite;
+        }
+        #card{
+            height: 350px; width: 250px;
+            background-color: bisque;
+            border-radius: 35% 35% 0% 0%;
+            transition-duration: 4s;
+            transform: rotate(20deg);
+        }
+        @keyframes abcd{
+            0%{
+                border-radius: 75px 64% 80% 65px;
+            }
+            33%{
+                border-radius: 80% 32px 44% 70%;
+            }
+            66%{
+                border-radius: 40% 12% 70% 22%;
+            }
+            100%{
+                border-radius: 75px 64% 80% 65px;
+            }
+        }
+        #abt_sec{
+            height: 300px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+
         .project-card{
             border: 1px solid black; margin: 10px;padding: 10px;
             height: 200px; width: 400px;
@@ -56,17 +114,30 @@
     </header>
     
     <main>
-        <div>
-            <h2> About Me </h2>
-            <p>
-                I am learning about new things trying to understand and find a way to use as well as apply them in real life projects. 
-            </p>
-            <ul>
-                <li> 1st year at VST Pune </li>
-                <li> Eager to work and chanalise my energy</li>
-                <li> Learning HTML and CSS</li>
-            </ul>
-        </div>
+        <section id="creative">
+
+            <section id="abt_sec">
+                <div>
+                    <h2> About Me </h2>
+                    <p>
+                        Student at Vedam School of Technology, Pune. <br>
+                        I have leant about....
+                    </p>
+                    <ol type="number">
+                        <li> Java</li>
+                        <li> JavaScript</li>
+                        <li> HTML/CSS</li>
+                    </ol>
+                </div>
+            </section>
+            
+            <section id="sec2">
+                <div id="ameoba">
+                    <div id="card"></div>
+                </div>
+            </section>
+
+        </section>
 
     <!-- My Projects -->
     <section id="prj_sec">
