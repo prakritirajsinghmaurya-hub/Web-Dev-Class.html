@@ -135,6 +135,34 @@ console.log(checkEligibility(16));
 //     "Child"    -> age < 13
 //     "Teenager" -> age 13-19
 //     "Adult"    -> age >= 20
+
+// =============================================
+// Solution for Practice Questions
+// =============================================
+
+// Q1. Function to return the cube of a number
+
+function cube(number) {
+  return number * number * number;
+}
+
+let ans = cube(7);
+console.log("cube:", ans);
+
+// Q2. Function to check whether a number is positive, negative or zero
+function check(a) {
+  if(a===0){
+    return "Zero";
+  }else if(a>0){
+    return "positive";
+  }else if(a<0){
+    return "negative";
+  }
+}
+
+ans = check(-5);
+console.log("check:", ans);
+
     </script>
 </body>
 </html>

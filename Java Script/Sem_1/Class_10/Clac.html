@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #sec{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            background-color: rgb(0, 0, 0);
+        }
+        #inp{
+            height: 50px;
+            width: 230px;
+            margin-bottom: 10px;
+            font-size: 20px;
+            border: 1px solid black;
+            background-color: lightcoral;
+        }
+        #main{
+            height: 300px;
+            width: 230px;
+            display: grid;
+            grid-template-columns: repeat(4,60px);
+            /* grid-template-rows: 500px 200px; */
+            grid-template-rows: 1fr 1fr 1fr 1fr;
+            /* border: 2px solid black; */
+        }
+        .btn{
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            border: 1px solid black;
+            background-color: brown;
+        }
+        #zero{
+            grid-column: span 2;
+            width: 110px;
+        }
+    </style>
+</head>
+<body>
+    <section id="sec">
+        <input id="inp">
+        <div id="main">
+            <button class="btn" id="clear">C</button>
+            <button class="btn">**</button>
+            <button class="btn">%</button>
+            <button class="btn">/</button>
+
+            <button class="btn">7</button>
+            <button class="btn">8</button>
+            <button class="btn">9</button>
+            <button class="btn">*</button>
+
+            <button class="btn">4</button>
+            <button class="btn">5</button>
+            <button class="btn">6</button>
+            <button class="btn">-</button>
+
+            <button class="btn">1</button>
+            <button class="btn">2</button>
+            <button class="btn">3</button>
+            <button class="btn">+</button>
+
+            <button class="btn" id="zero">0</button>
+            <button class="btn">.</button>
+            <button class="btn" id="equal">=</button>
+            
+        </div>
+    </section>
+
+    <script>
+        
+        let inp = document.getElementById("inp");
+        let btn = document.querySelectorAll(".btn");
+        let equal = document.querySelector(".btn:last-child");
+        let clear = document.querySelector(".btn:first-child");
+
+        for(let i=0; i<btn.length; i++){
+            btn[i].addEventListener("click", function(){
+                if(btn[i].innerText === "="){
+                    inp.value = eval(inp.value);
+                } else if(btn[i].innerText === "C"){
+                    inp.value = "";
+                } else {
+                    inp.value += btn[i].innerText;
+                }
+            });
+        }
+
+        // let button = document.querySelectorAll('.btn');
+        // let inp = document.querySelector('#inp');
+        // let equal = document.querySelector('#equal');
+        // let C = document.querySelector('#clear');
+
+        // for(let btn of button){
+        //     btn.addEventListener("click", function(){
+        //         let text = btn.innerText
+        //         if(text==='C'){
+        //             inp.value=""
+        //         }else if(text==="="){
+        //             inp.value=eval(inp.value)
+        //         }else{
+        //             inp.value+=text
+        //         }
+        //     })
+        // }
+
+    </script>
+</body>
+</html>
