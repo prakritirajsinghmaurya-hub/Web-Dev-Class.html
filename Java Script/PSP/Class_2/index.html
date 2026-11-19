@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        #title{
+            text-align: center;
+            color: red;
+        }
+        #parent{
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #main{
+            height: 400px;
+            width: 80%;
+            border: 2px solid black;
+            border-radius: 14px;
+            
+        }
+        #cont{
+            height: 100%;
+            width: 100%;
+            border: 2px solid black;
+            border-radius: 14px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            
+        }
+        button{
+            height: 150px;
+            width: 150px;
+        }
+        img{
+            height: 150px;
+            width: 150px;
+        }
+        #ad{
+            background-image: url(./images/image.png);
+            background-size: cover;
+        }
+        #bd{
+            background-image: url(./images/image\ copy.png);
+            background-size: cover;
+        }
+        #cd{
+            background-image: url(./images/image\ copy\ 2.png);
+            background-size: cover;
+        }
+        #dd{
+            background-image: url(./images/image\ copy\ 3.png);
+            background-size: cover;
+        }
+        #ed{
+            background-image: url(./images/image\ copy\ 4.png);
+            background-size: cover;
+        }
+        #fd{
+            background-image: url(./images/image\ copy\ 5.png);
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1 id="title">Musical Kit</h1>
+    <div id="parent">
+    <div id="main">
+
+        <div id="cont">
+        <button class="drum" id="ad">a</button> 
+        <button class="drum" id="bd">b</button>
+        <button class="drum" id="cd">c</button>
+        <button class="drum" id="dd">d</button>
+        <button class="drum" id="ed">e</button>
+        <button class="drum" id="fd">f</button>
+        </div>
+
+        <audio id="a" src="./audio/arpmedia-guitar-solo-guitar-music-588505.mp3"></audio>
+        <audio id="b" src="./audio/alex-morgan-trumpet-jazz-study-music-564260.mp3"></audio>
+        <audio id="c" src="./audio/leberch-piano-627002.mp3"></audio>
+        <audio id="d" src="./audio/nastelbom-violin-299793.mp3"></audio>
+        <audio id="e" src="./audio/monume-drum-amp-bass-dnb-music-dampb-drum-and-bass-519203.mp3"></audio>
+        <audio id="f" src="./audio/aurec-saxophone-588213.mp3"></audio>
+
+    </div>
+    </div>
+
+    <script>
+        var buttons= document.querySelectorAll(".drum");
+        for(let i=0; i<buttons.length; i++){
+            buttons[i].addEventListener("click", function(){
+                let buttonName= buttons[i].innerHTML.toLowerCase();
+                let audio= document.querySelector("#"+buttonName)
+                audio.currentTime= 0;
+                audio.play();
+            })
+        }
+
+        document.addEventListener("keydown", function(event){
+            var buttonName= event.key.toLowerCase();
+            var audio= document.querySelector("#"+ buttonName);
+            if(audio !== null){
+                //audio.currentTime=0;
+                audio.play();
+            }
+        })
+    </script>
+</body>
+</html>
