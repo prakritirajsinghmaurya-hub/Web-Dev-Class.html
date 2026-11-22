@@ -47,9 +47,10 @@
             border-radius: 35% 35% 0% 0%;
             transition-duration: 4s;
             transform: rotate(20deg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            animation-name: card;
+        }
+        @keyframes card{
+            0
         }
         @keyframes abcd{
             0%{
@@ -65,10 +66,18 @@
                 border-radius: 75px 64% 80% 65px;
             }
         }
+        #pic{
+            height: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
         #pfp{
             height: 100px;
             width: 100px;
-            border-radius: 50%;
+            border-radius: 20%;
         }
         #abt_sec{
             height: 300px;
@@ -108,10 +117,12 @@
             justify-content: space-evenly;
             
         }
+
     </style>
 </head>
 
 <body>
+
     <header>
         <div>
         <img src="../Profile Pic.jpeg" alt="PRSM Pic" height="800px">
@@ -141,7 +152,7 @@
             
             <section id="sec2">
                 <div id="ameoba">
-                    <div id="card"><div><img id="pfp" src="./Attachment/PRSM.jpg" ></div></div>
+                    <div id="card"><div id="pic" ><img id="pfp" src="./Attachment/PRSM.jpg" ></div></div>
                 </div>
             </section>
 
@@ -218,6 +229,7 @@
             </h4>
         </div>
     </footer>
+    
 </body>
 
 </html>
