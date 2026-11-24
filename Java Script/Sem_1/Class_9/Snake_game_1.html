@@ -14,39 +14,8 @@
 <body>
     <canvas height="600px" width="1200px"></canvas>
     <script>
-        let canvas= document.querySelector('canvas')
-let pen= canvas.getContext("2d")
-// pen.fillStyle='LawnGreen'
-// pen.fillRect(90,50,50,50)
-let arr= [[0,0]]
-let cell=50
-
-function shape(){
-    pen.clearRect(0,0,1200,600)
-    for(let i of arr){
-        pen.fillStyle="LawnGreen"
-        pen.fillRect(i[0],i[1],cell,cell)
-
-    }
-    
-}
-
-function update(){
-    let headX= arr[arr.length-1][1]
-    let headY= arr[arr.length-1][0]
-    let newX=headX+cell
-    let newY=headY
-    arr.push([newX,newY])
-    arr.shift()
 
 
-}
-
-setInterval(()=>{
-    shape()
-    update()
-
-},700)
     </script>
     
 </body>
