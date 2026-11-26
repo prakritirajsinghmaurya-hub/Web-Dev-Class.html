@@ -12,4 +12,8 @@ int[]arr = new int [5];
         arr[i] = scn.nextInt();
     }
 
+//Sorting -----> Arrays.sort(_arr_name)
+
+//from String to Array ------> (_String_name).toCharArray
+
 
